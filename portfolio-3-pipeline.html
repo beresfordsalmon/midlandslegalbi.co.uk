@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Mock — Automated Pipeline</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #1a1a2e;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 2rem;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .frame {
+            width: 960px;
+            height: 580px;
+            background: #0E1320;
+            border-radius: 8px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+        }
+
+        /* ── Header ── */
+        .pipe-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 28px;
+            background: #0B0F1A;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .pipe-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: #E8E6E1;
+        }
+        .pipe-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 10px;
+            font-weight: 600;
+            color: #34D399;
+        }
+        .pipe-status .pulse {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #34D399;
+            animation: pulse-glow 2s ease-in-out infinite;
+        }
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(52,211,153,0.4); }
+            50% { box-shadow: 0 0 0 6px rgba(52,211,153,0); }
+        }
+        .pipe-meta {
+            font-size: 10px;
+            color: #6B7280;
+        }
+
+        /* ── Pipeline flow ── */
+        .pipeline-body {
+            flex: 1;
+            padding: 32px 28px;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        /* Flow row */
+        .flow-row {
+            display: flex;
+            align-items: stretch;
+            gap: 0;
+        }
+
+        .flow-stage {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .stage-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+        .stage-number {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 9px;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+        .stage-number.active {
+            background: #C9A84C;
+            color: #0B0F1A;
+        }
+        .stage-number.complete {
+            background: #34D399;
+            color: #0B0F1A;
+        }
+        .stage-label {
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: #8B8D97;
+        }
+
+        .stage-card {
+            flex: 1;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 4px;
+            padding: 18px 20px;
+            position: relative;
+        }
+        .stage-card h4 {
+            font-size: 12px;
+            font-weight: 600;
+            color: #E8E6E1;
+            margin-bottom: 10px;
+        }
+
+        /* Arrow connector */
+        .flow-arrow {
+            width: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .flow-arrow svg { color: rgba(201,168,76,0.3); }
+
+        /* Code block styling */
+        .code-block {
+            background: #080B14;
+            border: 1px solid rgba(255,255,255,0.04);
+            border-radius: 3px;
+            padding: 10px 12px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 9.5px;
+            line-height: 1.7;
+            color: #8B8D97;
+            overflow: hidden;
+        }
+        .code-block .kw { color: #C9A84C; }
+        .code-block .str { color: #34D399; }
+        .code-block .fn { color: #60A5FA; }
+        .code-block .cm { color: #4B5563; font-style: italic; }
+        .code-block .op { color: #6B7280; }
+
+        /* File items */
+        .file-list {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .file-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 10px;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.04);
+            border-radius: 3px;
+        }
+        .file-icon {
+            font-size: 12px;
+        }
+        .file-name {
+            font-size: 10px;
+            font-family: 'JetBrains Mono', monospace;
+            color: #C0C0C8;
+        }
+        .file-size {
+            font-size: 9px;
+            color: #6B7280;
+            margin-left: auto;
+        }
+        .file-status {
+            font-size: 8px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 2px 6px;
+            border-radius: 2px;
+        }
+        .file-status.ok {
+            color: #34D399;
+            background: rgba(52,211,153,0.08);
+        }
+        .file-status.warn {
+            color: #FBBF24;
+            background: rgba(251,191,36,0.08);
+        }
+
+        /* Output items */
+        .output-list {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .output-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 10px;
+            background: rgba(201,168,76,0.04);
+            border: 1px solid rgba(201,168,76,0.1);
+            border-radius: 3px;
+        }
+        .output-icon { font-size: 12px; }
+        .output-name {
+            font-size: 10px;
+            color: #E8E6E1;
+            font-weight: 500;
+        }
+        .output-tag {
+            font-size: 8px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #C9A84C;
+            margin-left: auto;
+        }
+
+        /* ── Bottom stats bar ── */
+        .stats-bar {
+            display: flex;
+            border-top: 1px solid rgba(255,255,255,0.04);
+            background: #0B0F1A;
+        }
+        .stat-cell {
+            flex: 1;
+            padding: 14px 28px;
+            border-right: 1px solid rgba(255,255,255,0.04);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .stat-cell:last-child { border-right: none; }
+        .stat-cell .stat-icon {
+            width: 28px;
+            height: 28px;
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 3px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            color: #C9A84C;
+        }
+        .stat-cell .stat-info .stat-val {
+            font-size: 14px;
+            font-weight: 600;
+            color: #E8E6E1;
+        }
+        .stat-cell .stat-info .stat-desc {
+            font-size: 8px;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #6B7280;
+        }
+
+        .hint {
+            position: fixed;
+            bottom: 1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 12px;
+            color: #6B7280;
+        }
+        .hint strong { color: #E8E6E1; }
+    </style>
+</head>
+<body>
+    <div class="frame">
+
+        <!-- Header -->
+        <div class="pipe-header">
+            <div style="display:flex;align-items:center;gap:16px;">
+                <span class="pipe-title">Our Process — Monthly Refresh</span>
+                <span class="pipe-meta">Client A &middot; Run #31</span>
+            </div>
+            <div class="pipe-status">
+                <span class="pulse"></span>
+                Pipeline Complete — 00:04:12
+            </div>
+        </div>
+
+        <!-- Pipeline body -->
+        <div class="pipeline-body">
+
+            <!-- Flow row -->
+            <div class="flow-row">
+
+                <!-- Stage 1: Ingest -->
+                <div class="flow-stage">
+                    <div class="stage-header">
+                        <div class="stage-number complete">1</div>
+                        <span class="stage-label">Ingest</span>
+                    </div>
+                    <div class="stage-card">
+                        <h4>Raw Data Exports</h4>
+                        <div class="file-list">
+                            <div class="file-item">
+                                <span class="file-icon">&#128196;</span>
+                                <span class="file-name">cases_jan2026.csv</span>
+                                <span class="file-size">4.2 MB</span>
+                                <span class="file-status ok">Loaded</span>
+                            </div>
+                            <div class="file-item">
+                                <span class="file-icon">&#128196;</span>
+                                <span class="file-name">payments_jan2026.csv</span>
+                                <span class="file-size">1.8 MB</span>
+                                <span class="file-status ok">Loaded</span>
+                            </div>
+                            <div class="file-item">
+                                <span class="file-icon">&#128196;</span>
+                                <span class="file-name">referrers_master.xlsx</span>
+                                <span class="file-size">340 KB</span>
+                                <span class="file-status ok">Loaded</span>
+                            </div>
+                            <div class="file-item">
+                                <span class="file-icon">&#128196;</span>
+                                <span class="file-name">court_outcomes.csv</span>
+                                <span class="file-size">890 KB</span>
+                                <span class="file-status warn">12 nulls</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Arrow -->
+                <div class="flow-arrow">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </div>
+
+                <!-- Stage 2: Transform -->
+                <div class="flow-stage">
+                    <div class="stage-header">
+                        <div class="stage-number complete">2</div>
+                        <span class="stage-label">Transform</span>
+                    </div>
+                    <div class="stage-card">
+                        <h4>Power Query — ETL</h4>
+                        <div class="code-block">
+                            <span class="cm">// Clean & merge case data</span><br>
+                            <span class="kw">let</span><br>
+                            &nbsp;&nbsp;Source <span class="op">=</span> <span class="fn">Csv.Document</span>(<span class="str">"cases_jan2026"</span>),<br>
+                            &nbsp;&nbsp;Cleaned <span class="op">=</span> <span class="fn">Table.RemoveErrors</span>(Source),<br>
+                            &nbsp;&nbsp;Typed <span class="op">=</span> <span class="fn">Table.TransformColumnTypes</span>(<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;Cleaned, {{<span class="str">"Amount"</span>, <span class="kw">type</span> number}}),<br>
+                            &nbsp;&nbsp;Merged <span class="op">=</span> <span class="fn">Table.Join</span>(<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;Typed, <span class="str">"RefID"</span>,<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;Referrers, <span class="str">"RefID"</span>)<br>
+                            <span class="kw">in</span><br>
+                            &nbsp;&nbsp;Merged
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Arrow -->
+                <div class="flow-arrow">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </div>
+
+                <!-- Stage 3: Output -->
+                <div class="flow-stage">
+                    <div class="stage-header">
+                        <div class="stage-number active">3</div>
+                        <span class="stage-label">Output</span>
+                    </div>
+                    <div class="stage-card">
+                        <h4>Deliverables</h4>
+                        <div class="output-list">
+                            <div class="output-item">
+                                <span class="output-icon">&#128202;</span>
+                                <span class="output-name">Executive Dashboard</span>
+                                <span class="output-tag">Power BI</span>
+                            </div>
+                            <div class="output-item">
+                                <span class="output-icon">&#128218;</span>
+                                <span class="output-name">Board Slide Deck</span>
+                                <span class="output-tag">PowerPoint</span>
+                            </div>
+                            <div class="output-item">
+                                <span class="output-icon">&#128200;</span>
+                                <span class="output-name">Portfolio Analysis</span>
+                                <span class="output-tag">Excel</span>
+                            </div>
+                            <div class="output-item">
+                                <span class="output-icon">&#128230;</span>
+                                <span class="output-name">Delivered to OneDrive</span>
+                                <span class="output-tag">Secure</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats bar -->
+        <div class="stats-bar">
+            <div class="stat-cell">
+                <div class="stat-icon">&#9881;</div>
+                <div class="stat-info">
+                    <div class="stat-val">18,247</div>
+                    <div class="stat-desc">Records Processed</div>
+                </div>
+            </div>
+            <div class="stat-cell">
+                <div class="stat-icon">&#10003;</div>
+                <div class="stat-info">
+                    <div class="stat-val">12</div>
+                    <div class="stat-desc">Validation Checks Passed</div>
+                </div>
+            </div>
+            <div class="stat-cell">
+                <div class="stat-icon">&#9202;</div>
+                <div class="stat-info">
+                    <div class="stat-val">4m 12s</div>
+                    <div class="stat-desc">Total Run Time</div>
+                </div>
+            </div>
+            <div class="stat-cell">
+                <div class="stat-icon">&#9888;</div>
+                <div class="stat-info">
+                    <div class="stat-val">12</div>
+                    <div class="stat-desc">Null Values Flagged</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="hint"><strong>Portfolio Image 3</strong> — Screenshot this for the "Automated Pipelines" card</div>
+</body>
+</html>

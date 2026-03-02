@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Mock — Interactive Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #1a1a2e;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 2rem;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .frame {
+            width: 960px;
+            height: 580px;
+            background: #0E1320;
+            border-radius: 8px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+        }
+
+        /* ── Header ── */
+        .dash-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 28px;
+            background: #0B0F1A;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .dash-header-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .dash-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: #E8E6E1;
+        }
+        .dash-period {
+            font-size: 10px;
+            color: #6B7280;
+            padding-left: 16px;
+            border-left: 1px solid rgba(255,255,255,0.08);
+        }
+        .filters {
+            display: flex;
+            gap: 8px;
+        }
+        .filter-chip {
+            font-size: 9px;
+            font-weight: 600;
+            color: #8B8D97;
+            padding: 4px 12px;
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 3px;
+            letter-spacing: 0.03em;
+        }
+        .filter-chip.active {
+            color: #C9A84C;
+            border-color: rgba(201,168,76,0.3);
+            background: rgba(201,168,76,0.06);
+        }
+
+        /* ── KPI strip ── */
+        .kpi-strip {
+            display: flex;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+        }
+        .kpi-item {
+            flex: 1;
+            padding: 16px 28px;
+            border-right: 1px solid rgba(255,255,255,0.04);
+        }
+        .kpi-item:last-child { border-right: none; }
+        .kpi-item .label {
+            font-size: 8px;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: #6B7280;
+            margin-bottom: 4px;
+        }
+        .kpi-item .val {
+            font-size: 22px;
+            font-weight: 300;
+            color: #E8E6E1;
+        }
+        .kpi-item .val .sm { font-size: 14px; color: #8B8D97; }
+        .kpi-item .delta {
+            font-size: 9px;
+            font-weight: 600;
+            margin-top: 2px;
+        }
+        .kpi-item .delta.up { color: #34D399; }
+
+        /* ── Chart body ── */
+        .chart-body {
+            flex: 1;
+            padding: 24px 28px;
+            display: flex;
+            flex-direction: column;
+        }
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        .chart-label {
+            font-size: 11px;
+            font-weight: 600;
+            color: #E8E6E1;
+        }
+        .chart-legend {
+            display: flex;
+            gap: 16px;
+        }
+        .legend-entry {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 9px;
+            color: #8B8D97;
+        }
+        .legend-line {
+            width: 16px;
+            height: 2px;
+            border-radius: 1px;
+        }
+
+        .chart-svg-wrap {
+            flex: 1;
+            position: relative;
+        }
+
+        /* ── Tooltip mock ── */
+        .tooltip-mock {
+            position: absolute;
+            top: 48px;
+            left: 62%;
+            background: #1A1F30;
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 4px;
+            padding: 10px 14px;
+            pointer-events: none;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+        }
+        .tooltip-mock .tt-title {
+            font-size: 8px;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: #6B7280;
+            margin-bottom: 6px;
+        }
+        .tooltip-mock .tt-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 3px;
+        }
+        .tooltip-mock .tt-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+        }
+        .tooltip-mock .tt-label {
+            font-size: 10px;
+            color: #8B8D97;
+        }
+        .tooltip-mock .tt-val {
+            font-size: 10px;
+            font-weight: 600;
+            color: #E8E6E1;
+            margin-left: auto;
+            padding-left: 12px;
+        }
+
+        /* ── Crosshair line ── */
+        .crosshair {
+            position: absolute;
+            top: 0;
+            left: 66%;
+            width: 1px;
+            height: 100%;
+            background: rgba(201,168,76,0.2);
+            pointer-events: none;
+        }
+        .crosshair-dot {
+            position: absolute;
+            top: 72px;
+            left: calc(66% - 4px);
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #C9A84C;
+            border: 2px solid #0E1320;
+            pointer-events: none;
+        }
+        .crosshair-dot2 {
+            position: absolute;
+            top: 110px;
+            left: calc(66% - 4px);
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #34D399;
+            border: 2px solid #0E1320;
+            pointer-events: none;
+        }
+
+        .hint {
+            position: fixed;
+            bottom: 1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 12px;
+            color: #6B7280;
+        }
+        .hint strong { color: #E8E6E1; }
+    </style>
+</head>
+<body>
+    <div class="frame">
+
+        <!-- Header -->
+        <div class="dash-header">
+            <div class="dash-header-left">
+                <span class="dash-title">Monthly Recovery Trends</span>
+                <span class="dash-period">Feb 2025 — Jan 2026</span>
+            </div>
+            <div class="filters">
+                <div class="filter-chip active">All Referrers</div>
+                <div class="filter-chip">Consumer</div>
+                <div class="filter-chip">Commercial</div>
+                <div class="filter-chip">Utility</div>
+            </div>
+        </div>
+
+        <!-- KPI strip -->
+        <div class="kpi-strip">
+            <div class="kpi-item">
+                <div class="label">Total Recovered (12m)</div>
+                <div class="val">&pound;24.8<span class="sm">M</span></div>
+                <div class="delta up">&#9650; 14.2% YoY</div>
+            </div>
+            <div class="kpi-item">
+                <div class="label">New Instructions (12m)</div>
+                <div class="val">6,412</div>
+                <div class="delta up">&#9650; 9.8% YoY</div>
+            </div>
+            <div class="kpi-item">
+                <div class="label">Avg Recovery Time</div>
+                <div class="val">47 <span class="sm">days</span></div>
+                <div class="delta up">&#9650; Improved 6 days</div>
+            </div>
+            <div class="kpi-item">
+                <div class="label">Portfolio Health Score</div>
+                <div class="val">82<span class="sm">/100</span></div>
+                <div class="delta up">&#9650; +4 pts</div>
+            </div>
+        </div>
+
+        <!-- Chart -->
+        <div class="chart-body">
+            <div class="chart-header">
+                <span class="chart-label">Recoveries vs New Instructions — Monthly</span>
+                <div class="chart-legend">
+                    <div class="legend-entry"><div class="legend-line" style="background:#C9A84C;"></div> Recoveries (&pound;k)</div>
+                    <div class="legend-entry"><div class="legend-line" style="background:#34D399;"></div> New Instructions</div>
+                </div>
+            </div>
+            <div class="chart-svg-wrap">
+                <!-- Crosshair -->
+                <div class="crosshair"></div>
+                <div class="crosshair-dot"></div>
+                <div class="crosshair-dot2"></div>
+
+                <!-- Tooltip -->
+                <div class="tooltip-mock">
+                    <div class="tt-title">November 2025</div>
+                    <div class="tt-row">
+                        <div class="tt-dot" style="background:#C9A84C;"></div>
+                        <span class="tt-label">Recoveries</span>
+                        <span class="tt-val">&pound;2.31M</span>
+                    </div>
+                    <div class="tt-row">
+                        <div class="tt-dot" style="background:#34D399;"></div>
+                        <span class="tt-label">New Instructions</span>
+                        <span class="tt-val">578</span>
+                    </div>
+                </div>
+
+                <svg width="100%" height="100%" viewBox="0 0 900 280" preserveAspectRatio="none">
+                    <!-- Grid -->
+                    <line x1="0" y1="0" x2="900" y2="0" stroke="rgba(255,255,255,0.03)"/>
+                    <line x1="0" y1="56" x2="900" y2="56" stroke="rgba(255,255,255,0.03)"/>
+                    <line x1="0" y1="112" x2="900" y2="112" stroke="rgba(255,255,255,0.03)"/>
+                    <line x1="0" y1="168" x2="900" y2="168" stroke="rgba(255,255,255,0.03)"/>
+                    <line x1="0" y1="224" x2="900" y2="224" stroke="rgba(255,255,255,0.03)"/>
+
+                    <!-- Y axis labels -->
+                    <text x="5" y="12" fill="#4B5563" font-size="9" font-family="Outfit">&pound;3M</text>
+                    <text x="5" y="68" fill="#4B5563" font-size="9" font-family="Outfit">&pound;2M</text>
+                    <text x="5" y="124" fill="#4B5563" font-size="9" font-family="Outfit">&pound;1M</text>
+                    <text x="5" y="180" fill="#4B5563" font-size="9" font-family="Outfit">500</text>
+                    <text x="5" y="236" fill="#4B5563" font-size="9" font-family="Outfit">0</text>
+
+                    <!-- Area fill: Recoveries -->
+                    <path d="M40,165 L115,148 L190,155 L265,140 L340,120 L415,108 L490,118 L565,95 L640,105 L715,80 L790,65 L865,52 L865,260 L40,260 Z"
+                          fill="url(#areaGold)" stroke="none"/>
+                    <defs>
+                        <linearGradient id="areaGold" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stop-color="#C9A84C" stop-opacity="0.15"/>
+                            <stop offset="100%" stop-color="#C9A84C" stop-opacity="0.01"/>
+                        </linearGradient>
+                    </defs>
+
+                    <!-- Line: Recoveries -->
+                    <polyline points="40,165 115,148 190,155 265,140 340,120 415,108 490,118 565,95 640,105 715,80 790,65 865,52"
+                              fill="none" stroke="#C9A84C" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+
+                    <!-- Area fill: Instructions -->
+                    <path d="M40,185 L115,178 L190,182 L265,170 L340,158 L415,152 L490,160 L565,145 L640,148 L715,135 L790,128 L865,118 L865,260 L40,260 Z"
+                          fill="url(#areaGreen)" stroke="none"/>
+                    <defs>
+                        <linearGradient id="areaGreen" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stop-color="#34D399" stop-opacity="0.1"/>
+                            <stop offset="100%" stop-color="#34D399" stop-opacity="0.01"/>
+                        </linearGradient>
+                    </defs>
+
+                    <!-- Line: Instructions -->
+                    <polyline points="40,185 115,178 190,182 265,170 340,158 415,152 490,160 565,145 640,148 715,135 790,128 865,118"
+                              fill="none" stroke="#34D399" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="6 3"/>
+
+                    <!-- Month labels -->
+                    <text x="40" y="275" fill="#4B5563" font-size="9" font-family="Outfit" text-anchor="middle">Feb</text>
+                    <text x="115" y="275" fill="#4B5563" font-size="9" font-family="Outfit" text-anchor="middle">Mar</text>
+                    <text x="190" y="275" fill="#4B5563" font-size="9" font-family="Outfit" text-anchor="middle">Apr</text>
+                    <text x="265" y="275" fill="#4B5563" font-size="9" font-family="Outfit" text-anchor="middle">May</text>
+                    <text x="340" y="275" fill="#4B5563" font-size="9" font-family="Outfit" text-anchor="middle">Jun</text>
+                    <text x="415" y="275" fill="#4B5563" font-size="9" font-family="Outfit" text-anchor="middle">Jul</text>
+                    <text x="490" y="275" fill="#4B5563" font-size="9" font-family="Outfit" text-anchor="middle">Aug</text>
+                    <text x="565" y="275" fill="#4B5563" font-size="9" font-family="Outfit" text-anchor="middle">Sep</text>
+                    <text x="640" y="275" fill="#4B5563" font-size="9" font-family="Outfit" text-anchor="middle">Oct</text>
+                    <text x="715" y="275" fill="#C9A84C" font-size="9" font-family="Outfit" text-anchor="middle" font-weight="600">Nov</text>
+                    <text x="790" y="275" fill="#4B5563" font-size="9" font-family="Outfit" text-anchor="middle">Dec</text>
+                    <text x="865" y="275" fill="#4B5563" font-size="9" font-family="Outfit" text-anchor="middle">Jan</text>
+                </svg>
+            </div>
+        </div>
+    </div>
+
+    <div class="hint"><strong>Portfolio Image 2</strong> — Screenshot this for the "Interactive Dashboards" card</div>
+</body>
+</html>

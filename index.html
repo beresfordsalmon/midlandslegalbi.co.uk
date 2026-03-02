@@ -1,0 +1,1206 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Midlands Legal BI | Monthly Reporting for Legal Practices</title>
+    <meta name="description" content="Specialist Business Intelligence for legal practices and debt collection agencies. Fixed-fee monthly reporting and automated dashboards.">
+
+    <!-- Fonts: Playfair Display (editorial authority) + Outfit (modern precision) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500&display=swap" rel="stylesheet">
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --midnight: #0B0F1A;
+            --ink: #141927;
+            --slate: #1E2438;
+            --gold: #C9A84C;
+            --gold-light: #E8D599;
+            --gold-dim: rgba(201, 168, 76, 0.12);
+            --cream: #F5F2EB;
+            --warm-white: #FAF9F6;
+            --text-primary: #E8E6E1;
+            --text-muted: #8B8D97;
+            --text-dark: #1A1A2E;
+            --text-dark-muted: #5E6070;
+            --border-dark: rgba(255,255,255,0.06);
+            --border-light: rgba(0,0,0,0.06);
+        }
+
+        html { font-size: 16px; }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            color: var(--text-dark);
+            background: var(--warm-white);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden;
+        }
+
+        .font-display { font-family: 'Playfair Display', Georgia, serif; }
+
+        /* ── Utility ── */
+        .gold-text { color: var(--gold); }
+        .gold-text-light { color: var(--gold-light); }
+
+        /* ── Navigation ── */
+        .nav-glass {
+            background: rgba(11, 15, 26, 0.92);
+            backdrop-filter: blur(20px) saturate(1.4);
+            -webkit-backdrop-filter: blur(20px) saturate(1.4);
+            border-bottom: 1px solid var(--border-dark);
+        }
+        .nav-link {
+            color: var(--text-muted);
+            font-weight: 500;
+            font-size: 0.875rem;
+            letter-spacing: 0.03em;
+            text-decoration: none;
+            transition: color 0.3s;
+            position: relative;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--gold);
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover { color: var(--gold-light); }
+        .nav-link:hover::after { width: 100%; }
+
+        .cta-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.65rem 1.75rem;
+            background: var(--gold);
+            color: var(--midnight);
+            font-weight: 600;
+            font-size: 0.85rem;
+            letter-spacing: 0.04em;
+            border-radius: 2px;
+            text-decoration: none;
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid var(--gold);
+        }
+        .cta-btn:hover {
+            background: transparent;
+            color: var(--gold);
+        }
+
+        .cta-btn-outline {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.65rem 1.75rem;
+            background: transparent;
+            color: var(--gold);
+            font-weight: 600;
+            font-size: 0.85rem;
+            letter-spacing: 0.04em;
+            border-radius: 2px;
+            text-decoration: none;
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(201, 168, 76, 0.3);
+        }
+        .cta-btn-outline:hover {
+            background: var(--gold);
+            color: var(--midnight);
+            border-color: var(--gold);
+        }
+
+        /* ── Hero ── */
+        .hero {
+            position: relative;
+            background: var(--midnight);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 60% 50% at 70% 30%, rgba(201, 168, 76, 0.06) 0%, transparent 60%),
+                radial-gradient(ellipse 40% 60% at 20% 70%, rgba(201, 168, 76, 0.03) 0%, transparent 50%);
+        }
+        /* Subtle grid pattern */
+        .hero::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+            background-size: 60px 60px;
+            mask-image: radial-gradient(ellipse 70% 70% at 60% 40%, black, transparent);
+            -webkit-mask-image: radial-gradient(ellipse 70% 70% at 60% 40%, black, transparent);
+        }
+
+        .hero-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.4rem 1.2rem;
+            border: 1px solid rgba(201, 168, 76, 0.25);
+            border-radius: 1px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 2.5rem;
+        }
+        .hero-tag .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--gold);
+            animation: pulse-dot 2.5s ease-in-out infinite;
+        }
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(201, 168, 76, 0.4); }
+            50% { opacity: 0.7; box-shadow: 0 0 0 6px rgba(201, 168, 76, 0); }
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: clamp(2.8rem, 6vw, 5.5rem);
+            font-weight: 400;
+            line-height: 1.08;
+            color: var(--text-primary);
+            letter-spacing: -0.02em;
+            margin-bottom: 2rem;
+        }
+        .hero h1 em {
+            font-style: italic;
+            color: var(--gold);
+        }
+
+        .hero-body {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            line-height: 1.7;
+            max-width: 520px;
+            margin-bottom: 3rem;
+        }
+
+        .hero-portrait {
+            position: relative;
+        }
+        .hero-portrait img {
+            width: 320px;
+            height: 400px;
+            object-fit: cover;
+            filter: grayscale(15%) contrast(1.05);
+            border: 1px solid var(--border-dark);
+        }
+        .hero-portrait .frame-accent {
+            position: absolute;
+            top: -12px;
+            left: -12px;
+            right: 12px;
+            bottom: 12px;
+            border: 1px solid rgba(201, 168, 76, 0.2);
+            pointer-events: none;
+        }
+
+        /* ── Scroll reveal ── */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .reveal-delay-1 { transition-delay: 0.1s; }
+        .reveal-delay-2 { transition-delay: 0.2s; }
+        .reveal-delay-3 { transition-delay: 0.3s; }
+        .reveal-delay-4 { transition-delay: 0.4s; }
+
+        /* ── Tech Strip ── */
+        .tech-strip {
+            background: var(--ink);
+            border-bottom: 1px solid var(--border-dark);
+            padding: 1.5rem 0;
+        }
+        .tech-strip .inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+        .tech-strip .label {
+            font-size: 0.65rem;
+            font-weight: 600;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-right: 1rem;
+        }
+        .tech-pill {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.35rem 0.9rem;
+            border: 1px solid var(--border-dark);
+            border-radius: 1px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            transition: border-color 0.3s, color 0.3s;
+        }
+        .tech-pill:hover {
+            border-color: rgba(201, 168, 76, 0.3);
+            color: var(--gold-light);
+        }
+        .tech-pill img { width: 18px; height: 18px; object-fit: contain; }
+
+        /* ── Section Titles ── */
+        .section-label {
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 1rem;
+        }
+        .section-title {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: clamp(2rem, 4vw, 3.2rem);
+            font-weight: 400;
+            line-height: 1.15;
+            letter-spacing: -0.01em;
+            margin-bottom: 1.25rem;
+        }
+        .section-subtitle {
+            font-size: 1.05rem;
+            color: var(--text-dark-muted);
+            line-height: 1.7;
+            max-width: 580px;
+        }
+
+        /* ── Solutions ── */
+        .solutions { background: var(--warm-white); padding: 7rem 2rem; }
+        .solutions-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1px;
+            background: var(--border-light);
+            border: 1px solid rgba(0,0,0,0.04);
+            margin-top: 4rem;
+        }
+        .solution-card {
+            background: var(--warm-white);
+            padding: 3rem 2.5rem;
+            transition: background 0.4s;
+            cursor: default;
+        }
+        .solution-card:hover { background: #FFFFFF; }
+        .solution-card .icon-wrap {
+            width: 48px;
+            height: 48px;
+            border: 1px solid rgba(201, 168, 76, 0.25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 2rem;
+            color: var(--gold);
+        }
+        .solution-card h3 {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 1.35rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+        .solution-card p {
+            font-size: 0.92rem;
+            color: var(--text-dark-muted);
+            line-height: 1.7;
+        }
+
+        /* ── Portfolio ── */
+        .portfolio {
+            background: var(--cream);
+            padding: 7rem 2rem;
+            border-top: 1px solid rgba(0,0,0,0.04);
+        }
+        .portfolio-grid {
+            max-width: 1200px;
+            margin: 4rem auto 0;
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            grid-template-rows: auto auto;
+            gap: 1.5rem;
+        }
+        .portfolio-card {
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            border: 1px solid rgba(0,0,0,0.04);
+            background: white;
+        }
+        .portfolio-card:first-child {
+            grid-row: 1 / 3;
+        }
+        .portfolio-card .card-image {
+            width: 100%;
+            height: 100%;
+            min-height: 280px;
+            object-fit: cover;
+            transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), filter 0.5s;
+            filter: grayscale(20%) contrast(1.02);
+        }
+        .portfolio-card:hover .card-image {
+            transform: scale(1.04);
+            filter: grayscale(0%) contrast(1.05);
+        }
+        .portfolio-card .card-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, transparent 40%, rgba(11, 15, 26, 0.85) 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 2rem;
+            transition: background 0.5s;
+        }
+        .portfolio-card:hover .card-overlay {
+            background: linear-gradient(180deg, transparent 30%, rgba(11, 15, 26, 0.92) 100%);
+        }
+        .portfolio-card .card-tag {
+            font-size: 0.6rem;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 0.5rem;
+        }
+        .portfolio-card .card-title {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 1.3rem;
+            color: white;
+            margin-bottom: 0.5rem;
+        }
+        .portfolio-card .card-desc {
+            font-size: 0.82rem;
+            color: rgba(255,255,255,0.6);
+            line-height: 1.6;
+        }
+        .portfolio-card .zoom-icon {
+            position: absolute;
+            top: 1.25rem;
+            right: 1.25rem;
+            width: 36px;
+            height: 36px;
+            border: 1px solid rgba(255,255,255,0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            opacity: 0;
+            transform: translateY(-6px);
+            transition: opacity 0.4s, transform 0.4s;
+        }
+        .portfolio-card:hover .zoom-icon {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ── Track Record ── */
+        .track-record {
+            background: var(--midnight);
+            color: var(--text-primary);
+            padding: 7rem 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .track-record::before {
+            content: '';
+            position: absolute;
+            top: 0; right: 0;
+            width: 50%;
+            height: 100%;
+            background:
+                radial-gradient(ellipse 80% 60% at 80% 50%, rgba(201, 168, 76, 0.04) 0%, transparent 60%);
+        }
+        .track-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 6rem;
+            position: relative;
+            z-index: 1;
+        }
+        .track-content { flex: 1; }
+        .track-content .section-title { color: var(--text-primary); }
+        .track-content .section-subtitle { color: var(--text-muted); max-width: 500px; }
+
+        .track-stats {
+            flex: 0 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 3rem;
+        }
+        .stat-block {
+            text-align: right;
+            padding-right: 2rem;
+            border-right: 2px solid var(--gold);
+        }
+        .stat-number {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 4rem;
+            font-weight: 400;
+            color: var(--gold);
+            line-height: 1;
+            margin-bottom: 0.4rem;
+        }
+        .stat-label {
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+
+        /* ── Pricing ── */
+        .pricing {
+            background: var(--warm-white);
+            padding: 7rem 2rem;
+            border-top: 1px solid rgba(0,0,0,0.04);
+        }
+        .pricing-grid {
+            max-width: 1100px;
+            margin: 4rem auto 0;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0;
+            border: 1px solid rgba(0,0,0,0.06);
+        }
+        .price-card {
+            padding: 3rem 2.5rem;
+            border-right: 1px solid rgba(0,0,0,0.06);
+            display: flex;
+            flex-direction: column;
+            background: white;
+            transition: background 0.3s;
+        }
+        .price-card:last-child { border-right: none; }
+        .price-card:hover { background: #FEFDFB; }
+
+        .price-card.featured {
+            background: var(--midnight);
+            color: var(--text-primary);
+            border-right-color: rgba(255,255,255,0.05);
+            position: relative;
+        }
+        .price-card.featured::before {
+            content: 'Recommended';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: var(--gold);
+            color: var(--midnight);
+            font-size: 0.6rem;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            text-align: center;
+            padding: 0.4rem;
+        }
+        .price-card.featured { padding-top: 4rem; }
+
+        .price-tier {
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--text-dark-muted);
+            margin-bottom: 1.5rem;
+        }
+        .price-card.featured .price-tier { color: var(--text-muted); }
+
+        .price-amount {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 2.8rem;
+            font-weight: 400;
+            margin-bottom: 0.25rem;
+        }
+        .price-period {
+            font-size: 0.8rem;
+            color: var(--text-dark-muted);
+            margin-bottom: 2rem;
+        }
+        .price-card.featured .price-period { color: var(--text-muted); }
+
+        .price-features {
+            list-style: none;
+            flex-grow: 1;
+            margin-bottom: 2.5rem;
+        }
+        .price-features li {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid rgba(0,0,0,0.04);
+            font-size: 0.88rem;
+            color: var(--text-dark-muted);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .price-card.featured .price-features li {
+            border-bottom-color: rgba(255,255,255,0.06);
+            color: var(--text-muted);
+        }
+        .price-features li .check-icon { color: var(--gold); width: 16px; height: 16px; flex-shrink: 0; }
+
+        .price-cta {
+            display: block;
+            text-align: center;
+            padding: 0.85rem 1.5rem;
+            font-size: 0.82rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-decoration: none;
+            border: 1px solid rgba(0,0,0,0.12);
+            color: var(--text-dark);
+            transition: all 0.35s;
+            border-radius: 1px;
+        }
+        .price-cta:hover {
+            background: var(--text-dark);
+            color: white;
+            border-color: var(--text-dark);
+        }
+        .price-card.featured .price-cta {
+            background: var(--gold);
+            color: var(--midnight);
+            border-color: var(--gold);
+        }
+        .price-card.featured .price-cta:hover {
+            background: var(--gold-light);
+        }
+
+        /* ── Compliance ── */
+        .compliance {
+            background: var(--ink);
+            padding: 4.5rem 2rem;
+            border-top: 1px solid var(--border-dark);
+            border-bottom: 1px solid var(--border-dark);
+        }
+        .compliance-inner {
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            align-items: flex-start;
+            gap: 3rem;
+        }
+        .compliance-text {
+            font-size: 0.92rem;
+            color: var(--text-muted);
+            line-height: 1.8;
+            flex: 1;
+        }
+        .compliance-badges {
+            flex: 0 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .compliance-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1.25rem;
+            border: 1px solid var(--border-dark);
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            letter-spacing: 0.03em;
+            white-space: nowrap;
+        }
+        .compliance-badge img { width: 22px; height: 22px; object-fit: contain; }
+
+        /* ── Contact ── */
+        .contact {
+            background: var(--warm-white);
+            padding: 8rem 2rem;
+            text-align: center;
+        }
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 3rem;
+            flex-wrap: wrap;
+        }
+        .contact-card {
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+            padding: 1.5rem 2rem;
+            background: white;
+            border: 1px solid rgba(0,0,0,0.06);
+            text-decoration: none;
+            transition: border-color 0.3s, box-shadow 0.3s;
+            text-align: left;
+        }
+        .contact-card:hover {
+            border-color: var(--gold);
+            box-shadow: 0 4px 20px rgba(201, 168, 76, 0.08);
+        }
+        .contact-card .icon-wrap {
+            width: 44px;
+            height: 44px;
+            border: 1px solid rgba(201, 168, 76, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gold);
+            flex-shrink: 0;
+        }
+        .contact-card .card-label {
+            font-size: 0.6rem;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--text-dark-muted);
+        }
+        .contact-card .card-value {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        /* ── Footer ── */
+        .site-footer {
+            padding: 2.5rem 2rem;
+            border-top: 1px solid rgba(0,0,0,0.06);
+            background: var(--warm-white);
+        }
+        .footer-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .footer-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--text-dark);
+        }
+        .footer-brand .brand-icon { color: var(--gold); width: 20px; height: 20px; }
+        .footer-copy {
+            font-size: 0.75rem;
+            color: var(--text-dark-muted);
+        }
+        .footer-links { display: flex; gap: 2rem; }
+        .footer-links a {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-dark-muted);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        .footer-links a:hover { color: var(--gold); }
+
+        /* ── Lightbox ── */
+        .lightbox {
+            position: fixed;
+            inset: 0;
+            z-index: 200;
+            background: rgba(11, 15, 26, 0.96);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            opacity: 0;
+            transition: opacity 0.35s;
+        }
+        .lightbox.active { display: flex; opacity: 1; }
+        .lightbox img {
+            max-width: 90%;
+            max-height: 85vh;
+            object-fit: contain;
+            border: 1px solid var(--border-dark);
+        }
+        .lightbox-close {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            background: none;
+            border: 1px solid rgba(255,255,255,0.15);
+            color: white;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: border-color 0.3s, color 0.3s;
+        }
+        .lightbox-close:hover { border-color: var(--gold); color: var(--gold); }
+
+        /* ── Mobile Menu ── */
+        .mobile-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: var(--midnight);
+            border-top: 1px solid var(--border-dark);
+            padding: 2rem;
+        }
+        .mobile-menu.open { display: block; }
+        .mobile-menu a {
+            display: block;
+            padding: 0.8rem 0;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1rem;
+            border-bottom: 1px solid var(--border-dark);
+            transition: color 0.3s;
+        }
+        .mobile-menu a:last-child { border-bottom: none; }
+        .mobile-menu a:hover { color: var(--gold); }
+
+        /* ── Responsive ── */
+        @media (max-width: 900px) {
+            .solutions-grid { grid-template-columns: 1fr; }
+            .portfolio-grid { grid-template-columns: 1fr; }
+            .portfolio-card:first-child { grid-row: auto; }
+            .pricing-grid { grid-template-columns: 1fr; }
+            .price-card { border-right: none; border-bottom: 1px solid rgba(0,0,0,0.06); }
+            .price-card:last-child { border-bottom: none; }
+            .track-inner { flex-direction: column; gap: 3rem; }
+            .track-stats { flex-direction: row; gap: 2rem; }
+            .stat-block { text-align: center; border-right: none; padding-right: 0; border-bottom: 2px solid var(--gold); padding-bottom: 1rem; }
+            .compliance-inner { flex-direction: column; }
+            .hero-layout { flex-direction: column-reverse !important; text-align: center; }
+            .hero-portrait img { width: 200px; height: 250px; }
+            .hero-portrait .frame-accent { top: -8px; left: -8px; right: 8px; bottom: 8px; }
+            .hero-body { margin-left: auto; margin-right: auto; }
+            .hero-actions { justify-content: center; }
+            .nav-desktop { display: none !important; }
+            .nav-mobile-btn { display: flex !important; }
+        }
+        @media (min-width: 901px) {
+            .nav-mobile-btn { display: none !important; }
+            .mobile-menu { display: none !important; }
+        }
+        @media (max-width: 600px) {
+            .contact-links { flex-direction: column; align-items: stretch; }
+            .stat-number { font-size: 2.8rem; }
+        }
+
+        /* Thin horizontal rule */
+        .divider {
+            width: 60px;
+            height: 1px;
+            background: var(--gold);
+            opacity: 0.4;
+            margin: 1.5rem 0;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ═══════ NAVIGATION ═══════ -->
+    <nav class="nav-glass" style="position:fixed;width:100%;z-index:100;">
+        <div style="max-width:1200px;margin:0 auto;padding:0 2rem;display:flex;justify-content:space-between;align-items:center;height:72px;">
+            <a href="#" style="display:flex;align-items:center;gap:0.5rem;text-decoration:none;">
+                <i data-lucide="bar-chart-big" style="color:var(--gold);width:22px;height:22px;"></i>
+                <span style="font-weight:700;font-size:0.95rem;color:var(--text-primary);letter-spacing:0.02em;">Midlands Legal BI</span>
+            </a>
+            <div class="nav-desktop" style="display:flex;align-items:center;gap:2.5rem;">
+                <a href="#solutions" class="nav-link">Solutions</a>
+                <a href="#portfolio" class="nav-link">Portfolio</a>
+                <a href="#track-record" class="nav-link">Track Record</a>
+                <a href="#pricing" class="nav-link">Pricing</a>
+                <a href="#contact" class="cta-btn">Free Consultation</a>
+            </div>
+            <button class="nav-mobile-btn" id="mobile-menu-btn" style="background:none;border:1px solid var(--border-dark);color:var(--text-primary);width:40px;height:40px;display:flex;align-items:center;justify-content:center;cursor:pointer;">
+                <i data-lucide="menu" style="width:20px;height:20px;"></i>
+            </button>
+        </div>
+        <div class="mobile-menu" id="mobile-menu">
+            <a href="#solutions">Solutions</a>
+            <a href="#portfolio">Portfolio</a>
+            <a href="#track-record">Track Record</a>
+            <a href="#pricing">Pricing</a>
+            <a href="#contact" style="color:var(--gold);">Free Consultation</a>
+        </div>
+    </nav>
+
+    <!-- ═══════ HERO ═══════ -->
+    <section class="hero">
+        <div class="hero-layout" style="max-width:1200px;margin:0 auto;padding:8rem 2rem 6rem;display:flex;align-items:center;gap:5rem;position:relative;z-index:1;">
+            <!-- Portrait -->
+            <div class="hero-portrait reveal" style="flex:0 0 auto;">
+                <div class="frame-accent"></div>
+                <img src="Selfie.jpg" alt="Beresford Salmon — Founder, Midlands Legal BI"
+                     onerror="this.src='https://ui-avatars.com/api/?name=BS&background=0B0F1A&color=C9A84C&size=400&bold=true&font-size=0.35'">
+            </div>
+            <!-- Content -->
+            <div style="flex:1;">
+                <div class="hero-tag reveal reveal-delay-1">
+                    <span class="dot"></span>
+                    Legal Practices &amp; Debt Collection Agencies
+                </div>
+                <h1 class="reveal reveal-delay-2">
+                    Stop wasting days<br>on <em>manual reporting.</em>
+                </h1>
+                <p class="hero-body reveal reveal-delay-3">
+                    Automated data pipelines and executive-ready dashboards for legal practices. If your team is still compiling reports by hand, there is a better way.
+                </p>
+                <div class="hero-actions reveal reveal-delay-4" style="display:flex;gap:1rem;flex-wrap:wrap;">
+                    <a href="#contact" class="cta-btn">Claim Free Consultation</a>
+                    <a href="#solutions" class="cta-btn-outline">How It Works</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════ TECH STRIP ═══════ -->
+    <div class="tech-strip">
+        <div class="inner">
+            <span class="label">Powered by</span>
+            <div class="tech-pill"><img src="https://img.icons8.com/color/96/power-bi.png" alt="">Power BI</div>
+            <div class="tech-pill"><img src="https://img.icons8.com/color/96/microsoft-excel-2019.png" alt="">Excel</div>
+            <div class="tech-pill"><img src="https://img.icons8.com/color/96/sql.png" alt="">SQL</div>
+            <div class="tech-pill"><img src="https://img.icons8.com/color/96/python--v1.png" alt="">Python</div>
+            <div class="tech-pill"><img src="https://img.icons8.com/color/96/office-365.png" alt="">Microsoft 365</div>
+            <div class="tech-pill"><img src="https://img.icons8.com/color/96/microsoft-powerpoint-2019.png" alt="">PowerPoint</div>
+            <div class="tech-pill"><img src="https://img.icons8.com/color/96/microsoft-onedrive-2019.png" alt="">OneDrive</div>
+        </div>
+    </div>
+
+    <!-- ═══════ SOLUTIONS ═══════ -->
+    <section id="solutions" class="solutions">
+        <div style="max-width:1200px;margin:0 auto;">
+            <div class="reveal">
+                <div class="section-label">What We Deliver</div>
+                <div class="section-title font-display">Solutions</div>
+                <div class="divider"></div>
+                <p class="section-subtitle">End-to-end business intelligence — from raw data extraction through to boardroom-ready insight.</p>
+            </div>
+            <div class="solutions-grid">
+                <div class="solution-card reveal reveal-delay-1">
+                    <div class="icon-wrap"><i data-lucide="workflow" style="width:22px;height:22px;"></i></div>
+                    <h3>Automated Pipelines</h3>
+                    <p>Robust ETL processes transform raw data exports into analysis-ready datasets, eliminating manual entry risks and freeing your team's time.</p>
+                </div>
+                <div class="solution-card reveal reveal-delay-2">
+                    <div class="icon-wrap"><i data-lucide="layout-dashboard" style="width:22px;height:22px;"></i></div>
+                    <h3>Executive Dashboards</h3>
+                    <p>Consolidate multiple data sources with Power Query and DAX for a fully automated monthly refresh cycle your leadership team can trust.</p>
+                </div>
+                <div class="solution-card reveal reveal-delay-3">
+                    <div class="icon-wrap"><i data-lucide="shield-check" style="width:22px;height:22px;"></i></div>
+                    <h3>Full Compliance</h3>
+                    <p>ICO registered, professionally indemnified (£250k), and GDPR compliant. Your data stays in secure UK data centres at all times.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════ PORTFOLIO ═══════ -->
+    <section id="portfolio" class="portfolio">
+        <div style="max-width:1200px;margin:0 auto;">
+            <div class="reveal" style="text-align:center;">
+                <div class="section-label">Example Deliverables</div>
+                <div class="section-title font-display">From raw data to<br>boardroom-ready insight</div>
+                <div class="divider" style="margin:1.5rem auto;"></div>
+                <p class="section-subtitle" style="margin:0 auto;">Here is what lands on your desk every month. Click any image to enlarge.</p>
+            </div>
+            <div class="portfolio-grid">
+                <!-- Large Card -->
+                <div class="portfolio-card reveal reveal-delay-1" onclick="openLightbox(this)">
+                    <img class="card-image" src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format&fit=crop" alt="Executive Presentation">
+                    <div class="card-overlay">
+                        <div class="card-tag">Slide Deck</div>
+                        <div class="card-title font-display">Executive Presentations</div>
+                        <div class="card-desc">Narrative-driven slide decks for board meetings — portfolio analysis, trends, and actionable insights in one polished package.</div>
+                    </div>
+                    <div class="zoom-icon"><i data-lucide="maximize-2" style="width:16px;height:16px;"></i></div>
+                </div>
+                <!-- Top Right -->
+                <div class="portfolio-card reveal reveal-delay-2" onclick="openLightbox(this)">
+                    <img class="card-image" src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2015&auto=format&fit=crop" alt="Interactive Dashboard">
+                    <div class="card-overlay">
+                        <div class="card-tag">Power BI</div>
+                        <div class="card-title font-display">Interactive Dashboards</div>
+                        <div class="card-desc">Slice, filter, and drill into your numbers instantly.</div>
+                    </div>
+                    <div class="zoom-icon"><i data-lucide="maximize-2" style="width:16px;height:16px;"></i></div>
+                </div>
+                <!-- Bottom Right -->
+                <div class="portfolio-card reveal reveal-delay-3" onclick="openLightbox(this)">
+                    <img class="card-image" src="https://images.unsplash.com/photo-1555949963-aa79dcee981c?q=80&w=2070&auto=format&fit=crop" alt="Data Engineering Pipeline">
+                    <div class="card-overlay">
+                        <div class="card-tag">Data Engineering</div>
+                        <div class="card-title font-display">Automated Pipelines</div>
+                        <div class="card-desc">Power Query workflows that clean messy exports — zero manual entry.</div>
+                    </div>
+                    <div class="zoom-icon"><i data-lucide="maximize-2" style="width:16px;height:16px;"></i></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════ TRACK RECORD ═══════ -->
+    <section id="track-record" class="track-record">
+        <div class="track-inner">
+            <div class="track-content reveal">
+                <div class="section-label">Reliability</div>
+                <div class="section-title font-display" style="color:var(--text-primary);">Proven delivery.<br>Zero missed deadlines.</div>
+                <div class="divider"></div>
+                <p class="section-subtitle" style="color:var(--text-muted);">
+                    Over 2.5 years of continuous service for legal and debt-collection clients. Complex datasets of up to 20,000+ records handled monthly with total precision.
+                </p>
+            </div>
+            <div class="track-stats reveal reveal-delay-2">
+                <div class="stat-block">
+                    <div class="stat-number"><span class="counter" data-target="30">0</span>+</div>
+                    <div class="stat-label">Monthly Deliveries</div>
+                </div>
+                <div class="stat-block">
+                    <div class="stat-number"><span class="counter" data-target="100">0</span>%</div>
+                    <div class="stat-label">On-Time Rate</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════ PRICING ═══════ -->
+    <section id="pricing" class="pricing">
+        <div style="max-width:1200px;margin:0 auto;">
+            <div class="reveal" style="text-align:center;">
+                <div class="section-label">Investment</div>
+                <div class="section-title font-display">Fixed monthly retainers</div>
+                <div class="divider" style="margin:1.5rem auto;"></div>
+                <p class="section-subtitle" style="margin:0 auto;">Predictable costs. No hourly surprises. Full reliability.</p>
+            </div>
+            <div class="pricing-grid reveal reveal-delay-1">
+                <!-- Entry -->
+                <div class="price-card">
+                    <div class="price-tier">Entry</div>
+                    <div class="price-amount font-display">£1,200</div>
+                    <div class="price-period">per month</div>
+                    <ul class="price-features">
+                        <li><i data-lucide="check" class="check-icon"></i>Single monthly report</li>
+                        <li><i data-lucide="check" class="check-icon"></i>1–2 data sources</li>
+                        <li><i data-lucide="check" class="check-icon"></i>Automated pipeline</li>
+                    </ul>
+                    <a href="#contact" class="price-cta">Select Plan</a>
+                </div>
+                <!-- Standard -->
+                <div class="price-card featured">
+                    <div class="price-tier">Standard</div>
+                    <div class="price-amount font-display" style="color:var(--text-primary);">£1,500</div>
+                    <div class="price-period">per month</div>
+                    <ul class="price-features">
+                        <li><i data-lucide="check" class="check-icon"></i>Multiple reports or dashboards</li>
+                        <li><i data-lucide="check" class="check-icon"></i>3+ data sources</li>
+                        <li><i data-lucide="check" class="check-icon"></i>Portfolio analytics</li>
+                    </ul>
+                    <a href="#contact" class="price-cta">Get Started</a>
+                </div>
+                <!-- Premium -->
+                <div class="price-card">
+                    <div class="price-tier">Premium</div>
+                    <div class="price-amount font-display">£2,000+</div>
+                    <div class="price-period">per month</div>
+                    <ul class="price-features">
+                        <li><i data-lucide="check" class="check-icon"></i>4+ deliverables</li>
+                        <li><i data-lucide="check" class="check-icon"></i>10,000+ monthly records</li>
+                        <li><i data-lucide="check" class="check-icon"></i>Enterprise data pipelines</li>
+                    </ul>
+                    <a href="#contact" class="price-cta">Custom Quote</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════ COMPLIANCE ═══════ -->
+    <section class="compliance">
+        <div class="compliance-inner reveal">
+            <p class="compliance-text">
+                All client data is stored in encrypted Microsoft 365 Business (UK data centres) with MFA and full-disk encryption. Professional email and TLS-secure communications. ICO registered, professionally indemnified (£250,000), insured for legal expenses (£100,000), and GDPR compliant.
+            </p>
+            <div class="compliance-badges">
+                <div class="compliance-badge">
+                    <img src="https://img.icons8.com/color/96/gdpr.png" alt="GDPR">
+                    GDPR Compliant
+                </div>
+                <div class="compliance-badge">
+                    <img src="https://img.icons8.com/color/96/security-checked--v1.png" alt="ICO">
+                    ICO Registered
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════ CONTACT ═══════ -->
+    <section id="contact" class="contact">
+        <div style="max-width:700px;margin:0 auto;" class="reveal">
+            <div class="section-label">Get in Touch</div>
+            <div class="section-title font-display">Ready to lead<br>with data?</div>
+            <div class="divider" style="margin:1.5rem auto;"></div>
+            <p class="section-subtitle" style="margin:0 auto;">Claim your free 30-minute consultation. Based in Nuneaton, serving the Midlands and beyond.</p>
+            <div class="contact-links">
+                <a href="mailto:beresford.salmon@midlandslegalbi.co.uk" class="contact-card">
+                    <div class="icon-wrap"><i data-lucide="mail" style="width:20px;height:20px;"></i></div>
+                    <div>
+                        <div class="card-label">Email</div>
+                        <div class="card-value">beresford.salmon@midlandslegalbi.co.uk</div>
+                    </div>
+                </a>
+                <a href="https://linkedin.com/in/beresfordsalmon" target="_blank" class="contact-card">
+                    <div class="icon-wrap"><i data-lucide="linkedin" style="width:20px;height:20px;"></i></div>
+                    <div>
+                        <div class="card-label">LinkedIn</div>
+                        <div class="card-value">Connect with Beresford</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════ FOOTER ═══════ -->
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <i data-lucide="bar-chart-big" class="brand-icon"></i>
+                Midlands Legal BI
+            </div>
+            <div class="footer-copy">&copy; <span id="year"></span> Beresford Salmon, trading as Midlands Legal BI. ICO registered.</div>
+            <div class="footer-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">ICO Registered</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ═══════ LIGHTBOX ═══════ -->
+    <div class="lightbox" id="lightbox">
+        <button class="lightbox-close" id="lightbox-close"><i data-lucide="x" style="width:20px;height:20px;"></i></button>
+        <img id="lightbox-img" src="" alt="Enlarged view">
+    </div>
+
+    <script>
+        // ── Icons ──
+        lucide.createIcons();
+
+        // ── Year ──
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // ── Mobile Menu ──
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        menuBtn.addEventListener('click', () => mobileMenu.classList.toggle('open'));
+        mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mobileMenu.classList.remove('open')));
+
+        // ── Scroll Reveal ──
+        const revealEls = document.querySelectorAll('.reveal');
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+        revealEls.forEach(el => revealObserver.observe(el));
+
+        // ── Counter Animation ──
+        const counters = document.querySelectorAll('.counter');
+        const counterObserver = new IntersectionObserver((entries, obs) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const el = entry.target;
+                    const target = +el.getAttribute('data-target');
+                    const speed = 40;
+                    const tick = () => {
+                        const current = +el.innerText;
+                        const inc = target / speed;
+                        if (current < target) {
+                            el.innerText = Math.ceil(current + inc);
+                            setTimeout(tick, 30);
+                        } else {
+                            el.innerText = target;
+                        }
+                    };
+                    tick();
+                    obs.unobserve(el);
+                }
+            });
+        }, { threshold: 0.5 });
+        counters.forEach(c => counterObserver.observe(c));
+
+        // ── Lightbox ──
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+
+        function openLightbox(card) {
+            const img = card.querySelector('.card-image');
+            if (img) {
+                lightboxImg.src = img.src;
+                lightbox.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function closeLightbox() {
+            lightbox.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        document.getElementById('lightbox-close').addEventListener('click', closeLightbox);
+        lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+
+        // ── Smooth nav background on scroll ──
+        const nav = document.querySelector('.nav-glass');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 20) {
+                nav.style.borderBottomColor = 'rgba(255,255,255,0.08)';
+            } else {
+                nav.style.borderBottomColor = 'rgba(255,255,255,0.03)';
+            }
+        });
+    </script>
+</body>
+</html>
