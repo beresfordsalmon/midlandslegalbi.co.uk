@@ -3,13 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Midlands Legal BI | Monthly Reporting for Legal Practices</title>
-    <meta name="description" content="Fixed-fee reporting automation, Power BI dashboards, and monthly insight packs for legal practices and debt collection agencies.">
+    <title>Midlands Legal BI | Monthly reporting for law firms</title>
+    <meta name="description" content="Fixed-fee monthly reporting for law firms and debt collection agencies: automated data preparation, Excel and HTML dashboards, and reconciled review packs.">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,500;8..60,650;8..60,750&display=swap" rel="stylesheet">
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <meta property="og:title" content="Midlands Legal BI | Monthly reporting for law firms">
+    <meta property="og:description" content="Fixed-fee monthly reporting for law firms and debt collection agencies: automated data preparation, Excel and HTML dashboards, and reconciled review packs.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://midlandslegalbi.co.uk/">
+    <meta property="og:site_name" content="Midlands Legal BI">
+    <meta property="og:image" content="https://midlandslegalbi.co.uk/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Midlands Legal BI: Reports that arrive before they are chased. Beside it, an anonymised debt recovery executive summary slide.">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="icon" href="favicon.ico" sizes="32x32">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <script>document.documentElement.classList.add("js");</script>
 
     <style>
         *, *::before, *::after {
@@ -17,24 +30,23 @@
         }
 
         :root {
-            --paper: oklch(0.965 0.012 86);
-            --paper-warm: oklch(0.926 0.018 83);
-            --paper-deep: oklch(0.865 0.024 82);
-            --ink: oklch(0.185 0.031 286);
-            --ink-soft: oklch(0.315 0.028 286);
-            --muted: oklch(0.48 0.023 286);
-            --line: oklch(0.78 0.019 84);
-            --plum: oklch(0.29 0.076 332);
-            --plum-deep: oklch(0.22 0.065 332);
-            --green: oklch(0.48 0.09 166);
-            --green-dark: oklch(0.32 0.078 166);
-            --redline: oklch(0.59 0.16 24);
-            --blueprint: oklch(0.54 0.105 235);
-            --white-tint: oklch(0.985 0.006 86);
-            --shadow: 0 22px 70px oklch(0.2 0.03 286 / 0.14);
+            /* IBM Carbon palette, matching the monthly client packs */
+            --paper: #ffffff;
+            --paper-warm: #f4f4f4;   /* Gray 10 */
+            --paper-deep: #e0e0e0;   /* Gray 20 */
+            --ink: #161616;          /* Gray 100 */
+            --ink-soft: #393939;     /* Gray 80 */
+            --muted: #525252;        /* Gray 70 */
+            --line: #e0e0e0;
+            --accent: #0f62fe;       /* Blue 60: the one brand accent */
+            --accent-hover: #0043ce; /* Blue 70 */
+            --accent-on-dark: #78a9ff; /* Blue 40 */
+            --success: #24a148;      /* reserved for data: good news */
+            --error: #da1e28;        /* reserved for data: needs attention */
+            --shadow: 0 16px 48px rgba(22, 22, 22, 0.12);
             --max: 1180px;
-            --serif: "Source Serif 4", Georgia, serif;
-            --sans: "Libre Franklin", "Segoe UI", sans-serif;
+            --sans: "IBM Plex Sans", "Segoe UI", Arial, sans-serif;
+            --serif: var(--sans);
             color-scheme: light;
         }
 
@@ -46,11 +58,7 @@
             margin: 0;
             min-width: 320px;
             color: var(--ink);
-            background:
-                linear-gradient(90deg, oklch(0.7 0.018 84 / 0.2) 1px, transparent 1px),
-                linear-gradient(180deg, oklch(0.7 0.018 84 / 0.16) 1px, transparent 1px),
-                var(--paper);
-            background-size: 54px 54px;
+            background: var(--paper);
             font-family: var(--sans);
             -webkit-font-smoothing: antialiased;
             text-rendering: optimizeLegibility;
@@ -76,6 +84,13 @@
             font: inherit;
         }
 
+        .icon {
+            display: block;
+            width: 1.2rem;
+            height: 1.2rem;
+            flex: none;
+        }
+
         .skip-link {
             position: fixed;
             top: 0.75rem;
@@ -96,8 +111,8 @@
             position: fixed;
             z-index: 100;
             inset: 0 0 auto 0;
-            border-bottom: 1px solid oklch(0.2 0.025 286 / 0.14);
-            background: oklch(0.965 0.012 86 / 0.88);
+            border-bottom: 1px solid rgba(22, 22, 22, 0.14);
+            background: rgba(255, 255, 255, 0.88);
             backdrop-filter: blur(18px);
         }
 
@@ -125,16 +140,16 @@
             height: 2.2rem;
             display: grid;
             place-items: center;
-            background: var(--plum);
+            background: var(--accent);
             color: var(--paper);
-            font-weight: 800;
+            font-weight: 600;
             font-size: 0.78rem;
             letter-spacing: 0;
         }
 
         .brand-name {
             display: block;
-            font-weight: 800;
+            font-weight: 600;
             font-size: 0.94rem;
             line-height: 1.05;
         }
@@ -162,7 +177,7 @@
 
         .nav-links a:hover,
         .nav-links a:focus-visible {
-            color: var(--plum);
+            color: var(--accent);
         }
 
         .button {
@@ -172,10 +187,11 @@
             gap: 0.55rem;
             min-height: 2.8rem;
             padding: 0.78rem 1.05rem;
-            border: 1px solid var(--ink);
-            background: var(--ink);
-            color: var(--paper);
-            font-weight: 800;
+            border: 1px solid var(--accent);
+            border-radius: 6px;
+            background: var(--accent);
+            color: #ffffff;
+            font-weight: 600;
             font-size: 0.82rem;
             text-decoration: none;
             transition: transform 180ms ease, background 180ms ease, color 180ms ease, border-color 180ms ease;
@@ -183,22 +199,21 @@
 
         .button:hover,
         .button:focus-visible {
-            transform: translateY(-2px);
-            background: var(--plum);
-            border-color: var(--plum);
+            background: var(--accent-hover);
+            border-color: var(--accent-hover);
         }
 
         .button.secondary {
             background: transparent;
             color: var(--ink);
-            border-color: oklch(0.32 0.028 286 / 0.35);
+            border-color: rgba(22, 22, 22, 0.35);
         }
 
         .button.secondary:hover,
         .button.secondary:focus-visible {
             color: var(--paper);
-            background: var(--green-dark);
-            border-color: var(--green-dark);
+            background: var(--ink);
+            border-color: var(--ink);
         }
 
         .nav-links .button {
@@ -214,7 +229,7 @@
             display: none;
             width: 2.75rem;
             height: 2.75rem;
-            border: 1px solid oklch(0.32 0.028 286 / 0.28);
+            border: 1px solid rgba(22, 22, 22, 0.28);
             background: transparent;
             color: var(--ink);
             cursor: pointer;
@@ -225,8 +240,8 @@
         }
 
         .hero {
-            min-height: min(850px, 100svh);
-            padding: 8.8rem 0 4.5rem;
+            min-height: min(820px, 100svh);
+            padding: 7.5rem 0 4.5rem;
             display: grid;
             align-items: end;
         }
@@ -252,16 +267,16 @@
             align-items: center;
             gap: 0.62rem;
             margin-bottom: 1.25rem;
-            color: var(--plum);
+            color: var(--accent);
             font-size: 0.74rem;
-            font-weight: 800;
+            font-weight: 600;
         }
 
         .kicker::before {
             content: "";
             width: 2.4rem;
             height: 2px;
-            background: var(--redline);
+            background: var(--accent);
             transform-origin: left center;
         }
 
@@ -273,12 +288,12 @@
         }
 
         h1 {
-            max-width: 11ch;
+            max-width: 12ch;
             font-family: var(--serif);
-            font-size: clamp(4rem, 11vw, 9.2rem);
-            font-weight: 750;
-            line-height: 0.83;
-            letter-spacing: 0;
+            font-size: clamp(3rem, 6.6vw, 6rem);
+            font-weight: 600;
+            line-height: 1.02;
+            letter-spacing: -0.035em;
             color: var(--ink);
         }
 
@@ -313,23 +328,23 @@
             align-items: center;
             color: var(--ink);
             font-size: 0.78rem;
-            font-weight: 800;
+            font-weight: 600;
             transition: transform 260ms cubic-bezier(0.16, 1, 0.3, 1), color 260ms ease;
         }
 
-        .proof-item i {
+        .proof-item .icon {
             width: 1.1rem;
             height: 1.1rem;
-            color: var(--green-dark);
+            color: var(--accent);
             transition: transform 260ms cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .proof-item:hover {
-            color: var(--plum);
+            color: var(--accent);
             transform: translateX(0.18rem);
         }
 
-        .proof-item:hover i {
+        .proof-item:hover .icon {
             transform: rotate(-4deg) scale(1.05);
         }
 
@@ -342,7 +357,7 @@
 
         .hero-visual {
             position: relative;
-            min-height: 560px;
+            min-height: 0;
             display: grid;
             align-items: end;
         }
@@ -351,26 +366,17 @@
             position: relative;
             justify-self: end;
             width: min(100%, 390px);
-            background: var(--plum-deep);
+            background: var(--ink);
             box-shadow: var(--shadow);
             transform: translateY(1.2rem);
         }
 
-        .portrait-panel::before {
-            content: "";
-            position: absolute;
-            inset: -1.15rem 1.15rem 1.15rem -1.15rem;
-            border: 1px solid var(--redline);
-            z-index: -1;
-        }
 
         .portrait-panel img {
             width: 100%;
             aspect-ratio: 0.84;
             object-fit: cover;
             object-position: center top;
-            mix-blend-mode: luminosity;
-            opacity: 0.92;
         }
 
         .case-note {
@@ -380,13 +386,13 @@
             width: min(19rem, 80vw);
             padding: 1.1rem;
             border: 1px solid var(--line);
-            background: var(--white-tint);
+            background: var(--paper);
             box-shadow: var(--shadow);
         }
 
         .case-note strong {
             display: block;
-            color: var(--redline);
+            color: var(--accent);
             font-family: var(--serif);
             font-size: 2.2rem;
             line-height: 0.9;
@@ -415,15 +421,16 @@
             display: grid;
             grid-template-columns: minmax(0, 0.9fr) minmax(280px, 0.72fr);
             gap: clamp(1.5rem, 5vw, 5rem);
-            align-items: end;
+            align-items: start;
             margin-bottom: clamp(2.2rem, 5vw, 4rem);
         }
 
         .section-head h2 {
             font-family: var(--serif);
-            font-size: clamp(2.6rem, 6vw, 5.6rem);
-            font-weight: 750;
-            line-height: 0.92;
+            font-size: clamp(2.2rem, 4.2vw, 3.6rem);
+            font-weight: 600;
+            line-height: 1.05;
+            letter-spacing: -0.02em;
             color: var(--ink);
         }
 
@@ -439,12 +446,12 @@
         .ledger {
             border-top: 2px solid var(--ink);
             border-bottom: 1px solid var(--line);
-            background: oklch(0.985 0.006 86 / 0.62);
+            background: rgba(255, 255, 255, 0.62);
         }
 
         .ledger-row {
             display: grid;
-            grid-template-columns: minmax(140px, 0.38fr) minmax(240px, 0.7fr) minmax(260px, 1fr);
+            grid-template-columns: minmax(220px, 0.7fr) minmax(260px, 1.3fr);
             gap: clamp(1rem, 3vw, 2.4rem);
             padding: clamp(1.4rem, 3vw, 2rem) 0;
             border-bottom: 1px solid var(--line);
@@ -457,21 +464,13 @@
         }
 
         .ledger-row:hover {
-            background: oklch(0.985 0.006 86 / 0.68);
+            background: rgba(255, 255, 255, 0.68);
             padding-inline: 0.8rem;
-        }
-
-        .row-code {
-            color: var(--redline);
-            font-family: var(--serif);
-            font-size: clamp(2rem, 4vw, 3.7rem);
-            font-weight: 750;
-            line-height: 1;
         }
 
         .ledger h3 {
             font-size: clamp(1.2rem, 2vw, 1.65rem);
-            font-weight: 800;
+            font-weight: 600;
             color: var(--ink);
         }
 
@@ -483,7 +482,7 @@
         }
 
         .portfolio {
-            background: var(--plum-deep);
+            background: var(--ink);
             color: var(--paper);
         }
 
@@ -494,7 +493,7 @@
         }
 
         .portfolio .kicker::before {
-            background: var(--green);
+            background: var(--accent);
         }
 
         .case-study {
@@ -508,28 +507,44 @@
             gap: clamp(1.2rem, 3vw, 2.4rem);
             align-items: end;
             padding: clamp(1.4rem, 3vw, 2rem) 0;
-            border-top: 1px solid oklch(0.92 0.012 86 / 0.28);
-            border-bottom: 1px solid oklch(0.92 0.012 86 / 0.28);
+            border-top: 1px solid rgba(255, 255, 255, 0.28);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.28);
         }
 
         .case-study-brief h3 {
-            max-width: 14ch;
+            max-width: 22ch;
+            margin-bottom: 0.8rem;
             font-family: var(--serif);
-            font-size: clamp(2.1rem, 5vw, 4.9rem);
-            font-weight: 750;
-            line-height: 0.94;
+            font-size: clamp(1.5rem, 2.6vw, 2.2rem);
+            font-weight: 600;
+            line-height: 1.05;
         }
 
         .case-study-brief p {
             margin: 0;
-            color: oklch(0.91 0.012 86 / 0.82);
+            color: rgba(255, 255, 255, 0.82);
             line-height: 1.7;
+        }
+
+        .case-study-actions {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.6rem 1rem;
+            margin-top: 1.2rem;
+        }
+
+        .case-study-actions small {
+            max-width: 42ch;
+            color: rgba(255, 255, 255, 0.74);
+            font-size: 0.82rem;
+            line-height: 1.55;
         }
 
         .case-study-proof {
             display: grid;
             gap: 0;
-            border: 1px solid oklch(0.92 0.012 86 / 0.28);
+            border: 1px solid rgba(255, 255, 255, 0.28);
         }
 
         .case-study-proof span {
@@ -537,10 +552,10 @@
             justify-content: space-between;
             gap: 1rem;
             padding: 0.85rem 1rem;
-            border-bottom: 1px solid oklch(0.92 0.012 86 / 0.2);
-            color: oklch(0.91 0.012 86 / 0.76);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 0.76);
             font-size: 0.82rem;
-            font-weight: 800;
+            font-weight: 600;
         }
 
         .case-study-proof span:last-child {
@@ -557,8 +572,8 @@
             display: grid;
             gap: 0.9rem;
             padding: 0;
-            border: 1px solid oklch(0.92 0.012 86 / 0.24);
-            background: oklch(0.965 0.012 86 / 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.24);
+            background: rgba(255, 255, 255, 0.06);
             color: var(--paper);
             cursor: pointer;
             text-align: left;
@@ -572,7 +587,7 @@
             width: 100%;
             aspect-ratio: 16 / 9;
             object-fit: contain;
-            background: oklch(0.965 0.012 86);
+            background: #ffffff;
             transition: transform 550ms cubic-bezier(0.16, 1, 0.3, 1), filter 250ms ease;
         }
 
@@ -589,9 +604,9 @@
         }
 
         .shot-caption span {
-            color: oklch(0.82 0.104 166);
+            color: #78a9ff;
             font-size: 0.72rem;
-            font-weight: 800;
+            font-weight: 600;
         }
 
         .shot-caption strong {
@@ -602,7 +617,7 @@
         }
 
         .shot-caption small {
-            color: oklch(0.91 0.012 86 / 0.74);
+            color: rgba(255, 255, 255, 0.74);
             font-size: 0.82rem;
             line-height: 1.55;
         }
@@ -622,7 +637,7 @@
             max-width: 9ch;
             font-family: var(--serif);
             font-size: clamp(3rem, 7vw, 6.6rem);
-            font-weight: 750;
+            font-weight: 600;
             line-height: 0.9;
         }
 
@@ -650,12 +665,12 @@
         }
 
         .record-fact:hover {
-            background: oklch(0.965 0.012 86 / 0.72);
+            background: rgba(255, 255, 255, 0.72);
         }
 
         .record-fact strong {
             display: block;
-            color: var(--redline);
+            color: var(--accent);
             font-family: var(--serif);
             font-size: clamp(2.6rem, 6vw, 4.9rem);
             line-height: 0.9;
@@ -665,7 +680,7 @@
             display: block;
             margin-top: 0.45rem;
             color: var(--ink-soft);
-            font-weight: 800;
+            font-weight: 600;
             line-height: 1.35;
         }
 
@@ -688,24 +703,24 @@
         }
 
         .price-panel.featured {
-            background: var(--green-dark);
+            background: var(--ink);
             color: var(--paper);
         }
 
         .price-panel:hover {
             transform: translateY(-0.22rem);
-            box-shadow: 0 18px 40px oklch(0.2 0.03 286 / 0.12);
+            box-shadow: 0 18px 40px rgba(22, 22, 22, 0.12);
         }
 
         .price-panel h3 {
             font-size: 0.92rem;
-            font-weight: 800;
+            font-weight: 600;
         }
 
         .price {
             font-family: var(--serif);
             font-size: clamp(2.8rem, 5vw, 4.7rem);
-            font-weight: 750;
+            font-weight: 600;
             line-height: 0.92;
         }
 
@@ -714,12 +729,12 @@
             margin-top: 0.6rem;
             font-family: var(--sans);
             font-size: 0.76rem;
-            font-weight: 800;
+            font-weight: 600;
             color: var(--muted);
         }
 
         .featured .price span {
-            color: oklch(0.9 0.018 86 / 0.82);
+            color: rgba(255, 255, 255, 0.82);
         }
 
         .price-panel ul {
@@ -740,7 +755,7 @@
         }
 
         .featured li {
-            color: oklch(0.94 0.012 86 / 0.88);
+            color: rgba(255, 255, 255, 0.88);
         }
 
         .price-panel li::before {
@@ -748,11 +763,17 @@
             width: 0.58rem;
             height: 0.58rem;
             margin-top: 0.48rem;
-            background: var(--redline);
+            background: var(--accent);
         }
 
         .featured li::before {
-            background: oklch(0.82 0.104 166);
+            background: #78a9ff;
+        }
+
+        .pricing-note {
+            margin: 1rem 0 0;
+            color: var(--muted);
+            font-size: 0.85rem;
         }
 
         .security {
@@ -767,14 +788,14 @@
 
         .security h2 {
             font-family: var(--serif);
-            font-size: clamp(2rem, 4vw, 4rem);
-            font-weight: 750;
-            line-height: 0.95;
+            font-size: clamp(1.9rem, 3.4vw, 3rem);
+            font-weight: 600;
+            line-height: 1;
         }
 
         .security p {
             margin: 0;
-            color: oklch(0.91 0.012 86 / 0.78);
+            color: rgba(255, 255, 255, 0.78);
             line-height: 1.8;
         }
 
@@ -786,11 +807,11 @@
         }
 
         .security-points span {
-            border: 1px solid oklch(0.91 0.012 86 / 0.22);
+            border: 1px solid rgba(255, 255, 255, 0.22);
             padding: 0.55rem 0.75rem;
-            color: oklch(0.91 0.012 86 / 0.82);
+            color: rgba(255, 255, 255, 0.82);
             font-size: 0.8rem;
-            font-weight: 800;
+            font-weight: 600;
         }
 
         .contact {
@@ -807,11 +828,11 @@
         }
 
         .contact h2 {
-            max-width: 10ch;
+            max-width: 14ch;
             font-family: var(--serif);
-            font-size: clamp(3rem, 8vw, 7rem);
-            font-weight: 750;
-            line-height: 0.9;
+            font-size: clamp(2.2rem, 4.6vw, 4rem);
+            font-weight: 600;
+            line-height: 1;
         }
 
         .contact p {
@@ -835,7 +856,7 @@
             min-width: 0;
             padding: 1rem;
             border: 1px solid var(--line);
-            background: oklch(0.985 0.006 86 / 0.62);
+            background: rgba(255, 255, 255, 0.62);
             color: var(--ink);
             text-decoration: none;
             transition: border-color 220ms ease, transform 220ms cubic-bezier(0.16, 1, 0.3, 1), background 220ms ease;
@@ -843,15 +864,15 @@
 
         .contact-link:hover,
         .contact-link:focus-visible {
-            border-color: var(--plum);
-            background: oklch(0.985 0.006 86 / 0.92);
+            border-color: var(--accent);
+            background: rgba(255, 255, 255, 0.92);
             transform: translateX(0.2rem);
         }
 
-        .contact-link i {
+        .contact-link .icon {
             width: 1.25rem;
             height: 1.25rem;
-            color: var(--plum);
+            color: var(--accent);
         }
 
         .linkedin-logo {
@@ -861,10 +882,10 @@
             background: #0a66c2;
             display: grid;
             place-items: center;
-            color: oklch(0.985 0.006 86);
+            color: #ffffff;
             font-family: Arial, Helvetica, sans-serif;
             font-size: 1.45rem;
-            font-weight: 800;
+            font-weight: 600;
             line-height: 1;
         }
 
@@ -881,7 +902,7 @@
 
         .contact-link span {
             margin-top: 0.15rem;
-            font-weight: 800;
+            font-weight: 600;
             line-height: 1.3;
         }
 
@@ -909,7 +930,7 @@
             display: none;
             place-items: center;
             padding: 1rem;
-            background: oklch(0.17 0.045 332 / 0.92);
+            background: rgba(22, 22, 22, 0.92);
         }
 
         .lightbox.active {
@@ -920,8 +941,189 @@
             max-width: min(1120px, 94vw);
             max-height: 86vh;
             object-fit: contain;
-            border: 1px solid oklch(0.91 0.012 86 / 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.3);
             background: var(--paper);
+        }
+
+        .portrait-panel,
+        .portrait-panel img { border-radius: 12px; }
+        .case-note,
+        .contact-link,
+        .case-study-shot,
+        .case-study-proof,
+        .security-points span,
+        .mobile-toggle { border-radius: 8px; }
+        .case-study-shot { overflow: hidden; }
+        .pricing-grid,
+        .security,
+        .ledger { border-radius: 12px; overflow: hidden; }
+        .ledger { border: 1px solid var(--line); padding-inline: 1.5rem; background: var(--paper-warm); }
+        .ledger-row:hover { background: transparent; padding-inline: 0; }
+        .price-panel:hover { transform: none; box-shadow: none; }
+        .price, .case-note strong, .record-fact strong { font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
+        .section-head h2, .case-study-brief h3, .security h2, .contact h2 { letter-spacing: -0.02em; }
+        .brand-seal { border-radius: 6px; }
+        .price span { letter-spacing: 0; font-weight: 500; }
+        .price-panel { min-height: 0; }
+        .contact h2 { max-width: 18ch; }
+        .contact-panel { border-top: 1px solid var(--line); }
+        .shot-caption span { color: var(--accent-on-dark); }
+        :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+        /* Hero: audience line spans the top; photo aligns with the headline */
+        .hero { min-height: 0; padding-bottom: 1.5rem; }
+        .hero-inner { align-items: start; row-gap: 1.75rem; }
+        .audience {
+            grid-column: 1 / -1;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.6rem 0.75rem;
+        }
+        .audience-label { color: var(--muted); font-size: 0.95rem; font-weight: 500; }
+        .audience-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.45rem 0.85rem 0.45rem 0.7rem;
+            border: 1px solid #d0e2ff;
+            border-radius: 999px;
+            background: #edf5ff;
+            color: var(--accent-hover);
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+        .audience-tag .icon { width: 1.1rem; height: 1.1rem; }
+        .hero-main { min-width: 0; }
+        .hero-copy { display: block; max-width: 560px; margin-top: 2rem; }
+        .hero-visual { align-self: start; }
+        .portrait-panel { transform: none; }
+
+        /* Services as cards with icons and tool chips */
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 1.25rem;
+        }
+        .checks {
+            margin-top: clamp(2.5rem, 5vw, 3.5rem);
+            padding-top: clamp(1.5rem, 3vw, 2rem);
+            border-top: 1px solid var(--line);
+        }
+        .checks h3 { margin: 0 0 1.25rem; font-size: 1.25rem; letter-spacing: -0.01em; }
+        .checks-list {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 1.25rem clamp(1.25rem, 3vw, 2.5rem);
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        .checks-list li { color: var(--ink-soft); line-height: 1.55; }
+        .checks-list .check-num {
+            display: block;
+            margin-bottom: 0.4rem;
+            color: var(--accent);
+            font-size: 0.8rem;
+            font-weight: 600;
+            font-variant-numeric: tabular-nums;
+        }
+        .checks-list strong { color: var(--ink); }
+        .service-card {
+            display: flex;
+            flex-direction: column;
+            gap: 0.9rem;
+            padding: clamp(1.4rem, 2.5vw, 2rem);
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            background: var(--paper-warm);
+            transition: border-color 200ms ease, background 200ms ease;
+        }
+        .service-card:hover { border-color: var(--accent); background: var(--paper); }
+        .service-icon {
+            display: grid;
+            place-items: center;
+            width: 3.25rem;
+            height: 3.25rem;
+            border-radius: 10px;
+            background: var(--accent);
+            color: #ffffff;
+        }
+        .service-icon .icon { width: 1.6rem; height: 1.6rem; }
+        .service-card h3 { font-size: 1.3rem; font-weight: 600; letter-spacing: -0.01em; }
+        .service-card p { margin: 0; color: var(--muted); line-height: 1.65; font-size: 0.97rem; flex: 1; }
+        .tool-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.45rem;
+            margin: 0.4rem 0 0;
+            padding: 0;
+            list-style: none;
+        }
+        .tool-chips li {
+            padding: 0.3rem 0.65rem;
+            border: 1px solid var(--line);
+            border-radius: 6px;
+            background: var(--paper);
+            color: var(--ink-soft);
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        @media (max-width: 920px) {
+            .service-grid { grid-template-columns: 1fr; }
+            .checks-list { grid-template-columns: 1fr; }
+            .hero-visual { margin-top: 1rem; }
+        }
+
+        /* Dark hero and nav, matching the cover of the client packs */
+        .site-nav {
+            background: rgba(22, 22, 22, 0.92);
+            border-bottom-color: rgba(255, 255, 255, 0.12);
+        }
+        .brand-mark, .brand-name { color: #ffffff; }
+        .brand-sub { color: #a8a8a8; }
+        .nav-links a { color: #e0e0e0; }
+        .nav-links a:hover,
+        .nav-links a:focus-visible { color: var(--accent-on-dark); }
+        .mobile-toggle { color: #ffffff; border-color: rgba(255, 255, 255, 0.3); }
+        @media (max-width: 920px) {
+            .nav-links { background: #161616; border-bottom-color: rgba(255, 255, 255, 0.12); }
+        }
+
+        .hero { background: var(--ink); color: #ffffff; padding-bottom: clamp(4rem, 7vw, 6rem); }
+        .hero h1 { color: #ffffff; }
+        .hero .hero-copy p { color: #c6c6c6; }
+        .hero .audience-label { color: #a8a8a8; }
+        .hero .audience-tag {
+            background: rgba(15, 98, 254, 0.16);
+            border-color: rgba(120, 169, 255, 0.45);
+            color: #a6c8ff;
+        }
+        .hero .button.secondary {
+            color: #ffffff;
+            border-color: rgba(255, 255, 255, 0.45);
+        }
+        .hero .button.secondary:hover,
+        .hero .button.secondary:focus-visible {
+            background: #ffffff;
+            border-color: #ffffff;
+            color: var(--ink);
+        }
+        .hero .portrait-panel { box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5); }
+        .hero .case-note { border-color: transparent; box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45); }
+        .hero :focus-visible { outline-color: var(--accent-on-dark); }
+
+        /* Section intros sit directly under their heading */
+        .section-head {
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            align-items: start;
+        }
+        .section-head p { max-width: 62ch; font-size: 1.05rem; }
+
+        .lightbox button:focus-visible {
+            outline: 2px solid var(--paper);
+            outline-offset: 2px;
         }
 
         .lightbox button {
@@ -930,18 +1132,13 @@
             right: 1rem;
             width: 2.9rem;
             height: 2.9rem;
-            border: 1px solid oklch(0.91 0.012 86 / 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.3);
             background: transparent;
             color: var(--paper);
             cursor: pointer;
         }
 
         @media (prefers-reduced-motion: no-preference) {
-            @keyframes page-breathe {
-                from { background-position: 0 0, 0 0, 0 0; }
-                to { background-position: 54px 0, 0 54px, 0 0; }
-            }
-
             @keyframes frame-settle {
                 0% {
                     transform: translate(-0.65rem, 0.65rem);
@@ -964,18 +1161,14 @@
                 }
             }
 
-            body {
-                animation: page-breathe 28s linear infinite alternate;
-            }
-
-            .reveal {
+            .js .reveal {
                 opacity: 0;
                 transform: translateY(22px);
                 transition: opacity 760ms cubic-bezier(0.16, 1, 0.3, 1), transform 760ms cubic-bezier(0.16, 1, 0.3, 1);
                 will-change: opacity, transform;
             }
 
-            .reveal.visible {
+            .js .reveal.visible {
                 opacity: 1;
                 transform: translateY(0);
             }
@@ -1000,9 +1193,6 @@
                 transform: scaleX(1);
             }
 
-            .hero-visual.visible .portrait-panel::before {
-                animation: frame-settle 820ms cubic-bezier(0.16, 1, 0.3, 1) 540ms both;
-            }
 
             .hero-visual.visible .case-note {
                 animation: note-place 760ms cubic-bezier(0.16, 1, 0.3, 1) 620ms both;
@@ -1015,8 +1205,8 @@
             .case-study-shot:hover,
             .case-study-shot:focus-visible {
                 transform: translateY(-0.3rem);
-                border-color: oklch(0.82 0.104 166 / 0.72);
-                background: oklch(0.965 0.012 86 / 0.1);
+                border-color: rgba(120, 169, 255, 0.72);
+                background: rgba(255, 255, 255, 0.1);
             }
         }
 
@@ -1078,7 +1268,7 @@
             }
 
             h1 {
-                max-width: 8ch;
+                max-width: 11ch;
             }
 
             .hero-visual {
@@ -1098,11 +1288,8 @@
             }
 
             .ledger-row {
-                grid-template-columns: 0.3fr 0.7fr;
-            }
-
-            .ledger-row p {
-                grid-column: 1 / -1;
+                grid-template-columns: 1fr;
+                gap: 0.5rem;
             }
 
             .slide-gallery,
@@ -1181,12 +1368,11 @@
                 </span>
             </a>
             <button class="mobile-toggle" type="button" aria-label="Open menu" aria-expanded="false">
-                <i data-lucide="menu"></i>
+                <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 5h16"/><path d="M4 12h16"/><path d="M4 19h16"/></svg>
             </button>
             <div class="nav-links" id="nav-links">
                 <a href="#services">Services</a>
                 <a href="#portfolio">Work</a>
-                <a href="#record">Record</a>
                 <a href="#pricing">Pricing</a>
                 <a class="button" href="#contact">Book a call</a>
             </div>
@@ -1196,21 +1382,18 @@
     <main id="main">
         <section class="hero" id="top">
             <div class="hero-inner">
-                <div>
-                    <div class="kicker reveal">Legal practices and debt collection agencies</div>
+                <div class="audience reveal">
+                    <span class="audience-label">Reporting and BI for</span>
+                    <span class="audience-tag"><svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M10 18v-7"/><path d="M11.119 2.205a2 2 0 0 1 1.762 0l7.84 3.846A.5.5 0 0 1 20.5 7h-17a.5.5 0 0 1-.22-.949z"/><path d="M14 18v-7"/><path d="M18 18v-7"/><path d="M3 22h18"/><path d="M6 18v-7"/></svg>Law firms</span>
+                    <span class="audience-tag"><svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M11 15h2a2 2 0 1 0 0-4h-3c-.6 0-1.1.2-1.4.6L3 17"/><path d="m7 21 1.6-1.4c.3-.4.8-.6 1.4-.6h4c1.1 0 2.1-.4 2.8-1.2l4.6-4.4a2 2 0 0 0-2.75-2.91l-4.2 3.9"/><path d="m2 16 6 6"/><circle cx="16" cy="9" r="2.9"/><circle cx="6" cy="5" r="3"/></svg>Debt collection agencies</span>
+                </div>
+                <div class="hero-main">
                     <h1 class="reveal">Reports that arrive before they are chased.</h1>
                     <div class="hero-copy reveal">
-                        <div class="proof-strip" aria-label="Service proof points">
-                            <span class="proof-item"><i data-lucide="calendar-check"></i>30+ monthly deliveries</span>
-                            <span class="proof-item"><i data-lucide="shield-check"></i>ICO registered</span>
-                            <span class="proof-item"><i data-lucide="database-zap"></i>20,000+ record datasets</span>
-                        </div>
-                        <div>
-                            <p>Fixed-fee reporting automation, Power BI dashboards, and board-ready monthly packs for teams who cannot afford another spreadsheet scramble.</p>
-                            <div class="hero-actions">
-                                <a class="button" href="#contact">Claim the free consultation</a>
-                                <a class="button secondary" href="#portfolio">See the work</a>
-                            </div>
+                        <p>Fixed-fee reporting automation and monthly review packs, delivered on the same day every month.</p>
+                        <div class="hero-actions">
+                            <a class="button" href="#contact">Book a free consultation</a>
+                            <a class="button secondary" href="#portfolio">See the work</a>
                         </div>
                     </div>
                 </div>
@@ -1220,7 +1403,7 @@
                     </figure>
                     <div class="case-note" aria-label="Delivery note">
                         <strong>Zero</strong>
-                        <span>missed reporting deadlines across 2.5 years of legal-sector delivery.</span>
+                        <span>missed reporting deadlines in over 3 years of monthly legal-sector reporting.</span>
                     </div>
                 </div>
             </div>
@@ -1230,28 +1413,39 @@
             <div class="section-inner">
                 <div class="section-head">
                     <div>
-                        <div class="kicker reveal">What gets fixed</div>
-                        <h2 class="reveal">The reporting month stops being a fire drill.</h2>
+                        <h2 class="reveal">What I do</h2>
                     </div>
-                    <p class="reveal">The work sits where legal operations, finance, and case management overlap: extracting messy data, shaping it into trusted models, then packaging the answer for people who need to act.</p>
+                    <p class="reveal">I take the exports from your case management and finance systems, clean and join them, and turn them into a report your team gets on the same day every month, without anyone rebuilding a spreadsheet by hand.</p>
                 </div>
 
-                <div class="ledger reveal">
-                    <div class="ledger-row">
-                        <div class="row-code">01</div>
+                <div class="service-grid reveal">
+                    <article class="service-card">
+                        <span class="service-icon"><svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 15 21.84"/><path d="M21 5V8"/><path d="M21 12L18 17H22L19 22"/><path d="M3 12A9 3 0 0 0 14.59 14.87"/></svg></span>
                         <h3>Automated data preparation</h3>
-                        <p>Power Query, SQL, Excel, and Python workflows turn exports into repeatable datasets, with manual handling removed wherever possible.</p>
-                    </div>
-                    <div class="ledger-row">
-                        <div class="row-code">02</div>
-                        <h3>Dashboards people can trust</h3>
-                        <p>Power BI and Excel dashboards connect KPIs, trends, exceptions, and client performance into a monthly view leadership can use.</p>
-                    </div>
-                    <div class="ledger-row">
-                        <div class="row-code">03</div>
-                        <h3>Board-ready narrative packs</h3>
-                        <p>Monthly PowerPoint or PDF outputs explain what changed, why it matters, and which decisions need attention.</p>
-                    </div>
+                        <p>Raw exports from your case management and finance systems become the same clean, reconciled dataset every month, with as little manual handling as possible.</p>
+                        <ul class="tool-chips" aria-label="Tools used"><li>Excel</li><li>Power Query</li><li>SQL</li><li>Python</li></ul>
+                    </article>
+                    <article class="service-card">
+                        <span class="service-icon"><svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg></span>
+                        <h3>Excel and HTML dashboards</h3>
+                        <p>KPIs, trends, exceptions, and client performance in one monthly view, reconciled back to the source figures.</p>
+                        <ul class="tool-chips" aria-label="Tools used"><li>Excel</li><li>HTML</li></ul>
+                    </article>
+                    <article class="service-card">
+                        <span class="service-icon"><svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M2 3h20"/><path d="M21 3v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V3"/><path d="m7 21 5-5 5 5"/></svg></span>
+                        <h3>Monthly review packs</h3>
+                        <p>An interactive HTML, PDF or PowerPoint pack that explains what changed since last month, why, and what needs a decision.</p>
+                        <ul class="tool-chips" aria-label="Tools used"><li>HTML</li><li>PDF</li><li>PowerPoint</li></ul>
+                    </article>
+                </div>
+
+                <div class="checks reveal">
+                    <h3>Every figure is checked before it reaches you</h3>
+                    <ol class="checks-list">
+                        <li><span class="check-num">01</span><strong>Reconciled.</strong> Totals must agree on every slide, with the source data, and with your own backup workbook.</li>
+                        <li><span class="check-num">02</span><strong>Blocked if wrong.</strong> If a check fails, the pack can't be sent. I see a clearly marked preview and fix the problem first.</li>
+                        <li><span class="check-num">03</span><strong>Flagged, not hidden.</strong> If your case-management system has something wrong, such as a live case showing a zero balance, I list it for your team to correct rather than quietly patching the report.</li>
+                    </ol>
                 </div>
             </div>
         </section>
@@ -1260,80 +1454,82 @@
             <div class="section-inner">
                 <div class="section-head">
                     <div>
-                        <div class="kicker reveal">Featured work</div>
-                        <h2 class="reveal">A monthly service review people can actually use.</h2>
+                        <h2 class="reveal">Example work</h2>
                     </div>
-                    <p class="reveal">This anonymised pack shows the kind of client-ready reporting I build: messy operational exports shaped into a clean review deck, with the month explained through movement, exceptions, recovery, pipeline, success rate, and forecast.</p>
                 </div>
 
                 <div class="case-study reveal">
                     <div class="case-study-brief">
                         <div>
-                            <h3>Anonymised debt recovery service review</h3>
-                            <p>A recurring monthly pack designed for legal and recovery teams that need clean numbers, a practical story, and a clear list of what needs attention next.</p>
+                            <h3>Anonymised debt recovery review</h3>
+                            <p>The monthly pack a law firm's debt recovery team sends its client: balance movement, recoveries, the collection pipeline, cases awaiting instructions, the instalment forecast and the return on each year's instructions. It is built from case management exports, and every figure is checked against the source workbook before it goes out. This sample keeps a live client pack's layout and interactions; the figures are invented, and no client or firm is named.</p>
+                            <div class="case-study-actions">
+                                <a class="button" href="debt-recovery-review-sample.html" target="_blank" rel="noopener">Open the interactive demo</a>
+                                <small>Opens in a new tab: click through the slides, switch views and hover for exact figures. Best on a laptop or desktop.</small>
+                            </div>
                         </div>
                         <div class="case-study-proof" aria-label="Portfolio case study features">
-                            <span>Format <strong>Executive HTML/PPT pack</strong></span>
-                            <span>Workflow <strong>Excel model to client deck</strong></span>
+                            <span>Format <strong>Interactive HTML pack</strong></span>
+                            <span>Workflow <strong>Excel model to reconciled pack</strong></span>
                             <span>Focus <strong>Movement, blockers, forecast</strong></span>
                         </div>
                     </div>
 
-                    <div class="slide-gallery" aria-label="Anonymised service review slide gallery">
-                    <button class="case-study-shot featured" type="button" data-full="service-review-01-executive-summary.png">
-                        <img src="service-review-01-executive-summary.png" alt="Anonymised executive summary slide with KPI cards and action areas">
+                    <div class="slide-gallery" aria-label="Anonymised debt recovery review slide gallery">
+                    <button class="case-study-shot featured" type="button" data-full="review-sample-01-executive-summary.png">
+                        <img src="review-sample-01-executive-summary.png" alt="Anonymised executive summary slide with KPI cards, the month's balance movement and cases awaiting client instructions">
                         <span class="shot-caption">
                             <span>01</span>
                             <strong>Executive summary</strong>
-                            <small>Current position, movement, recovery, and attention points in one review page.</small>
+                            <small>Balance, recoveries, new instructions and cases awaiting instructions on one page.</small>
                         </span>
                     </button>
-                    <button class="case-study-shot" type="button" data-full="service-review-02-monthly-movement.png">
-                        <img src="service-review-02-monthly-movement.png" alt="Anonymised monthly debt movement waterfall slide">
+                    <button class="case-study-shot" type="button" data-full="review-sample-02-balance-movement.png">
+                        <img src="review-sample-02-balance-movement.png" alt="Anonymised current balance movement waterfall slide">
                         <span class="shot-caption">
                             <span>02</span>
-                            <strong>Monthly balance bridge</strong>
-                            <small>A waterfall view that explains the change from opening to closing balance.</small>
+                            <strong>Balance movement</strong>
+                            <small>A waterfall from last month's balance to this month's, step by step.</small>
                         </span>
                     </button>
-                    <button class="case-study-shot" type="button" data-full="service-review-03-recovery-performance.png">
-                        <img src="service-review-03-recovery-performance.png" alt="Anonymised recovery performance trend slide">
+                    <button class="case-study-shot" type="button" data-full="review-sample-03-instalment-forecast.png">
+                        <img src="review-sample-03-instalment-forecast.png" alt="Anonymised instalment plan forecast slide with a cumulative chart and yearly table">
                         <span class="shot-caption">
                             <span>03</span>
-                            <strong>Recovery performance</strong>
-                            <small>A 12-month trend with simple high and low readouts for context.</small>
+                            <strong>Instalment plan forecast</strong>
+                            <small>What agreed plans should collect each year, and what the forecast leaves out.</small>
                         </span>
                     </button>
-                    <button class="case-study-shot" type="button" data-full="service-review-04-active-pipeline.png">
-                        <img src="service-review-04-active-pipeline.png" alt="Anonymised active recovery pipeline slide">
+                    <button class="case-study-shot" type="button" data-full="review-sample-04-trend.png">
+                        <img src="review-sample-04-trend.png" alt="Anonymised 12-month current balance trend slide">
                         <span class="shot-caption">
                             <span>04</span>
-                            <strong>Active recovery pipeline</strong>
-                            <small>Stage-level exposure, case counts, and concentration made visible.</small>
+                            <strong>12-month trend</strong>
+                            <small>Balance, recoveries and new instructions, switchable in the pack.</small>
                         </span>
                     </button>
-                    <button class="case-study-shot" type="button" data-full="service-review-05-awaiting-instructions.png">
-                        <img src="service-review-05-awaiting-instructions.png" alt="Anonymised awaiting client instructions ageing slide">
+                    <button class="case-study-shot" type="button" data-full="review-sample-05-awaiting-instructions.png">
+                        <img src="review-sample-05-awaiting-instructions.png" alt="Anonymised awaiting client instructions ageing slide">
                         <span class="shot-caption">
                             <span>05</span>
                             <strong>Awaiting client instructions</strong>
-                            <small>Ageing and monthly movement for cases that need a decision.</small>
+                            <small>How long cases have waited on the client, with four months or more in red.</small>
                         </span>
                     </button>
-                    <button class="case-study-shot" type="button" data-full="service-review-06-success-rate.png">
-                        <img src="service-review-06-success-rate.png" alt="Anonymised success rate analysis slide">
+                    <button class="case-study-shot" type="button" data-full="review-sample-06-return-on-instruction.png">
+                        <img src="review-sample-06-return-on-instruction.png" alt="Anonymised return on instruction slide showing outcomes by instruction year">
                         <span class="shot-caption">
                             <span>06</span>
-                            <strong>Success rate analysis</strong>
-                            <small>Outcome rates by debt band and instruction year, with maturity caveats.</small>
+                            <strong>Return on instruction</strong>
+                            <small>What each instruction year has recovered, written off and still has open.</small>
                         </span>
                     </button>
-                    <button class="case-study-shot" type="button" data-full="service-review-07-forecast-profile.png">
-                        <img src="service-review-07-forecast-profile.png" alt="Anonymised forecast profile slide">
+                    <button class="case-study-shot" type="button" data-full="review-sample-07-commentary.png">
+                        <img src="review-sample-07-commentary.png" alt="Anonymised commentary slide with What matters and What needs attention panels">
                         <span class="shot-caption">
                             <span>07</span>
-                            <strong>Forecast profile</strong>
-                            <small>Expected future balance timing, separated from items without payment dates.</small>
+                            <strong>Written commentary</strong>
+                            <small>What matters this month, and what needs a decision, written for the figures.</small>
                         </span>
                     </button>
                     </div>
@@ -1341,38 +1537,20 @@
             </div>
         </section>
 
-        <section class="section record-band" id="record">
-            <div class="section-inner record-grid">
-                <div class="record-copy reveal">
-                    <div class="kicker">Delivery record</div>
-                    <h2>Quietly dependable.</h2>
-                    <p>Midlands Legal BI is built for the unglamorous part of analytics: showing up every month with clean data, reconciled outputs, and a pack that gives people something concrete to discuss.</p>
-                </div>
-                <div class="record-facts reveal">
-                    <div class="record-fact">
-                        <strong>2.5</strong>
-                        <span>years of continuous reporting service</span>
-                    </div>
-                    <div class="record-fact">
-                        <strong>100%</strong>
-                        <span>on-time monthly delivery record</span>
-                    </div>
-                    <div class="record-fact">
-                        <strong>UK</strong>
-                        <span>Microsoft 365 data centre storage</span>
-                    </div>
-                </div>
-            </div>
-        </section>
+        <!--
+            ABOUT / INTRO VIDEO GOES HERE.
+            Suggested: <section class="section" id="about"> with an h2 "About me",
+            the video, and two or three sentences of background. Add an
+            "About" link to the nav when it is live.
+        -->
 
         <section class="section" id="pricing">
             <div class="section-inner">
                 <div class="section-head">
                     <div>
-                        <div class="kicker reveal">Fixed retainers</div>
-                        <h2 class="reveal">Predictable cost beats hourly drift.</h2>
+                        <h2 class="reveal">Pricing</h2>
                     </div>
-                    <p class="reveal">The first consultation is free. After that, each retainer is scoped around cadence, data sources, output complexity, and the level of monthly explanation required.</p>
+                    <p class="reveal">Fixed monthly fees, so the cost does not creep up with the hours. The first consultation is free; after that, each retainer is scoped around how often you need reporting, how many data sources are involved, and how much written commentary you want.</p>
                 </div>
 
                 <div class="pricing-grid reveal">
@@ -1400,21 +1578,22 @@
                         <ul>
                             <li>Four or more deliverables</li>
                             <li>High-volume case and client datasets</li>
-                            <li>Enterprise-grade pipelines and review packs</li>
+                            <li>Automated pipelines across several source systems</li>
                         </ul>
                     </article>
                 </div>
+                <p class="pricing-note">No VAT is charged: I'm not VAT registered.</p>
             </div>
         </section>
 
         <section class="section">
             <div class="section-inner security reveal">
-                <h2>Security is part of the service, not a footer badge.</h2>
+                <h2>Security and compliance</h2>
                 <div>
-                    <p>Client data is handled through encrypted Microsoft 365 Business with MFA, full-disk encryption, TLS-secure communications, and UK data centre storage. Midlands Legal BI is ICO registered, professionally indemnified for £250,000, and covered for legal expenses up to £100,000.</p>
+                    <p>Client data is handled through encrypted Microsoft 365 Business with MFA, full-disk encryption, TLS-secure communications, and UK data centre storage. Midlands Legal BI is ICO registered and professional indemnity insured.</p>
                     <div class="security-points" aria-label="Security and compliance points">
                         <span>ICO registered</span>
-                        <span>GDPR compliant</span>
+                        <span>Data processing agreement available</span>
                         <span>UK data centres</span>
                         <span>Professional indemnity</span>
                     </div>
@@ -1425,13 +1604,12 @@
         <section class="contact" id="contact">
             <div class="section-inner contact-panel reveal">
                 <div>
-                    <div class="kicker">Free 30-minute consultation</div>
-                    <h2>Bring the reporting mess.</h2>
-                    <p>Based in Nuneaton and serving the Midlands and beyond. Send the current reporting pain point and the next monthly deadline, then we can work out whether the fit is real.</p>
+                    <h2>Book a free 30-minute call</h2>
+                    <p>I'm based in Nuneaton and work with firms across the Midlands and remotely. Email me with what you report on now and when your next deadline is, and we can see whether I can help.</p>
                 </div>
                 <div class="contact-actions">
-                    <a class="contact-link" href="mailto:beresford.salmon@midlandslegalbi.co.uk">
-                        <i data-lucide="mail"></i>
+                    <a class="contact-link" href="mailto:beresford.salmon@midlandslegalbi.co.uk?subject=Free%20consultation">
+                        <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7"/><rect x="2" y="4" width="20" height="16" rx="2"/></svg>
                         <span>
                             <strong>Email</strong>
                             <span>beresford.salmon@midlandslegalbi.co.uk</span>
@@ -1452,18 +1630,16 @@
     <footer class="site-footer">
         <div class="footer-inner">
             <span>© <span id="year"></span> Beresford Salmon, trading as Midlands Legal BI.</span>
-            <span>Monthly reporting automation for legal-sector operators.</span>
+            <span>Monthly reporting for law firms and debt collection agencies.</span>
         </div>
     </footer>
 
-    <div class="lightbox" id="lightbox" aria-hidden="true">
-        <button type="button" id="lightbox-close" aria-label="Close preview"><i data-lucide="x"></i></button>
+    <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Enlarged slide" aria-hidden="true">
+        <button type="button" id="lightbox-close" aria-label="Close preview"><svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
         <img id="lightbox-image" src="" alt="Expanded portfolio preview">
     </div>
 
     <script>
-        lucide.createIcons();
-
         const year = document.getElementById("year");
         year.textContent = new Date().getFullYear();
 
@@ -1482,7 +1658,10 @@
         });
 
         const revealItems = document.querySelectorAll(".reveal");
-        const revealObserver = new IntersectionObserver((entries) => {
+        if (!("IntersectionObserver" in window)) {
+            revealItems.forEach((item) => item.classList.add("visible"));
+        }
+        const revealObserver = !("IntersectionObserver" in window) ? null : new IntersectionObserver((entries) => {
             entries.forEach((entry) => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add("visible");
@@ -1490,26 +1669,31 @@
                 }
             });
         }, { threshold: 0.12, rootMargin: "0px 0px -50px 0px" });
-        revealItems.forEach((item) => revealObserver.observe(item));
+        if (revealObserver) revealItems.forEach((item) => revealObserver.observe(item));
 
         const lightbox = document.getElementById("lightbox");
         const lightboxImage = document.getElementById("lightbox-image");
         const lightboxClose = document.getElementById("lightbox-close");
+        let lastTrigger = null;
 
         document.querySelectorAll(".case-study-shot").forEach((item) => {
             item.addEventListener("click", () => {
+                lastTrigger = item;
                 lightboxImage.src = item.dataset.full;
                 lightboxImage.alt = item.querySelector("img")?.alt || "Expanded portfolio preview";
                 lightbox.classList.add("active");
                 lightbox.setAttribute("aria-hidden", "false");
+                lightboxClose.focus();
             });
         });
 
         function closeLightbox() {
+            if (!lightbox.classList.contains("active")) return;
             lightbox.classList.remove("active");
             lightbox.setAttribute("aria-hidden", "true");
             lightboxImage.src = "";
             lightboxImage.alt = "Expanded portfolio preview";
+            if (lastTrigger) lastTrigger.focus();
         }
 
         lightboxClose.addEventListener("click", closeLightbox);
