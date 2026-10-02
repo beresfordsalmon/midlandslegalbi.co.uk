@@ -1,14 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-GB">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Midlands Legal BI | Monthly reporting for law firms</title>
     <meta name="description" content="Fixed-fee monthly reporting for law firms and debt collection agencies: automated data preparation, Excel and HTML dashboards, and reconciled review packs.">
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <meta property="og:title" content="Midlands Legal BI | Monthly reporting for law firms">
     <meta property="og:description" content="Fixed-fee monthly reporting for law firms and debt collection agencies: automated data preparation, Excel and HTML dashboards, and reconciled review packs.">
     <meta property="og:type" content="website">
@@ -25,6 +22,31 @@
     <script>document.documentElement.classList.add("js");</script>
 
     <style>
+        /* IBM Plex Sans, self-hosted (SIL Open Font License). Built by Website/build_fonts.py. */
+        @font-face {
+            font-family: "IBM Plex Sans";
+            font-style: normal;
+            font-weight: 400;
+            font-display: swap;
+            src: url("fonts/IBMPlexSans-Regular.woff2") format("woff2");
+        }
+
+        @font-face {
+            font-family: "IBM Plex Sans";
+            font-style: normal;
+            font-weight: 600;
+            font-display: swap;
+            src: url("fonts/IBMPlexSans-SemiBold.woff2") format("woff2");
+        }
+
+        @font-face {
+            font-family: "IBM Plex Sans";
+            font-style: normal;
+            font-weight: 700;
+            font-display: swap;
+            src: url("fonts/IBMPlexSans-Bold.woff2") format("woff2");
+        }
+
         *, *::before, *::after {
             box-sizing: border-box;
         }
@@ -68,6 +90,7 @@
         img {
             display: block;
             max-width: 100%;
+            height: auto;
         }
 
         figure {
@@ -262,24 +285,6 @@
             min-width: 0;
         }
 
-        .kicker {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.62rem;
-            margin-bottom: 1.25rem;
-            color: var(--accent);
-            font-size: 0.74rem;
-            font-weight: 600;
-        }
-
-        .kicker::before {
-            content: "";
-            width: 2.4rem;
-            height: 2px;
-            background: var(--accent);
-            transform-origin: left center;
-        }
-
         h1,
         h2,
         h3 {
@@ -313,39 +318,6 @@
             font-size: clamp(1rem, 1.6vw, 1.25rem);
             line-height: 1.7;
             overflow-wrap: anywhere;
-        }
-
-        .proof-strip {
-            display: grid;
-            gap: 0.65rem;
-            padding-top: 0.15rem;
-        }
-
-        .proof-item {
-            display: grid;
-            grid-template-columns: 1.7rem auto;
-            gap: 0.55rem;
-            align-items: center;
-            color: var(--ink);
-            font-size: 0.78rem;
-            font-weight: 600;
-            transition: transform 260ms cubic-bezier(0.16, 1, 0.3, 1), color 260ms ease;
-        }
-
-        .proof-item .icon {
-            width: 1.1rem;
-            height: 1.1rem;
-            color: var(--accent);
-            transition: transform 260ms cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .proof-item:hover {
-            color: var(--accent);
-            transform: translateX(0.18rem);
-        }
-
-        .proof-item:hover .icon {
-            transform: rotate(-4deg) scale(1.05);
         }
 
         .hero-actions {
@@ -443,57 +415,14 @@
             overflow-wrap: anywhere;
         }
 
-        .ledger {
-            border-top: 2px solid var(--ink);
-            border-bottom: 1px solid var(--line);
-            background: rgba(255, 255, 255, 0.62);
-        }
-
-        .ledger-row {
-            display: grid;
-            grid-template-columns: minmax(220px, 0.7fr) minmax(260px, 1.3fr);
-            gap: clamp(1rem, 3vw, 2.4rem);
-            padding: clamp(1.4rem, 3vw, 2rem) 0;
-            border-bottom: 1px solid var(--line);
-            align-items: center;
-            transition: background 280ms ease, padding-inline 280ms cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .ledger-row:last-child {
-            border-bottom: 0;
-        }
-
-        .ledger-row:hover {
-            background: rgba(255, 255, 255, 0.68);
-            padding-inline: 0.8rem;
-        }
-
-        .ledger h3 {
-            font-size: clamp(1.2rem, 2vw, 1.65rem);
-            font-weight: 600;
-            color: var(--ink);
-        }
-
-        .ledger p {
-            margin: 0;
-            color: var(--muted);
-            line-height: 1.7;
-            font-size: 0.96rem;
-        }
-
         .portfolio {
             background: var(--ink);
             color: var(--paper);
         }
 
         .portfolio .section-head h2,
-        .portfolio .section-head p,
-        .portfolio .kicker {
+        .portfolio .section-head p {
             color: var(--paper);
-        }
-
-        .portfolio .kicker::before {
-            background: var(--accent);
         }
 
         .case-study {
@@ -620,68 +549,6 @@
             color: rgba(255, 255, 255, 0.74);
             font-size: 0.82rem;
             line-height: 1.55;
-        }
-
-        .record-band {
-            background: var(--paper-warm);
-        }
-
-        .record-grid {
-            display: grid;
-            grid-template-columns: minmax(0, 1fr) minmax(260px, 0.62fr);
-            gap: clamp(2rem, 6vw, 6rem);
-            align-items: center;
-        }
-
-        .record-copy h2 {
-            max-width: 9ch;
-            font-family: var(--serif);
-            font-size: clamp(3rem, 7vw, 6.6rem);
-            font-weight: 600;
-            line-height: 0.9;
-        }
-
-        .record-copy p {
-            max-width: 58ch;
-            margin: 1.6rem 0 0;
-            color: var(--ink-soft);
-            line-height: 1.8;
-        }
-
-        .record-facts {
-            display: grid;
-            border: 1px solid var(--ink);
-            background: var(--paper);
-        }
-
-        .record-fact {
-            padding: clamp(1.2rem, 3vw, 1.8rem);
-            border-bottom: 1px solid var(--ink);
-            transition: background 280ms ease;
-        }
-
-        .record-fact:last-child {
-            border-bottom: 0;
-        }
-
-        .record-fact:hover {
-            background: rgba(255, 255, 255, 0.72);
-        }
-
-        .record-fact strong {
-            display: block;
-            color: var(--accent);
-            font-family: var(--serif);
-            font-size: clamp(2.6rem, 6vw, 4.9rem);
-            line-height: 0.9;
-        }
-
-        .record-fact span {
-            display: block;
-            margin-top: 0.45rem;
-            color: var(--ink-soft);
-            font-weight: 600;
-            line-height: 1.35;
         }
 
         .pricing-grid {
@@ -955,15 +822,12 @@
         .mobile-toggle { border-radius: 8px; }
         .case-study-shot { overflow: hidden; }
         .pricing-grid,
-        .security,
-        .ledger { border-radius: 12px; overflow: hidden; }
-        .ledger { border: 1px solid var(--line); padding-inline: 1.5rem; background: var(--paper-warm); }
-        .ledger-row:hover { background: transparent; padding-inline: 0; }
+        .security { border-radius: 12px; overflow: hidden; }
         .price-panel:hover { transform: none; box-shadow: none; }
-        .price, .case-note strong, .record-fact strong { font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
+        .price, .case-note strong { font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
         .section-head h2, .case-study-brief h3, .security h2, .contact h2 { letter-spacing: -0.02em; }
         .brand-seal { border-radius: 6px; }
-        .price span { letter-spacing: 0; font-weight: 500; }
+        .price span { letter-spacing: 0; font-weight: 400; }
         .price-panel { min-height: 0; }
         .contact h2 { max-width: 18ch; }
         .contact-panel { border-top: 1px solid var(--line); }
@@ -980,7 +844,7 @@
             align-items: center;
             gap: 0.6rem 0.75rem;
         }
-        .audience-label { color: var(--muted); font-size: 0.95rem; font-weight: 500; }
+        .audience-label { color: var(--muted); font-size: 0.95rem; font-weight: 400; }
         .audience-tag {
             display: inline-flex;
             align-items: center;
@@ -1086,9 +950,7 @@
         .nav-links a:hover,
         .nav-links a:focus-visible { color: var(--accent-on-dark); }
         .mobile-toggle { color: #ffffff; border-color: rgba(255, 255, 255, 0.3); }
-        @media (max-width: 920px) {
-            .nav-links { background: #161616; border-bottom-color: rgba(255, 255, 255, 0.12); }
-        }
+        .site-nav :focus-visible { outline-color: var(--accent-on-dark); }
 
         .hero { background: var(--ink); color: #ffffff; padding-bottom: clamp(4rem, 7vw, 6rem); }
         .hero h1 { color: #ffffff; }
@@ -1139,17 +1001,6 @@
         }
 
         @media (prefers-reduced-motion: no-preference) {
-            @keyframes frame-settle {
-                0% {
-                    transform: translate(-0.65rem, 0.65rem);
-                    opacity: 0;
-                }
-                100% {
-                    transform: translate(0, 0);
-                    opacity: 1;
-                }
-            }
-
             @keyframes note-place {
                 0% {
                     transform: translate(-0.35rem, 0.55rem);
@@ -1173,26 +1024,12 @@
                 transform: translateY(0);
             }
 
-            .hero .kicker.reveal { transition-delay: 80ms; }
             .hero h1.reveal { transition-delay: 180ms; }
             .hero .hero-copy.reveal { transition-delay: 310ms; }
             .hero .hero-visual.reveal { transition-delay: 420ms; }
 
             .section-head .reveal:nth-child(1) { transition-delay: 60ms; }
             .section-head .reveal:nth-child(2) { transition-delay: 180ms; }
-
-            .kicker::before {
-                transform: scaleX(0);
-                transition: transform 680ms cubic-bezier(0.16, 1, 0.3, 1);
-            }
-
-            .kicker.visible::before,
-            .reveal.visible .kicker::before,
-            .record-copy.reveal.visible .kicker::before,
-            .contact-panel.reveal.visible .kicker::before {
-                transform: scaleX(1);
-            }
-
 
             .hero-visual.visible .case-note {
                 animation: note-place 760ms cubic-bezier(0.16, 1, 0.3, 1) 620ms both;
@@ -1234,13 +1071,18 @@
                 position: absolute;
                 inset: 74px 0 auto 0;
                 display: none;
-                padding: 1rem;
-                background: var(--paper);
-                border-bottom: 1px solid var(--line);
+                padding: 0.5rem 1rem 1rem;
+                background: var(--ink);
+                border-bottom: 1px solid rgba(255, 255, 255, 0.12);
             }
 
             .nav-links.open {
                 display: grid;
+            }
+
+            .nav-links a:not(.button) {
+                padding: 0.7rem 0;
+                font-size: 0.95rem;
             }
 
             .mobile-toggle {
@@ -1250,6 +1092,7 @@
 
             .nav-links .button {
                 justify-self: start;
+                margin-top: 0.5rem;
             }
 
             .hero {
@@ -1261,7 +1104,6 @@
             .hero-copy,
             .section-head,
             .case-study-brief,
-            .record-grid,
             .security,
             .contact-panel {
                 grid-template-columns: 1fr;
@@ -1285,11 +1127,6 @@
                 right: 0;
                 left: auto;
                 bottom: -1.4rem;
-            }
-
-            .ledger-row {
-                grid-template-columns: 1fr;
-                gap: 0.5rem;
             }
 
             .slide-gallery,
@@ -1343,11 +1180,6 @@
                 width: 100%;
             }
 
-            .ledger-row {
-                grid-template-columns: 1fr;
-            }
-
-            .record-facts,
             .pricing-grid,
             .security {
                 margin-inline: -0.1rem;
@@ -1367,7 +1199,7 @@
                     <span class="brand-sub">Monthly reporting, made reliable</span>
                 </span>
             </a>
-            <button class="mobile-toggle" type="button" aria-label="Open menu" aria-expanded="false">
+            <button class="mobile-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links">
                 <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 5h16"/><path d="M4 12h16"/><path d="M4 19h16"/></svg>
             </button>
             <div class="nav-links" id="nav-links">
@@ -1399,9 +1231,9 @@
                 </div>
                 <div class="hero-visual reveal">
                     <figure class="portrait-panel">
-                        <img src="Selfie.jpg" alt="Beresford Salmon, founder of Midlands Legal BI">
+                        <img src="Selfie.jpg" width="796" height="822" alt="Beresford Salmon, founder of Midlands Legal BI">
                     </figure>
-                    <div class="case-note" aria-label="Delivery note">
+                    <div class="case-note">
                         <strong>Zero</strong>
                         <span>missed reporting deadlines in over 3 years of monthly legal-sector reporting.</span>
                     </div>
@@ -1468,16 +1300,16 @@
                                 <small>Opens in a new tab: click through the slides, switch views and hover for exact figures. Best on a laptop or desktop.</small>
                             </div>
                         </div>
-                        <div class="case-study-proof" aria-label="Portfolio case study features">
-                            <span>Format <strong>Interactive HTML pack</strong></span>
-                            <span>Workflow <strong>Excel model to reconciled pack</strong></span>
-                            <span>Focus <strong>Movement, blockers, forecast</strong></span>
+                        <div class="case-study-proof" role="list" aria-label="About this sample">
+                            <span role="listitem">Format <strong>Interactive HTML pack</strong></span>
+                            <span role="listitem">Workflow <strong>Excel model to reconciled pack</strong></span>
+                            <span role="listitem">Focus <strong>Movement, blockers, forecast</strong></span>
                         </div>
                     </div>
 
-                    <div class="slide-gallery" aria-label="Anonymised debt recovery review slide gallery">
+                    <div class="slide-gallery" role="group" aria-label="Anonymised debt recovery review slides">
                     <button class="case-study-shot featured" type="button" data-full="review-sample-01-executive-summary.png">
-                        <img src="review-sample-01-executive-summary.png" alt="Anonymised executive summary slide with KPI cards, the month's balance movement and cases awaiting client instructions">
+                        <img src="review-sample-01-executive-summary.png" width="3200" height="1800" loading="lazy" decoding="async" alt="Anonymised executive summary slide with KPI cards, the month's balance movement and cases awaiting client instructions">
                         <span class="shot-caption">
                             <span>01</span>
                             <strong>Executive summary</strong>
@@ -1485,7 +1317,7 @@
                         </span>
                     </button>
                     <button class="case-study-shot" type="button" data-full="review-sample-02-balance-movement.png">
-                        <img src="review-sample-02-balance-movement.png" alt="Anonymised current balance movement waterfall slide">
+                        <img src="review-sample-02-balance-movement.png" width="3200" height="1800" loading="lazy" decoding="async" alt="Anonymised current balance movement waterfall slide">
                         <span class="shot-caption">
                             <span>02</span>
                             <strong>Balance movement</strong>
@@ -1493,7 +1325,7 @@
                         </span>
                     </button>
                     <button class="case-study-shot" type="button" data-full="review-sample-03-instalment-forecast.png">
-                        <img src="review-sample-03-instalment-forecast.png" alt="Anonymised instalment plan forecast slide with a cumulative chart and yearly table">
+                        <img src="review-sample-03-instalment-forecast.png" width="3200" height="1800" loading="lazy" decoding="async" alt="Anonymised instalment plan forecast slide with a cumulative chart and yearly table">
                         <span class="shot-caption">
                             <span>03</span>
                             <strong>Instalment plan forecast</strong>
@@ -1501,7 +1333,7 @@
                         </span>
                     </button>
                     <button class="case-study-shot" type="button" data-full="review-sample-04-trend.png">
-                        <img src="review-sample-04-trend.png" alt="Anonymised 12-month current balance trend slide">
+                        <img src="review-sample-04-trend.png" width="3200" height="1800" loading="lazy" decoding="async" alt="Anonymised 12-month current balance trend slide">
                         <span class="shot-caption">
                             <span>04</span>
                             <strong>12-month trend</strong>
@@ -1509,7 +1341,7 @@
                         </span>
                     </button>
                     <button class="case-study-shot" type="button" data-full="review-sample-05-awaiting-instructions.png">
-                        <img src="review-sample-05-awaiting-instructions.png" alt="Anonymised awaiting client instructions ageing slide">
+                        <img src="review-sample-05-awaiting-instructions.png" width="3200" height="1800" loading="lazy" decoding="async" alt="Anonymised awaiting client instructions ageing slide">
                         <span class="shot-caption">
                             <span>05</span>
                             <strong>Awaiting client instructions</strong>
@@ -1517,7 +1349,7 @@
                         </span>
                     </button>
                     <button class="case-study-shot" type="button" data-full="review-sample-06-return-on-instruction.png">
-                        <img src="review-sample-06-return-on-instruction.png" alt="Anonymised return on instruction slide showing outcomes by instruction year">
+                        <img src="review-sample-06-return-on-instruction.png" width="3200" height="1800" loading="lazy" decoding="async" alt="Anonymised return on instruction slide showing outcomes by instruction year">
                         <span class="shot-caption">
                             <span>06</span>
                             <strong>Return on instruction</strong>
@@ -1525,7 +1357,7 @@
                         </span>
                     </button>
                     <button class="case-study-shot" type="button" data-full="review-sample-07-commentary.png">
-                        <img src="review-sample-07-commentary.png" alt="Anonymised commentary slide with What matters and What needs attention panels">
+                        <img src="review-sample-07-commentary.png" width="3200" height="1800" loading="lazy" decoding="async" alt="Anonymised commentary slide with What matters and What needs attention panels">
                         <span class="shot-caption">
                             <span>07</span>
                             <strong>Written commentary</strong>
@@ -1591,11 +1423,11 @@
                 <h2>Security and compliance</h2>
                 <div>
                     <p>Client data is handled through encrypted Microsoft 365 Business with MFA, full-disk encryption, TLS-secure communications, and UK data centre storage. Midlands Legal BI is ICO registered and professional indemnity insured.</p>
-                    <div class="security-points" aria-label="Security and compliance points">
-                        <span>ICO registered</span>
-                        <span>Data processing agreement available</span>
-                        <span>UK data centres</span>
-                        <span>Professional indemnity</span>
+                    <div class="security-points" role="list">
+                        <span role="listitem">ICO registered</span>
+                        <span role="listitem">Data processing agreement available</span>
+                        <span role="listitem">UK data centres</span>
+                        <span role="listitem">Professional indemnity</span>
                     </div>
                 </div>
             </div>
@@ -1629,14 +1461,13 @@
 
     <footer class="site-footer">
         <div class="footer-inner">
-            <span>© <span id="year"></span> Beresford Salmon, trading as Midlands Legal BI.</span>
+            <span>© <span id="year">2026</span> Beresford Salmon, trading as Midlands Legal BI.</span>
             <span>Monthly reporting for law firms and debt collection agencies.</span>
         </div>
     </footer>
 
     <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Enlarged slide" aria-hidden="true">
         <button type="button" id="lightbox-close" aria-label="Close preview"><svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
-        <img id="lightbox-image" src="" alt="Expanded portfolio preview">
     </div>
 
     <script>
@@ -1645,16 +1476,17 @@
 
         const toggle = document.querySelector(".mobile-toggle");
         const nav = document.getElementById("nav-links");
-        toggle.addEventListener("click", () => {
-            const isOpen = nav.classList.toggle("open");
+
+        function setMenu(isOpen) {
+            nav.classList.toggle("open", isOpen);
             toggle.setAttribute("aria-expanded", String(isOpen));
-        });
+            toggle.setAttribute("aria-label", isOpen ? "Close menu" : "Open menu");
+        }
+
+        toggle.addEventListener("click", () => setMenu(!nav.classList.contains("open")));
 
         nav.querySelectorAll("a").forEach((link) => {
-            link.addEventListener("click", () => {
-                nav.classList.remove("open");
-                toggle.setAttribute("aria-expanded", "false");
-            });
+            link.addEventListener("click", () => setMenu(false));
         });
 
         const revealItems = document.querySelectorAll(".reveal");
@@ -1672,8 +1504,9 @@
         if (revealObserver) revealItems.forEach((item) => revealObserver.observe(item));
 
         const lightbox = document.getElementById("lightbox");
-        const lightboxImage = document.getElementById("lightbox-image");
         const lightboxClose = document.getElementById("lightbox-close");
+        // The enlarged image exists only while the lightbox is open, so the page never has an image without a source.
+        const lightboxImage = document.createElement("img");
         let lastTrigger = null;
 
         document.querySelectorAll(".case-study-shot").forEach((item) => {
@@ -1681,6 +1514,7 @@
                 lastTrigger = item;
                 lightboxImage.src = item.dataset.full;
                 lightboxImage.alt = item.querySelector("img")?.alt || "Expanded portfolio preview";
+                lightbox.append(lightboxImage);
                 lightbox.classList.add("active");
                 lightbox.setAttribute("aria-hidden", "false");
                 lightboxClose.focus();
@@ -1691,8 +1525,8 @@
             if (!lightbox.classList.contains("active")) return;
             lightbox.classList.remove("active");
             lightbox.setAttribute("aria-hidden", "true");
-            lightboxImage.src = "";
-            lightboxImage.alt = "Expanded portfolio preview";
+            lightboxImage.remove();
+            lightboxImage.removeAttribute("src");
             if (lastTrigger) lastTrigger.focus();
         }
 
@@ -1701,7 +1535,20 @@
             if (event.target === lightbox) closeLightbox();
         });
         document.addEventListener("keydown", (event) => {
-            if (event.key === "Escape") closeLightbox();
+            const lightboxOpen = lightbox.classList.contains("active");
+            if (event.key === "Escape") {
+                if (lightboxOpen) {
+                    closeLightbox();
+                } else if (nav.classList.contains("open")) {
+                    setMenu(false);
+                    toggle.focus();
+                }
+            }
+            // The close button is the lightbox's only control, so Tab stays on it.
+            if (event.key === "Tab" && lightboxOpen) {
+                event.preventDefault();
+                lightboxClose.focus();
+            }
         });
     </script>
 </body>
