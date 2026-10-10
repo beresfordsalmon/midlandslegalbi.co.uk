@@ -1004,6 +1004,28 @@
         }
 
         /* Security: one compact band */
+        /* About: one readable column */
+        .about {
+            max-width: 46rem;
+        }
+
+        .about p {
+            margin-top: 1rem;
+            color: var(--text-2);
+            font-size: 1.0625rem;
+            line-height: 1.7;
+        }
+
+        .about h2 + p {
+            margin-top: 1.5rem;
+        }
+
+        .about .about-credentials {
+            margin-top: 1.5rem;
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
         .security {
             display: grid;
             grid-template-columns: auto minmax(0, 1fr);
@@ -1374,6 +1396,7 @@
             <div class="nav-links" id="nav-links">
                 <a href="#services">Services</a>
                 <a href="#portfolio">Work</a>
+                <a href="#about">About</a>
                 <a href="#pricing">Pricing</a>
                 <a class="button" href="#contact">Book a free call</a>
             </div>
@@ -1559,12 +1582,18 @@
             </div>
         </section>
 
-        <!--
-            ABOUT / INTRO VIDEO GOES HERE.
-            Suggested: <section class="section" id="about"> with an h2 "About me",
-            the video, and two or three sentences of background. Add an
-            "About" link to the nav when it is live.
-        -->
+        <!-- The intro video (website-v4/04) goes in this section when it's ready. -->
+        <section class="section tinted" id="about">
+            <div class="wrap">
+                <div class="about reveal">
+                    <h2>About me</h2>
+                    <p>I started in credit control, chasing aged debt and reporting on it to managers, directors and clients. At one firm I cut a £250,000 aged-debt ledger to £11,000 in six months. In 2023 I joined a law firm's debt recovery team, setting up debtor accounts and running case files.</p>
+                    <p>That's where the reporting started. Since July 2023 I've produced a UK law firm's monthly and quarterly debt recovery reporting, and I haven't missed a deadline.</p>
+                    <p>So I know what the figures mean as well as how to build them: what a month's balance movement is telling you, why cases sit waiting for instructions, and what your client will ask about first. You deal with one person, on a fixed monthly fee, and your pack arrives on the same day every month.</p>
+                    <p class="about-credentials">BSc Psychology, University of Kent · AAT Level 4 (Accountancy)</p>
+                </div>
+            </div>
+        </section>
 
         <section class="section" id="pricing">
             <div class="wrap">
