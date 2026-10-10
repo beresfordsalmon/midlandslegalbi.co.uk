@@ -1,13 +1,20 @@
 <!DOCTYPE html>
+<!--
+    Website v5, 10 October 2026.
+    Built to Brand/brand-reference.md: Plex Sans, one blue accent, the dark nav and hero (ADR 0001, the
+    page's one colour block), real slides and photo, Lucide-style line icons. Light and dark themes
+    follow the visitor's system, with a toggle in the nav.
+    Radius rule: 8px on every surface and control; only the logo square keeps its own construction.
+-->
 <html lang="en-GB">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Midlands Legal BI | Monthly reporting for law firms</title>
-    <meta name="description" content="Fixed-fee monthly reporting for law firms and debt collection agencies: automated data preparation, Excel and HTML dashboards, and reconciled review packs.">
+    <title>Midlands Legal BI | Monthly reporting for debt recovery teams</title>
+    <meta name="description" content="Fixed-fee monthly reporting for debt recovery teams in law firms and collection agencies: data preparation, Excel and HTML dashboards, and reconciled review packs.">
 
-    <meta property="og:title" content="Midlands Legal BI | Monthly reporting for law firms">
-    <meta property="og:description" content="Fixed-fee monthly reporting for law firms and debt collection agencies: automated data preparation, Excel and HTML dashboards, and reconciled review packs.">
+    <meta property="og:title" content="Midlands Legal BI | Monthly reporting for debt recovery teams">
+    <meta property="og:description" content="Fixed-fee monthly reporting for debt recovery teams in law firms and collection agencies: data preparation, Excel and HTML dashboards, and reconciled review packs.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://midlandslegalbi.co.uk/">
     <meta property="og:site_name" content="Midlands Legal BI">
@@ -19,7 +26,15 @@
     <link rel="icon" href="favicon.ico" sizes="32x32">
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
-    <script>document.documentElement.classList.add("js");</script>
+    <link rel="preload" href="fonts/IBMPlexSans-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
+    <script>
+        document.documentElement.classList.add("js");
+        // The page follows the system's light or dark setting unless the visitor has picked one.
+        try {
+            const savedTheme = localStorage.getItem("mlbi-theme");
+            if (savedTheme === "light" || savedTheme === "dark") document.documentElement.dataset.theme = savedTheme;
+        } catch (error) {}
+    </script>
 
     <style>
         /* IBM Plex Sans, self-hosted (SIL Open Font License). Built by Website/build_fonts.py. */
@@ -51,37 +66,81 @@
             box-sizing: border-box;
         }
 
+        /* Light: Carbon's White theme values from Brand/brand-reference.md */
         :root {
-            /* IBM Carbon palette, matching the monthly client packs */
-            --paper: #ffffff;
-            --paper-warm: #f4f4f4;   /* Gray 10 */
-            --paper-deep: #e0e0e0;   /* Gray 20 */
-            --ink: #161616;          /* Gray 100 */
-            --ink-soft: #393939;     /* Gray 80 */
-            --muted: #525252;        /* Gray 70 */
-            --line: #e0e0e0;
-            --accent: #0f62fe;       /* Blue 60: the one brand accent */
-            --accent-hover: #0043ce; /* Blue 70 */
-            --accent-on-dark: #78a9ff; /* Blue 40 */
-            --success: #24a148;      /* reserved for data: good news */
-            --error: #da1e28;        /* reserved for data: needs attention */
-            --shadow: 0 16px 48px rgba(22, 22, 22, 0.12);
-            --max: 1180px;
-            --sans: "IBM Plex Sans", "Segoe UI", Arial, sans-serif;
-            --serif: var(--sans);
+            --bg: #ffffff;
+            --layer: #f4f4f4;          /* Gray 10 */
+            --layer-hover: #e8e8e8;
+            --line: #e0e0e0;           /* Gray 20 */
+            --line-strong: #c6c6c6;    /* Gray 30 */
+            --text: #161616;           /* Gray 100 */
+            --text-2: #393939;         /* Gray 80 */
+            --muted: #525252;          /* Gray 70 */
+            --accent: #0f62fe;         /* Blue 60: logo square, buttons */
+            --accent-hover: #0043ce;   /* Blue 70 */
+            --link: #0f62fe;           /* blue text: links and markers */
+            --focus: #0f62fe;
+            --feature-bg: #161616;
+            --feature-text: #f4f4f4;
+            --feature-muted: #c6c6c6;
+            --feature-link: #78a9ff;
+            --shadow: 0 1px 2px rgba(22, 22, 22, 0.05), 0 16px 40px rgba(22, 22, 22, 0.08);
+            --radius: 8px;
+            --max: 1200px;
+            --nav-h: 64px;
+            --ease: cubic-bezier(0.16, 1, 0.3, 1);
+            --sans: "IBM Plex Sans", Arial, sans-serif;
             color-scheme: light;
+        }
+
+        /* Dark: Carbon's Gray 100 theme, for visitors whose system is set to dark */
+        @media (prefers-color-scheme: dark) {
+            :root:not([data-theme="light"]) {
+                --bg: #161616;
+                --layer: #262626;      /* Gray 90 */
+                --layer-hover: #333333;
+                --line: #393939;       /* Gray 80 */
+                --line-strong: #525252;
+                --text: #f4f4f4;
+                --text-2: #c6c6c6;
+                --muted: #a8a8a8;      /* Gray 40 */
+                --link: #78a9ff;       /* Blue 40 */
+                --focus: #78a9ff;
+                --feature-bg: #393939;
+                --shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
+                color-scheme: dark;
+            }
+        }
+
+        :root[data-theme="dark"] {
+            --bg: #161616;
+            --layer: #262626;
+            --layer-hover: #333333;
+            --line: #393939;
+            --line-strong: #525252;
+            --text: #f4f4f4;
+            --text-2: #c6c6c6;
+            --muted: #a8a8a8;
+            --link: #78a9ff;
+            --focus: #78a9ff;
+            --feature-bg: #393939;
+            --shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
+            color-scheme: dark;
         }
 
         html {
             scroll-behavior: smooth;
+            scroll-padding-top: var(--nav-h);
         }
 
         body {
             margin: 0;
             min-width: 320px;
-            color: var(--ink);
-            background: var(--paper);
+            color: var(--text);
+            background: var(--bg);
             font-family: var(--sans);
+            font-size: 1rem;
+            line-height: 1.6;
             -webkit-font-smoothing: antialiased;
             text-rendering: optimizeLegibility;
             overflow-x: hidden;
@@ -101,17 +160,35 @@
             color: inherit;
         }
 
-        button,
-        input,
-        textarea {
+        button {
             font: inherit;
+            color: inherit;
+        }
+
+        h1, h2, h3 {
+            margin: 0;
+            text-wrap: balance;
+        }
+
+        p {
+            margin: 0;
+        }
+
+        :focus-visible {
+            outline: 2px solid var(--focus);
+            outline-offset: 3px;
         }
 
         .icon {
             display: block;
-            width: 1.2rem;
-            height: 1.2rem;
+            width: 1.25rem;
+            height: 1.25rem;
             flex: none;
+        }
+
+        .wrap {
+            width: min(var(--max), calc(100% - 2rem));
+            margin-inline: auto;
         }
 
         .skip-link {
@@ -120,9 +197,10 @@
             left: 0.75rem;
             z-index: 500;
             transform: translateY(-140%);
-            background: var(--ink);
-            color: var(--paper);
             padding: 0.65rem 0.9rem;
+            border-radius: var(--radius);
+            background: var(--text);
+            color: var(--bg);
             text-decoration: none;
         }
 
@@ -130,666 +208,924 @@
             transform: translateY(0);
         }
 
-        .site-nav {
-            position: fixed;
-            z-index: 100;
-            inset: 0 0 auto 0;
-            border-bottom: 1px solid rgba(22, 22, 22, 0.14);
-            background: rgba(255, 255, 255, 0.88);
-            backdrop-filter: blur(18px);
-        }
-
-        .nav-inner {
-            width: min(var(--max), calc(100% - 2rem));
-            height: 74px;
-            margin: 0 auto;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 1rem;
-        }
-
-        .brand-mark {
-            display: grid;
-            grid-template-columns: 2.2rem auto;
-            gap: 0.7rem;
-            align-items: center;
-            color: var(--ink);
-            text-decoration: none;
-        }
-
-        .brand-seal {
-            width: 2.2rem;
-            height: 2.2rem;
+        /* Buttons */
+        /* One icon style for the page: a Blue line icon in a small neutral tile */
+        .icon-tile {
+            width: 3rem;
+            height: 3rem;
             display: grid;
             place-items: center;
-            background: var(--accent);
-            color: var(--paper);
-            font-weight: 600;
-            font-size: 0.78rem;
-            letter-spacing: 0;
+            flex: none;
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            background: var(--bg);
+            color: var(--link);
         }
 
-        .brand-name {
-            display: block;
-            font-weight: 600;
-            font-size: 0.94rem;
-            line-height: 1.05;
-        }
-
-        .brand-sub {
-            display: block;
-            color: var(--muted);
-            font-size: 0.68rem;
-            line-height: 1.2;
-            margin-top: 0.14rem;
-        }
-
-        .nav-links {
-            display: flex;
-            align-items: center;
-            gap: clamp(1rem, 2.2vw, 2.2rem);
-        }
-
-        .nav-links a {
-            color: var(--ink-soft);
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 0.8rem;
-        }
-
-        .nav-links a:hover,
-        .nav-links a:focus-visible {
-            color: var(--accent);
+        .icon-tile .icon {
+            width: 1.5rem;
+            height: 1.5rem;
         }
 
         .button {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 0.55rem;
-            min-height: 2.8rem;
-            padding: 0.78rem 1.05rem;
+            gap: 0.5rem;
+            min-height: 3rem;
+            padding: 0 1.25rem;
             border: 1px solid var(--accent);
-            border-radius: 6px;
+            border-radius: var(--radius);
             background: var(--accent);
             color: #ffffff;
+            font-size: 0.9375rem;
             font-weight: 600;
-            font-size: 0.82rem;
+            line-height: 1;
+            white-space: nowrap;
             text-decoration: none;
-            transition: transform 180ms ease, background 180ms ease, color 180ms ease, border-color 180ms ease;
+            cursor: pointer;
+            transition: background 180ms ease, border-color 180ms ease, color 180ms ease, transform 180ms var(--ease);
         }
 
-        .button:hover,
-        .button:focus-visible {
+        .button:hover {
             background: var(--accent-hover);
             border-color: var(--accent-hover);
         }
 
-        .button.secondary {
-            background: transparent;
-            color: var(--ink);
-            border-color: rgba(22, 22, 22, 0.35);
+        .button:active {
+            transform: translateY(1px) scale(0.98);
         }
 
-        .button.secondary:hover,
-        .button.secondary:focus-visible {
-            color: var(--paper);
-            background: var(--ink);
-            border-color: var(--ink);
+        .button .icon {
+            width: 1.05rem;
+            height: 1.05rem;
+            transition: transform 220ms var(--ease);
+        }
+
+        .button:hover .icon-out {
+            transform: translate(2px, -2px);
+        }
+
+        .button.secondary {
+            background: transparent;
+            border-color: var(--line-strong);
+            color: var(--text);
+        }
+
+        .button.secondary:hover {
+            background: var(--bg);
+            border-color: var(--text);
+        }
+
+        .button.ghost {
+            background: transparent;
+            border-color: rgba(255, 255, 255, 0.45);
+            color: #ffffff;
+        }
+
+        .button.ghost:hover {
+            background: #ffffff;
+            border-color: #ffffff;
+            color: #161616;
+        }
+
+        /* Navigation: always ink, like the cover of the client packs (ADR 0001) */
+        .site-nav {
+            position: fixed;
+            inset: 0 0 auto 0;
+            z-index: 100;
+            background: rgba(22, 22, 22, 0.9);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            color: #f4f4f4;
+            --focus: #78a9ff;
+        }
+
+        .nav-inner {
+            height: var(--nav-h);
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .brand-mark {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-right: auto;
+            color: #ffffff;
+            text-decoration: none;
+        }
+
+        .brand-seal {
+            width: 2.25rem;
+            height: 2.25rem;
+            display: grid;
+            place-items: center;
+            border-radius: 6px; /* the logo square's own construction: radius 17 on 100 */
+            background: var(--accent);
+            color: #ffffff;
+            font-size: 0.78rem;
+            font-weight: 600;
+        }
+
+        .brand-name {
+            display: block;
+            font-size: 0.97rem;
+            font-weight: 600;
+            line-height: 1.1;
+        }
+
+        .brand-sub {
+            display: block;
+            margin-top: 0.15rem;
+            color: #a8a8a8;
+            font-size: 0.72rem;
+            line-height: 1.2;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .nav-links a:not(.button) {
+            color: #c6c6c6;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: color 160ms ease;
+        }
+
+        .nav-links a:not(.button):hover {
+            color: #ffffff;
         }
 
         .nav-links .button {
-            color: var(--paper);
+            min-height: 2.5rem;
+            padding: 0 1rem;
+            font-size: 0.875rem;
         }
 
-        .nav-links .button:hover,
-        .nav-links .button:focus-visible {
-            color: var(--paper);
+        .nav-tools {
+            display: flex;
+            gap: 0.5rem;
         }
+
+        .icon-button {
+            width: 2.5rem;
+            height: 2.5rem;
+            display: grid;
+            place-items: center;
+            padding: 0;
+            border: 1px solid rgba(255, 255, 255, 0.22);
+            border-radius: var(--radius);
+            background: transparent;
+            color: #f4f4f4;
+            cursor: pointer;
+            transition: background 160ms ease, border-color 160ms ease;
+        }
+
+        .icon-button:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+
+        .icon-button .icon {
+            width: 1.1rem;
+            height: 1.1rem;
+        }
+
+        .theme-toggle .icon-sun {
+            display: none;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root:not([data-theme="light"]) .theme-toggle .icon-sun { display: block; }
+            :root:not([data-theme="light"]) .theme-toggle .icon-moon { display: none; }
+        }
+
+        :root[data-theme="dark"] .theme-toggle .icon-sun { display: block; }
+        :root[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
 
         .mobile-toggle {
             display: none;
-            width: 2.75rem;
-            height: 2.75rem;
-            border: 1px solid rgba(22, 22, 22, 0.28);
-            background: transparent;
-            color: var(--ink);
-            cursor: pointer;
         }
 
-        main {
-            overflow: hidden;
-        }
-
+        /* Hero: the page's one colour block, ink in both themes */
         .hero {
-            min-height: min(820px, 100svh);
-            padding: 7.5rem 0 4.5rem;
-            display: grid;
-            align-items: end;
+            padding: calc(var(--nav-h) + clamp(3rem, 6vw, 5rem)) 0 clamp(3.5rem, 6vw, 5rem);
+            background: #161616;
+            color: #f4f4f4;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            --focus: #78a9ff;
         }
 
         .hero-inner {
-            width: min(var(--max), calc(100% - 2rem));
-            margin: 0 auto;
             display: grid;
-            grid-template-columns: minmax(0, 1.04fr) minmax(300px, 0.72fr);
-            gap: clamp(2.2rem, 5vw, 5.5rem);
-            align-items: end;
+            grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+            gap: clamp(2.5rem, 5vw, 4.5rem);
+            align-items: center;
         }
 
-        .hero-inner > *,
-        .hero-copy > *,
-        .section-head > *,
-        .contact-panel > * {
-            min-width: 0;
+        /* On a laptop or desktop the hero and proof strip fill the first screen */
+        @media (min-width: 961px) and (min-height: 640px) {
+            .hero {
+                min-height: calc(100svh - 10.75rem);
+                display: grid;
+                align-content: center;
+            }
         }
 
-        h1,
-        h2,
-        h3 {
-            margin: 0;
-            text-wrap: balance;
+        .hero-eyebrow {
+            color: #a8a8a8;
+            font-size: 1rem;
         }
 
-        h1 {
-            max-width: 12ch;
-            font-family: var(--serif);
-            font-size: clamp(3rem, 6.6vw, 6rem);
+        .hero h1 {
+            margin-top: 1.25rem;
+            color: #ffffff;
+            font-size: clamp(2.25rem, 3.9vw, 3.5rem);
             font-weight: 600;
-            line-height: 1.02;
-            letter-spacing: -0.035em;
-            color: var(--ink);
+            line-height: 1.08;
+            letter-spacing: -0.025em;
         }
 
-        .hero-copy {
-            display: grid;
-            grid-template-columns: minmax(210px, 0.62fr) minmax(250px, 1fr);
-            gap: clamp(1.2rem, 3vw, 2.5rem);
-            max-width: 760px;
-            margin-top: 2.2rem;
-            align-items: start;
-            min-width: 0;
-        }
-
-        .hero-copy p {
-            margin: 0;
-            color: var(--ink-soft);
-            font-size: clamp(1rem, 1.6vw, 1.25rem);
-            line-height: 1.7;
-            overflow-wrap: anywhere;
+        .hero-lede {
+            max-width: 34rem;
+            margin-top: 1.5rem;
+            color: #c6c6c6;
+            font-size: clamp(1.05rem, 1.4vw, 1.25rem);
+            line-height: 1.6;
         }
 
         .hero-actions {
             display: flex;
-            gap: 0.85rem;
             flex-wrap: wrap;
-            margin-top: 2rem;
+            gap: 0.75rem;
+            margin-top: 2.25rem;
         }
 
-        .hero-visual {
-            position: relative;
-            min-height: 0;
-            display: grid;
-            align-items: end;
-        }
-
-        .portrait-panel {
-            position: relative;
-            justify-self: end;
-            width: min(100%, 390px);
-            background: var(--ink);
-            box-shadow: var(--shadow);
-            transform: translateY(1.2rem);
-        }
-
-
-        .portrait-panel img {
+        .hero-slide img {
             width: 100%;
-            aspect-ratio: 0.84;
-            object-fit: cover;
-            object-position: center top;
+            aspect-ratio: 16 / 9;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius);
+            background: #ffffff;
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
         }
 
-        .case-note {
-            position: absolute;
-            left: clamp(-2.5rem, -6vw, -1rem);
-            bottom: -2.2rem;
-            width: min(19rem, 80vw);
-            padding: 1.1rem;
-            border: 1px solid var(--line);
-            background: var(--paper);
-            box-shadow: var(--shadow);
+        .hero-slide figcaption {
+            margin-top: 0.85rem;
+            color: #a8a8a8;
+            font-size: 0.85rem;
         }
 
-        .case-note strong {
+        /* Proof strip, directly under the hero */
+        .proof {
+            border-bottom: 1px solid var(--line);
+        }
+
+        .proof-inner {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+
+        .proof-item {
+            padding: clamp(1.75rem, 3vw, 2.5rem) clamp(1.25rem, 3vw, 2.5rem);
+        }
+
+        .proof-item:first-child {
+            padding-left: 0;
+        }
+
+        .proof-item + .proof-item {
+            border-left: 1px solid var(--line);
+        }
+
+        .proof-item strong {
             display: block;
-            color: var(--accent);
-            font-family: var(--serif);
-            font-size: 2.2rem;
-            line-height: 0.9;
+            font-size: clamp(1.6rem, 2.4vw, 2rem);
+            font-weight: 600;
+            line-height: 1.1;
+            letter-spacing: -0.02em;
         }
 
-        .case-note span {
-            display: block;
-            margin-top: 0.4rem;
-            color: var(--ink-soft);
-            font-size: 0.78rem;
-            font-weight: 700;
-            line-height: 1.45;
-            overflow-wrap: anywhere;
+        .proof-item p {
+            max-width: 30ch;
+            margin-top: 0.5rem;
+            color: var(--muted);
+            font-size: 0.95rem;
+            line-height: 1.55;
         }
 
+        /* Sections */
         .section {
-            padding: clamp(4.5rem, 9vw, 8rem) 0;
+            padding: clamp(4rem, 8vw, 6.5rem) 0;
         }
 
-        .section-inner {
-            width: min(var(--max), calc(100% - 2rem));
-            margin: 0 auto;
+        .section.tinted {
+            background: var(--layer);
         }
 
         .section-head {
-            display: grid;
-            grid-template-columns: minmax(0, 0.9fr) minmax(280px, 0.72fr);
-            gap: clamp(1.5rem, 5vw, 5rem);
-            align-items: start;
-            margin-bottom: clamp(2.2rem, 5vw, 4rem);
+            max-width: 46rem;
+            margin-bottom: clamp(2rem, 4vw, 3rem);
         }
 
-        .section-head h2 {
-            font-family: var(--serif);
-            font-size: clamp(2.2rem, 4.2vw, 3.6rem);
+        h2 {
+            font-size: clamp(2rem, 3.6vw, 3rem);
             font-weight: 600;
-            line-height: 1.05;
+            line-height: 1.1;
             letter-spacing: -0.02em;
-            color: var(--ink);
         }
 
         .section-head p {
-            margin: 0;
-            color: var(--ink-soft);
-            font-size: 1rem;
-            line-height: 1.75;
-            max-width: 58ch;
-            overflow-wrap: anywhere;
-        }
-
-        .portfolio {
-            background: var(--ink);
-            color: var(--paper);
-        }
-
-        .portfolio .section-head h2,
-        .portfolio .section-head p {
-            color: var(--paper);
-        }
-
-        .case-study {
-            display: grid;
-            gap: clamp(1.2rem, 2.8vw, 2rem);
-        }
-
-        .case-study-brief {
-            display: grid;
-            grid-template-columns: minmax(0, 0.86fr) minmax(280px, 0.56fr);
-            gap: clamp(1.2rem, 3vw, 2.4rem);
-            align-items: end;
-            padding: clamp(1.4rem, 3vw, 2rem) 0;
-            border-top: 1px solid rgba(255, 255, 255, 0.28);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.28);
-        }
-
-        .case-study-brief h3 {
-            max-width: 22ch;
-            margin-bottom: 0.8rem;
-            font-family: var(--serif);
-            font-size: clamp(1.5rem, 2.6vw, 2.2rem);
-            font-weight: 600;
-            line-height: 1.05;
-        }
-
-        .case-study-brief p {
-            margin: 0;
-            color: rgba(255, 255, 255, 0.82);
+            max-width: 62ch;
+            margin-top: 1rem;
+            color: var(--text-2);
+            font-size: 1.0625rem;
             line-height: 1.7;
         }
 
-        .case-study-actions {
+        /* What I do: a three-cell bento */
+        .bento {
+            display: grid;
+            grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr);
+            grid-template-areas:
+                "feature prep"
+                "feature dash";
+            gap: 1rem;
+        }
+
+        .tile {
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            background: var(--layer);
+        }
+
+        .tile-feature { grid-area: feature; }
+        .tile-prep { grid-area: prep; }
+        .tile-dash { grid-area: dash; }
+
+        .tile-media {
+            aspect-ratio: 16 / 9;
+            overflow: hidden;
+            border-bottom: 1px solid var(--line);
+            background: #ffffff;
+        }
+
+        .tile-media img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 700ms var(--ease);
+        }
+
+        .tile-crop {
+            position: relative;
+            height: 10.5rem;
+            margin-top: auto;
+            overflow: hidden;
+            border-top: 1px solid var(--line);
+            background: #ffffff;
+        }
+
+        .tile-crop img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 165%;
+            max-width: none;
+            transform: translate(-3.5%, -27%);
+            transition: transform 700ms var(--ease);
+        }
+
+        .tile:hover .tile-media img {
+            transform: scale(1.025);
+        }
+
+        .tile:hover .tile-crop img {
+            transform: translate(-3.5%, -29%);
+        }
+
+        .tile-body {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            padding: clamp(1.25rem, 2.5vw, 1.75rem);
+        }
+
+        .tile-prep .tile-body {
+            height: 100%;
+        }
+
+        .tile h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            line-height: 1.25;
+            letter-spacing: -0.01em;
+        }
+
+        .tile-feature h3 {
+            font-size: clamp(1.4rem, 2vw, 1.65rem);
+        }
+
+        .tile p {
+            color: var(--text-2);
+            line-height: 1.65;
+        }
+
+        .chips {
             display: flex;
             flex-wrap: wrap;
-            align-items: center;
-            gap: 0.6rem 1rem;
-            margin-top: 1.2rem;
+            gap: 0.4rem;
+            margin: auto 0 0;
+            padding: 0.25rem 0 0;
+            list-style: none;
         }
 
-        .case-study-actions small {
-            max-width: 42ch;
-            color: rgba(255, 255, 255, 0.74);
-            font-size: 0.82rem;
-            line-height: 1.55;
-        }
-
-        .case-study-proof {
-            display: grid;
-            gap: 0;
-            border: 1px solid rgba(255, 255, 255, 0.28);
-        }
-
-        .case-study-proof span {
-            display: flex;
-            justify-content: space-between;
-            gap: 1rem;
-            padding: 0.85rem 1rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-            color: rgba(255, 255, 255, 0.76);
-            font-size: 0.82rem;
+        .chips li {
+            padding: 0.25rem 0.6rem;
+            border: 1px solid var(--line-strong);
+            border-radius: var(--radius);
+            color: var(--text-2);
+            font-size: 0.8rem;
             font-weight: 600;
         }
 
-        .case-study-proof span:last-child {
-            border-bottom: 0;
-        }
-
-        .slide-gallery {
+        /* The checks: sticky heading beside the three rules */
+        .checks-grid {
             display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: clamp(1rem, 2vw, 1.35rem);
+            grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+            gap: clamp(2rem, 4.5vw, 4.5rem);
+            align-items: start;
         }
 
-        .case-study-shot {
-            display: grid;
-            gap: 0.9rem;
-            padding: 0;
-            border: 1px solid rgba(255, 255, 255, 0.24);
-            background: rgba(255, 255, 255, 0.06);
-            color: var(--paper);
-            cursor: pointer;
-            text-align: left;
+        .checks-head {
+            position: sticky;
+            top: calc(var(--nav-h) + 2.5rem);
         }
 
-        .case-study-shot.featured {
-            grid-column: 1 / -1;
+        .checks-head p {
+            margin-top: 1rem;
+            color: var(--text-2);
+            font-size: 1.0625rem;
+            line-height: 1.7;
         }
 
-        .case-study-shot img {
-            width: 100%;
-            aspect-ratio: 16 / 9;
-            object-fit: contain;
-            background: #ffffff;
-            transition: transform 550ms cubic-bezier(0.16, 1, 0.3, 1), filter 250ms ease;
-        }
-
-        .case-study-shot:hover img,
-        .case-study-shot:focus-visible img {
-            transform: scale(1.012);
-            filter: contrast(1.02);
-        }
-
-        .shot-caption {
-            display: grid;
-            gap: 0.3rem;
-            padding: 0 1rem 1rem;
-        }
-
-        .shot-caption span {
-            color: #78a9ff;
-            font-size: 0.72rem;
-            font-weight: 600;
-        }
-
-        .shot-caption strong {
-            color: var(--paper);
-            font-family: var(--serif);
-            font-size: clamp(1.25rem, 2vw, 1.9rem);
-            line-height: 1;
-        }
-
-        .shot-caption small {
-            color: rgba(255, 255, 255, 0.74);
-            font-size: 0.82rem;
-            line-height: 1.55;
-        }
-
-        .pricing-grid {
-            display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 1px;
-            background: var(--ink);
-            border: 1px solid var(--ink);
-        }
-
-        .price-panel {
-            display: grid;
-            align-content: start;
-            gap: 1.25rem;
-            min-height: 28rem;
-            padding: clamp(1.35rem, 3vw, 2rem);
-            background: var(--paper);
-            transition: transform 280ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 280ms ease;
-        }
-
-        .price-panel.featured {
-            background: var(--ink);
-            color: var(--paper);
-        }
-
-        .price-panel:hover {
-            transform: translateY(-0.22rem);
-            box-shadow: 0 18px 40px rgba(22, 22, 22, 0.12);
-        }
-
-        .price-panel h3 {
-            font-size: 0.92rem;
-            font-weight: 600;
-        }
-
-        .price {
-            font-family: var(--serif);
-            font-size: clamp(2.8rem, 5vw, 4.7rem);
-            font-weight: 600;
-            line-height: 0.92;
-        }
-
-        .price span {
-            display: block;
-            margin-top: 0.6rem;
-            font-family: var(--sans);
-            font-size: 0.76rem;
-            font-weight: 600;
-            color: var(--muted);
-        }
-
-        .featured .price span {
-            color: rgba(255, 255, 255, 0.82);
-        }
-
-        .price-panel ul {
-            display: grid;
-            gap: 0.85rem;
+        .checks-list {
             margin: 0;
             padding: 0;
             list-style: none;
         }
 
-        .price-panel li {
+        .checks-list li {
             display: grid;
-            grid-template-columns: 1rem auto;
-            gap: 0.65rem;
-            color: var(--ink-soft);
+            grid-template-columns: 3rem minmax(0, 1fr);
+            gap: 0 1.25rem;
+            align-items: start;
+            padding: 1.75rem 0;
+        }
+
+        .checks-list li:first-child {
+            padding-top: 0;
+        }
+
+        .checks-list li + li {
+            border-top: 1px solid var(--line-strong);
+        }
+
+        .checks-list h3 {
+            font-size: clamp(1.35rem, 2.2vw, 1.75rem);
+            font-weight: 600;
+            letter-spacing: -0.015em;
+        }
+
+        .checks-list p {
+            max-width: 52ch;
+            margin-top: 0.5rem;
+            color: var(--text-2);
+            font-size: 1.0625rem;
+            line-height: 1.7;
+        }
+
+        /* Example work: a slide viewer */
+        .work-head {
+            display: grid;
+            gap: 1rem;
+            max-width: 46rem;
+            margin-bottom: clamp(2rem, 4vw, 3rem);
+        }
+
+        .work-head p {
+            max-width: 62ch;
+            color: var(--text-2);
+            font-size: 1.0625rem;
+            line-height: 1.7;
+        }
+
+        .work-actions {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.75rem 1.25rem;
+            margin-top: 0.5rem;
+        }
+
+        .work-actions small {
+            max-width: 40ch;
+            color: var(--muted);
+            font-size: 0.875rem;
+            line-height: 1.5;
+        }
+
+        .viewer {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) 17rem;
+            grid-template-areas:
+                "stage tabs"
+                "caption tabs";
+            gap: 1.25rem 2rem;
+            align-items: start;
+        }
+
+        .viewer-panel {
+            grid-area: stage;
+            min-width: 0;
+        }
+
+        .viewer-stage {
+            display: block;
+            width: 100%;
+            padding: 0;
+            overflow: hidden;
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            background: #ffffff;
+            box-shadow: var(--shadow);
+            cursor: zoom-in;
+        }
+
+        .viewer-stage img {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            object-fit: contain;
+            transition: opacity 200ms ease, transform 480ms var(--ease);
+        }
+
+        .viewer-stage.is-swapping img {
+            opacity: 0;
+            transform: scale(0.985);
+        }
+
+        .viewer-caption {
+            grid-area: caption;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 0.5rem 1.5rem;
+        }
+
+        .viewer-caption h3 {
+            font-size: 1.15rem;
+            font-weight: 600;
+        }
+
+        .viewer-caption p {
+            flex: 1 1 22rem;
+            color: var(--muted);
             line-height: 1.55;
-            font-size: 0.92rem;
         }
 
-        .featured li {
-            color: rgba(255, 255, 255, 0.88);
+        .viewer-tabs {
+            grid-area: tabs;
+            display: grid;
+            gap: 0.125rem;
         }
 
-        .price-panel li::before {
+        .viewer-tab {
+            position: relative;
+            padding: 0.8rem 1rem;
+            border: 0;
+            border-radius: 0 var(--radius) var(--radius) 0;
+            background: transparent;
+            color: var(--muted);
+            font-size: 0.97rem;
+            font-weight: 600;
+            line-height: 1.3;
+            text-align: left;
+            cursor: pointer;
+            transition: color 160ms ease, background 160ms ease;
+        }
+
+        .viewer-tab::before {
             content: "";
-            width: 0.58rem;
-            height: 0.58rem;
-            margin-top: 0.48rem;
+            position: absolute;
+            inset: 0 auto 0 0;
+            width: 2px;
+            background: var(--line-strong);
+            transition: background 200ms ease;
+        }
+
+        .viewer-tab:hover {
+            color: var(--text);
+            background: var(--layer);
+        }
+
+        .viewer-tab[aria-selected="true"] {
+            color: var(--text);
+            background: var(--layer);
+        }
+
+        .viewer-tab[aria-selected="true"]::before {
             background: var(--accent);
         }
 
-        .featured li::before {
-            background: #78a9ff;
+        .work-facts {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 1rem 2rem;
+            margin: clamp(2.5rem, 5vw, 3.5rem) 0 0;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--line);
         }
 
-        .pricing-note {
-            margin: 1rem 0 0;
+        .work-facts dt {
             color: var(--muted);
             font-size: 0.85rem;
         }
 
+        .work-facts dd {
+            margin: 0.2rem 0 0;
+            font-weight: 600;
+        }
+
+        .work-note {
+            margin-top: 1.25rem;
+            color: var(--muted);
+            font-size: 0.875rem;
+        }
+
+        /* Pricing: the middle tier stands proud of the other two */
+        .tiers {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr) minmax(0, 1fr);
+            align-items: stretch;
+            padding-block: 1.25rem;
+        }
+
+        .tier {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            padding: clamp(1.5rem, 3vw, 2.25rem);
+            border: 1px solid var(--line);
+            background: var(--bg);
+        }
+
+        .tier:first-child {
+            border-right: 0;
+            border-radius: var(--radius) 0 0 var(--radius);
+        }
+
+        .tier:last-child {
+            border-left: 0;
+            border-radius: 0 var(--radius) var(--radius) 0;
+        }
+
+        .tier-featured {
+            margin-block: -1.25rem;
+            padding-block: calc(clamp(1.5rem, 3vw, 2.25rem) + 1.25rem);
+            border-color: transparent;
+            border-radius: var(--radius);
+            background: var(--feature-bg);
+            color: var(--feature-text);
+            box-shadow: var(--shadow);
+        }
+
+        .tier h3 {
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .price {
+            font-size: clamp(2.6rem, 4.4vw, 3.6rem);
+            font-weight: 600;
+            line-height: 1;
+            letter-spacing: -0.025em;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .price span {
+            display: block;
+            margin-top: 0.5rem;
+            color: var(--muted);
+            font-size: 0.875rem;
+            font-weight: 400;
+            letter-spacing: 0;
+        }
+
+        .tier-featured .price span {
+            color: var(--feature-muted);
+        }
+
+        .tier ul {
+            display: grid;
+            gap: 0.8rem;
+            margin: 0;
+            padding: 1.5rem 0 0;
+            border-top: 1px solid var(--line);
+            list-style: none;
+        }
+
+        .tier-featured ul {
+            border-top-color: rgba(255, 255, 255, 0.16);
+        }
+
+        .tier li {
+            display: grid;
+            grid-template-columns: 1rem minmax(0, 1fr);
+            gap: 0.7rem;
+            color: var(--text-2);
+            line-height: 1.55;
+        }
+
+        .tier-featured li {
+            color: var(--feature-muted);
+        }
+
+        /* Lucide "check", used as a mask so it takes the theme's blue */
+        .tier li::before {
+            content: "";
+            width: 1rem;
+            height: 1rem;
+            margin-top: 0.2rem;
+            background: var(--link);
+            -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E") center / contain no-repeat;
+            mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E") center / contain no-repeat;
+        }
+
+        .tier-featured li::before {
+            background: var(--feature-link);
+        }
+
+        .pricing-includes {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 2.5rem;
+            padding: 1.1rem 1.25rem;
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            background: var(--layer);
+        }
+
+        .pricing-includes p {
+            font-weight: 600;
+            line-height: 1.5;
+        }
+
+        .pricing-includes a {
+            color: var(--link);
+            text-underline-offset: 0.2em;
+        }
+
+        .pricing-note {
+            margin-top: 1rem;
+            color: var(--muted);
+            font-size: 0.875rem;
+        }
+
+        /* Security: one compact band */
         .security {
             display: grid;
-            grid-template-columns: 0.72fr 1fr;
-            gap: clamp(2rem, 5vw, 5rem);
+            grid-template-columns: auto minmax(0, 1fr);
+            gap: 1rem 1.5rem;
             align-items: start;
-            padding: clamp(2rem, 5vw, 3rem);
-            background: var(--ink);
-            color: var(--paper);
         }
 
         .security h2 {
-            font-family: var(--serif);
-            font-size: clamp(1.9rem, 3.4vw, 3rem);
-            font-weight: 600;
-            line-height: 1;
+            font-size: clamp(1.6rem, 2.6vw, 2.1rem);
         }
 
         .security p {
-            margin: 0;
-            color: rgba(255, 255, 255, 0.78);
-            line-height: 1.8;
+            max-width: 68ch;
+            margin-top: 0.85rem;
+            color: var(--text-2);
+            line-height: 1.7;
         }
 
         .security-points {
             display: flex;
             flex-wrap: wrap;
-            gap: 0.7rem;
-            margin-top: 1.2rem;
+            gap: 0.5rem;
+            margin: 1.25rem 0 0;
+            padding: 0;
+            list-style: none;
         }
 
-        .security-points span {
-            border: 1px solid rgba(255, 255, 255, 0.22);
-            padding: 0.55rem 0.75rem;
-            color: rgba(255, 255, 255, 0.82);
-            font-size: 0.8rem;
+        .security-points li {
+            padding: 0.4rem 0.75rem;
+            border: 1px solid var(--line-strong);
+            border-radius: var(--radius);
+            background: var(--bg);
+            color: var(--text-2);
+            font-size: 0.85rem;
             font-weight: 600;
         }
 
-        .contact {
-            padding-bottom: clamp(4rem, 8vw, 7rem);
-        }
-
+        /* Contact: one panel, the photo beside the call to action */
         .contact-panel {
             display: grid;
-            grid-template-columns: minmax(0, 0.92fr) minmax(280px, 0.58fr);
-            gap: clamp(2rem, 5vw, 4rem);
-            align-items: end;
-            padding-top: clamp(3rem, 8vw, 6rem);
-            border-top: 2px solid var(--ink);
+            grid-template-columns: minmax(0, 4fr) minmax(0, 7fr);
+            overflow: hidden;
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            background: var(--layer);
+        }
+
+        .contact-photo {
+            width: 100%;
+            height: 100%;
+            min-height: 22rem;
+            object-fit: cover;
+            object-position: center 15%;
+        }
+
+        .contact-body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: clamp(2rem, 5vw, 4rem);
         }
 
         .contact h2 {
-            max-width: 14ch;
-            font-family: var(--serif);
-            font-size: clamp(2.2rem, 4.6vw, 4rem);
-            font-weight: 600;
-            line-height: 1;
+            font-size: clamp(2rem, 3.6vw, 2.9rem);
+            line-height: 1.08;
         }
 
-        .contact p {
-            max-width: 47ch;
-            margin: 1.3rem 0 0;
-            color: var(--ink-soft);
-            line-height: 1.75;
-            overflow-wrap: anywhere;
+        .contact-lede {
+            max-width: 52ch;
+            margin-top: 1.25rem;
+            color: var(--text-2);
+            font-size: 1.0625rem;
+            line-height: 1.7;
         }
 
         .contact-actions {
-            display: grid;
-            gap: 0.8rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-top: 2rem;
         }
 
-        .contact-link {
-            display: grid;
-            grid-template-columns: 2.8rem auto;
-            align-items: center;
-            gap: 0.9rem;
-            min-width: 0;
-            padding: 1rem;
-            border: 1px solid var(--line);
-            background: rgba(255, 255, 255, 0.62);
-            color: var(--ink);
-            text-decoration: none;
-            transition: border-color 220ms ease, transform 220ms cubic-bezier(0.16, 1, 0.3, 1), background 220ms ease;
+        .contact-address {
+            margin-top: 1.25rem;
+            color: var(--muted);
+            font-size: 0.95rem;
         }
 
-        .contact-link:hover,
-        .contact-link:focus-visible {
-            border-color: var(--accent);
-            background: rgba(255, 255, 255, 0.92);
-            transform: translateX(0.2rem);
-        }
-
-        .contact-link .icon {
-            width: 1.25rem;
-            height: 1.25rem;
-            color: var(--accent);
-        }
-
-        .linkedin-logo {
-            width: 2rem;
-            height: 2rem;
-            border-radius: 0.22rem;
-            background: #0a66c2;
-            display: grid;
-            place-items: center;
-            color: #ffffff;
-            font-family: Arial, Helvetica, sans-serif;
-            font-size: 1.45rem;
-            font-weight: 600;
-            line-height: 1;
-        }
-
-        .contact-link strong,
-        .contact-link span {
-            display: block;
+        .contact-address a {
+            color: var(--text);
+            text-underline-offset: 0.2em;
             overflow-wrap: anywhere;
         }
 
-        .contact-link strong {
-            font-size: 0.78rem;
-            color: var(--muted);
+        .contact-address a:hover {
+            color: var(--link);
         }
 
-        .contact-link span {
-            margin-top: 0.15rem;
-            font-weight: 600;
-            line-height: 1.3;
+        .footer-inner a {
+            color: var(--text);
+            text-underline-offset: 0.2em;
+        }
+
+        .footer-inner a:hover {
+            color: var(--link);
         }
 
         .site-footer {
-            border-top: 1px solid var(--line);
             padding: 2rem 0;
+            border-top: 1px solid var(--line);
         }
 
         .footer-inner {
-            width: min(var(--max), calc(100% - 2rem));
-            margin: 0 auto;
             display: flex;
-            justify-content: space-between;
-            gap: 1rem;
             flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 0.5rem 1.5rem;
             color: var(--muted);
-            font-size: 0.78rem;
-            font-weight: 700;
+            font-size: 0.85rem;
         }
 
+        /* Lightbox for enlarged slides */
         .lightbox {
             position: fixed;
             inset: 0;
@@ -798,6 +1134,7 @@
             place-items: center;
             padding: 1rem;
             background: rgba(22, 22, 22, 0.92);
+            --focus: #ffffff;
         }
 
         .lightbox.active {
@@ -805,245 +1142,55 @@
         }
 
         .lightbox img {
-            max-width: min(1120px, 94vw);
-            max-height: 86vh;
+            max-width: min(1280px, 94vw);
+            max-height: 88vh;
             object-fit: contain;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            background: var(--paper);
-        }
-
-        .portrait-panel,
-        .portrait-panel img { border-radius: 12px; }
-        .case-note,
-        .contact-link,
-        .case-study-shot,
-        .case-study-proof,
-        .security-points span,
-        .mobile-toggle { border-radius: 8px; }
-        .case-study-shot { overflow: hidden; }
-        .pricing-grid,
-        .security { border-radius: 12px; overflow: hidden; }
-        .price-panel:hover { transform: none; box-shadow: none; }
-        .price, .case-note strong { font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
-        .section-head h2, .case-study-brief h3, .security h2, .contact h2 { letter-spacing: -0.02em; }
-        .brand-seal { border-radius: 6px; }
-        .price span { letter-spacing: 0; font-weight: 400; }
-        .price-panel { min-height: 0; }
-        .contact h2 { max-width: 18ch; }
-        .contact-panel { border-top: 1px solid var(--line); }
-        .shot-caption span { color: var(--accent-on-dark); }
-        :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
-
-        /* Hero: audience line spans the top; photo aligns with the headline */
-        .hero { min-height: 0; padding-bottom: 1.5rem; }
-        .hero-inner { align-items: start; row-gap: 1.75rem; }
-        .audience {
-            grid-column: 1 / -1;
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            gap: 0.6rem 0.75rem;
-        }
-        .audience-label { color: var(--muted); font-size: 0.95rem; font-weight: 400; }
-        .audience-tag {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.45rem 0.85rem 0.45rem 0.7rem;
-            border: 1px solid #d0e2ff;
-            border-radius: 999px;
-            background: #edf5ff;
-            color: var(--accent-hover);
-            font-size: 0.95rem;
-            font-weight: 600;
-        }
-        .audience-tag .icon { width: 1.1rem; height: 1.1rem; }
-        .hero-main { min-width: 0; }
-        .hero-copy { display: block; max-width: 560px; margin-top: 2rem; }
-        .hero-visual { align-self: start; }
-        .portrait-panel { transform: none; }
-
-        /* Services as cards with icons and tool chips */
-        .service-grid {
-            display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 1.25rem;
-        }
-        .checks {
-            margin-top: clamp(2.5rem, 5vw, 3.5rem);
-            padding-top: clamp(1.5rem, 3vw, 2rem);
-            border-top: 1px solid var(--line);
-        }
-        .checks h3 { margin: 0 0 1.25rem; font-size: 1.25rem; letter-spacing: -0.01em; }
-        .checks-list {
-            display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 1.25rem clamp(1.25rem, 3vw, 2.5rem);
-            margin: 0;
-            padding: 0;
-            list-style: none;
-        }
-        .checks-list li { color: var(--ink-soft); line-height: 1.55; }
-        .checks-list .check-num {
-            display: block;
-            margin-bottom: 0.4rem;
-            color: var(--accent);
-            font-size: 0.8rem;
-            font-weight: 600;
-            font-variant-numeric: tabular-nums;
-        }
-        .checks-list strong { color: var(--ink); }
-        .service-card {
-            display: flex;
-            flex-direction: column;
-            gap: 0.9rem;
-            padding: clamp(1.4rem, 2.5vw, 2rem);
-            border: 1px solid var(--line);
-            border-radius: 12px;
-            background: var(--paper-warm);
-            transition: border-color 200ms ease, background 200ms ease;
-        }
-        .service-card:hover { border-color: var(--accent); background: var(--paper); }
-        .service-icon {
-            display: grid;
-            place-items: center;
-            width: 3.25rem;
-            height: 3.25rem;
-            border-radius: 10px;
-            background: var(--accent);
-            color: #ffffff;
-        }
-        .service-icon .icon { width: 1.6rem; height: 1.6rem; }
-        .service-card h3 { font-size: 1.3rem; font-weight: 600; letter-spacing: -0.01em; }
-        .service-card p { margin: 0; color: var(--muted); line-height: 1.65; font-size: 0.97rem; flex: 1; }
-        .tool-chips {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.45rem;
-            margin: 0.4rem 0 0;
-            padding: 0;
-            list-style: none;
-        }
-        .tool-chips li {
-            padding: 0.3rem 0.65rem;
-            border: 1px solid var(--line);
-            border-radius: 6px;
-            background: var(--paper);
-            color: var(--ink-soft);
-            font-size: 0.8rem;
-            font-weight: 600;
-        }
-        @media (max-width: 920px) {
-            .service-grid { grid-template-columns: 1fr; }
-            .checks-list { grid-template-columns: 1fr; }
-            .hero-visual { margin-top: 1rem; }
-        }
-
-        /* Dark hero and nav, matching the cover of the client packs */
-        .site-nav {
-            background: rgba(22, 22, 22, 0.92);
-            border-bottom-color: rgba(255, 255, 255, 0.12);
-        }
-        .brand-mark, .brand-name { color: #ffffff; }
-        .brand-sub { color: #a8a8a8; }
-        .nav-links a { color: #e0e0e0; }
-        .nav-links a:hover,
-        .nav-links a:focus-visible { color: var(--accent-on-dark); }
-        .mobile-toggle { color: #ffffff; border-color: rgba(255, 255, 255, 0.3); }
-        .site-nav :focus-visible { outline-color: var(--accent-on-dark); }
-
-        .hero { background: var(--ink); color: #ffffff; padding-bottom: clamp(4rem, 7vw, 6rem); }
-        .hero h1 { color: #ffffff; }
-        .hero .hero-copy p { color: #c6c6c6; }
-        .hero .audience-label { color: #a8a8a8; }
-        .hero .audience-tag {
-            background: rgba(15, 98, 254, 0.16);
-            border-color: rgba(120, 169, 255, 0.45);
-            color: #a6c8ff;
-        }
-        .hero .button.secondary {
-            color: #ffffff;
-            border-color: rgba(255, 255, 255, 0.45);
-        }
-        .hero .button.secondary:hover,
-        .hero .button.secondary:focus-visible {
+            border-radius: var(--radius);
             background: #ffffff;
-            border-color: #ffffff;
-            color: var(--ink);
-        }
-        .hero .portrait-panel { box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5); }
-        .hero .case-note { border-color: transparent; box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45); }
-        .hero :focus-visible { outline-color: var(--accent-on-dark); }
-
-        /* Section intros sit directly under their heading */
-        .section-head {
-            grid-template-columns: 1fr;
-            gap: 1rem;
-            align-items: start;
-        }
-        .section-head p { max-width: 62ch; font-size: 1.05rem; }
-
-        .lightbox button:focus-visible {
-            outline: 2px solid var(--paper);
-            outline-offset: 2px;
         }
 
         .lightbox button {
             position: fixed;
             top: 1rem;
             right: 1rem;
-            width: 2.9rem;
-            height: 2.9rem;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            background: transparent;
-            color: var(--paper);
-            cursor: pointer;
         }
 
+        .nowrap {
+            white-space: nowrap;
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            overflow: hidden;
+            clip-path: inset(50%);
+            white-space: nowrap;
+        }
+
+        /* Motion: load-in for the hero, reveal on scroll for the rest. All of it is off for reduced motion. */
         @media (prefers-reduced-motion: no-preference) {
-            @keyframes note-place {
-                0% {
-                    transform: translate(-0.35rem, 0.55rem);
-                    opacity: 0;
-                }
-                100% {
-                    transform: translate(0, 0);
-                    opacity: 1;
-                }
+            @keyframes rise {
+                from { opacity: 0; transform: translateY(16px); }
+                to { opacity: 1; transform: none; }
+            }
+
+            .hero-copy > *,
+            .hero-slide {
+                animation: rise 820ms var(--ease) both;
+                animation-delay: calc(var(--i, 0) * 90ms + 60ms);
             }
 
             .js .reveal {
                 opacity: 0;
-                transform: translateY(22px);
-                transition: opacity 760ms cubic-bezier(0.16, 1, 0.3, 1), transform 760ms cubic-bezier(0.16, 1, 0.3, 1);
-                will-change: opacity, transform;
+                transform: translateY(20px);
+                transition: opacity 720ms var(--ease), transform 720ms var(--ease);
+                transition-delay: calc(var(--i, 0) * 80ms);
             }
 
             .js .reveal.visible {
                 opacity: 1;
-                transform: translateY(0);
-            }
-
-            .hero h1.reveal { transition-delay: 180ms; }
-            .hero .hero-copy.reveal { transition-delay: 310ms; }
-            .hero .hero-visual.reveal { transition-delay: 420ms; }
-
-            .section-head .reveal:nth-child(1) { transition-delay: 60ms; }
-            .section-head .reveal:nth-child(2) { transition-delay: 180ms; }
-
-            .hero-visual.visible .case-note {
-                animation: note-place 760ms cubic-bezier(0.16, 1, 0.3, 1) 620ms both;
-            }
-
-            .case-study-shot {
-                transition: transform 360ms cubic-bezier(0.16, 1, 0.3, 1), border-color 260ms ease, background 260ms ease;
-            }
-
-            .case-study-shot:hover,
-            .case-study-shot:focus-visible {
-                transform: translateY(-0.3rem);
-                border-color: rgba(120, 169, 255, 0.72);
-                background: rgba(255, 255, 255, 0.1);
+                transform: none;
             }
         }
 
@@ -1052,137 +1199,158 @@
                 scroll-behavior: auto;
             }
 
-            *,
-            *::before,
-            *::after {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
-            }
-
-            .reveal {
-                opacity: 1;
-                transform: none;
+            *, *::before, *::after {
+                animation: none !important;
+                transition: none !important;
             }
         }
 
-        @media (max-width: 920px) {
+        @media (min-width: 768px) {
+            .wrap {
+                width: min(var(--max), calc(100% - 4rem));
+            }
+        }
+
+        @media (max-width: 960px) {
             .nav-links {
                 position: absolute;
-                inset: 74px 0 auto 0;
+                inset: var(--nav-h) 0 auto 0;
                 display: none;
-                padding: 0.5rem 1rem 1rem;
-                background: var(--ink);
+                padding: 0.5rem 1rem 1.25rem;
+                background: #161616;
                 border-bottom: 1px solid rgba(255, 255, 255, 0.12);
             }
 
             .nav-links.open {
                 display: grid;
+                gap: 0;
             }
 
             .nav-links a:not(.button) {
-                padding: 0.7rem 0;
-                font-size: 0.95rem;
-            }
-
-            .mobile-toggle {
-                display: grid;
-                place-items: center;
+                padding: 0.8rem 0;
+                font-size: 1rem;
             }
 
             .nav-links .button {
                 justify-self: start;
+                min-height: 3rem;
                 margin-top: 0.5rem;
+                padding: 0 1.25rem;
             }
 
-            .hero {
-                min-height: auto;
-                padding-top: 7.8rem;
+            .mobile-toggle {
+                display: grid;
             }
 
             .hero-inner,
-            .hero-copy,
-            .section-head,
-            .case-study-brief,
-            .security,
+            .checks-grid,
             .contact-panel {
-                grid-template-columns: 1fr;
+                grid-template-columns: minmax(0, 1fr);
             }
 
-            h1 {
-                max-width: 11ch;
+            .contact-photo {
+                height: auto;
+                min-height: 0;
+                aspect-ratio: 4 / 3;
+                object-position: center 20%;
             }
 
-            .hero-visual {
-                min-height: auto;
+            .checks-head {
+                position: static;
             }
 
-            .portrait-panel {
-                justify-self: start;
-                width: min(72vw, 330px);
-                transform: none;
+            .bento {
+                grid-template-columns: minmax(0, 1fr);
+                grid-template-areas:
+                    "feature"
+                    "prep"
+                    "dash";
             }
 
-            .case-note {
-                right: 0;
-                left: auto;
-                bottom: -1.4rem;
+            .viewer {
+                grid-template-columns: minmax(0, 1fr);
+                grid-template-areas:
+                    "stage"
+                    "tabs"
+                    "caption";
             }
 
-            .slide-gallery,
-            .pricing-grid {
-                grid-template-columns: 1fr;
+            /* The slide list becomes a row you can swipe */
+            .viewer-tabs {
+                display: flex;
+                gap: 0.5rem;
+                margin-inline: -1rem;
+                padding: 0.25rem 1rem;
+                overflow-x: auto;
+                scroll-snap-type: x mandatory;
+                scroll-padding-inline: 1rem;
+                scrollbar-width: none;
             }
 
-            .case-study-shot.featured {
-                grid-column: auto;
+            .viewer-tab {
+                flex: none;
+                scroll-snap-align: start;
+                border: 1px solid var(--line-strong);
+                border-radius: var(--radius);
+                white-space: nowrap;
+            }
+
+            .viewer-tab::before {
+                display: none;
+            }
+
+            .viewer-tab[aria-selected="true"] {
+                border-color: var(--accent);
+                box-shadow: inset 0 0 0 1px var(--accent);
+            }
+
+            .tiers {
+                grid-template-columns: minmax(0, 1fr);
+                gap: 1rem;
+                padding-block: 0;
+            }
+
+            .tier,
+            .tier:first-child,
+            .tier:last-child {
+                border: 1px solid var(--line);
+                border-radius: var(--radius);
+            }
+
+            .tier-featured {
+                margin-block: 0;
+                padding-block: clamp(1.5rem, 3vw, 2.25rem);
+                border-color: transparent;
             }
         }
 
-        @media (max-width: 560px) {
-            .nav-inner {
-                width: min(100% - 1rem, var(--max));
-            }
-
+        @media (max-width: 700px) {
             .brand-sub {
                 display: none;
             }
 
-            .hero,
-            .section {
-                padding-left: 0;
-                padding-right: 0;
+            .proof-inner,
+            .work-facts {
+                grid-template-columns: minmax(0, 1fr);
             }
 
-            .hero-inner,
-            .section-inner {
-                width: min(100% - 1.1rem, var(--max));
+            .proof-item,
+            .proof-item:first-child {
+                padding: 1.5rem 0;
             }
 
-            .hero-actions {
+            .proof-item + .proof-item {
+                border-left: 0;
+                border-top: 1px solid var(--line);
+            }
+
+            .hero-actions,
+            .contact-actions {
                 display: grid;
             }
 
-            .button {
-                width: 100%;
-            }
-
-            .case-note {
-                position: relative;
-                width: calc(100% - 1rem);
-                left: auto;
-                right: auto;
-                bottom: auto;
-                margin: -1rem 0.5rem 0;
-            }
-
-            .portrait-panel {
-                width: 100%;
-            }
-
-            .pricing-grid,
             .security {
-                margin-inline: -0.1rem;
+                grid-template-columns: minmax(0, 1fr);
             }
         }
     </style>
@@ -1191,181 +1359,199 @@
     <a class="skip-link" href="#main">Skip to content</a>
 
     <nav class="site-nav" aria-label="Primary navigation">
-        <div class="nav-inner">
+        <div class="wrap nav-inner">
             <a class="brand-mark" href="#top" aria-label="Midlands Legal BI home">
-                <span class="brand-seal">MLBI</span>
+                <span class="brand-seal" aria-hidden="true">MLBI</span>
                 <span>
                     <span class="brand-name">Midlands Legal BI</span>
                     <span class="brand-sub">Monthly reporting, made reliable</span>
                 </span>
             </a>
-            <button class="mobile-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links">
-                <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 5h16"/><path d="M4 12h16"/><path d="M4 19h16"/></svg>
-            </button>
             <div class="nav-links" id="nav-links">
                 <a href="#services">Services</a>
                 <a href="#portfolio">Work</a>
                 <a href="#pricing">Pricing</a>
-                <a class="button" href="#contact">Book a call</a>
+                <a class="button" href="#contact">Book a free call</a>
+            </div>
+            <div class="nav-tools">
+                <button class="icon-button theme-toggle" type="button" aria-label="Switch between light and dark mode">
+                    <svg class="icon icon-moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+                    <svg class="icon icon-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+                </button>
+                <button class="icon-button mobile-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links">
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 5h16"/><path d="M4 12h16"/><path d="M4 19h16"/></svg>
+                </button>
             </div>
         </div>
     </nav>
 
     <main id="main">
         <section class="hero" id="top">
-            <div class="hero-inner">
-                <div class="audience reveal">
-                    <span class="audience-label">Reporting and BI for</span>
-                    <span class="audience-tag"><svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M10 18v-7"/><path d="M11.119 2.205a2 2 0 0 1 1.762 0l7.84 3.846A.5.5 0 0 1 20.5 7h-17a.5.5 0 0 1-.22-.949z"/><path d="M14 18v-7"/><path d="M18 18v-7"/><path d="M3 22h18"/><path d="M6 18v-7"/></svg>Law firms</span>
-                    <span class="audience-tag"><svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M11 15h2a2 2 0 1 0 0-4h-3c-.6 0-1.1.2-1.4.6L3 17"/><path d="m7 21 1.6-1.4c.3-.4.8-.6 1.4-.6h4c1.1 0 2.1-.4 2.8-1.2l4.6-4.4a2 2 0 0 0-2.75-2.91l-4.2 3.9"/><path d="m2 16 6 6"/><circle cx="16" cy="9" r="2.9"/><circle cx="6" cy="5" r="3"/></svg>Debt collection agencies</span>
-                </div>
-                <div class="hero-main">
-                    <h1 class="reveal">Reports that arrive before they are chased.</h1>
-                    <div class="hero-copy reveal">
-                        <p>Fixed-fee reporting automation and monthly review packs, delivered on the same day every month.</p>
-                        <div class="hero-actions">
-                            <a class="button" href="#contact">Book a free consultation</a>
-                            <a class="button secondary" href="#portfolio">See the work</a>
-                        </div>
+            <div class="wrap hero-inner">
+                <div class="hero-copy">
+                    <p class="hero-eyebrow" style="--i: 0">For debt recovery teams in law firms and collection agencies</p>
+                    <h1 style="--i: 1">Reports that arrive before they are chased.</h1>
+                    <p class="hero-lede" style="--i: 2">Fixed-fee monthly reporting and review packs, delivered on the same day every month.</p>
+                    <div class="hero-actions" style="--i: 3">
+                        <a class="button" href="#contact">Book a free call</a>
+                        <a class="button ghost" href="#portfolio">See the work</a>
                     </div>
                 </div>
-                <div class="hero-visual reveal">
-                    <figure class="portrait-panel">
-                        <img src="Selfie.jpg" width="796" height="822" alt="Beresford Salmon, founder of Midlands Legal BI">
-                    </figure>
-                    <div class="case-note">
-                        <strong>Zero</strong>
-                        <span>missed reporting deadlines in over 3 years of monthly legal-sector reporting.</span>
-                    </div>
+                <figure class="hero-slide" style="--i: 2">
+                    <img src="review-sample-01-executive-summary.png" width="3200" height="1800" fetchpriority="high" alt="Anonymised executive summary slide from a monthly debt recovery pack, with KPI cards, the month's balance movement and cases awaiting client instructions">
+                    <figcaption>From an anonymised sample pack. The figures are invented.</figcaption>
+                </figure>
+            </div>
+        </section>
+
+        <section class="proof" aria-label="At a glance">
+            <div class="wrap proof-inner">
+                <div class="proof-item reveal" style="--i: 0">
+                    <strong>Zero</strong>
+                    <p>missed deadlines in monthly <span class="nowrap">legal-sector</span> reporting since July 2023.</p>
+                </div>
+                <div class="proof-item reveal" style="--i: 1">
+                    <strong>Reconciled</strong>
+                    <p>Every total is checked against your source data before a pack can be sent.</p>
+                </div>
+                <div class="proof-item reveal" style="--i: 2">
+                    <strong>Fixed fee</strong>
+                    <p>Monthly retainers from £1,200. The first consultation is free.</p>
                 </div>
             </div>
         </section>
 
         <section class="section" id="services">
-            <div class="section-inner">
-                <div class="section-head">
-                    <div>
-                        <h2 class="reveal">What I do</h2>
-                    </div>
-                    <p class="reveal">I take the exports from your case management and finance systems, clean and join them, and turn them into a report your team gets on the same day every month, without anyone rebuilding a spreadsheet by hand.</p>
-                </div>
+            <div class="wrap">
+                <header class="section-head reveal">
+                    <h2>What I do</h2>
+                    <p>I take the exports from your case management and finance systems, clean and join them, and turn them into a report your team gets on the same day every month, without anyone rebuilding a spreadsheet by hand.</p>
+                </header>
 
-                <div class="service-grid reveal">
-                    <article class="service-card">
-                        <span class="service-icon"><svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 15 21.84"/><path d="M21 5V8"/><path d="M21 12L18 17H22L19 22"/><path d="M3 12A9 3 0 0 0 14.59 14.87"/></svg></span>
-                        <h3>Automated data preparation</h3>
-                        <p>Raw exports from your case management and finance systems become the same clean, reconciled dataset every month, with as little manual handling as possible.</p>
-                        <ul class="tool-chips" aria-label="Tools used"><li>Excel</li><li>Power Query</li><li>SQL</li><li>Python</li></ul>
+                <div class="bento">
+                    <article class="tile tile-feature reveal" style="--i: 0">
+                        <div class="tile-media">
+                            <img src="review-sample-07-commentary.png" width="3200" height="1800" loading="lazy" decoding="async" alt="An anonymised commentary slide with What matters and What needs attention panels">
+                        </div>
+                        <div class="tile-body">
+                            <h3>Monthly review packs</h3>
+                            <p>An interactive HTML, PDF or PowerPoint pack that explains what changed since last month, why, and what needs a decision.</p>
+                            <ul class="chips" aria-label="Formats"><li>HTML</li><li>PDF</li><li>PowerPoint</li></ul>
+                        </div>
                     </article>
-                    <article class="service-card">
-                        <span class="service-icon"><svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg></span>
-                        <h3>Excel and HTML dashboards</h3>
-                        <p>KPIs, trends, exceptions, and client performance in one monthly view, reconciled back to the source figures.</p>
-                        <ul class="tool-chips" aria-label="Tools used"><li>Excel</li><li>HTML</li></ul>
+                    <article class="tile tile-prep reveal" style="--i: 1">
+                        <div class="tile-body">
+                            <span class="icon-tile"><svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 15 21.84"/><path d="M21 5V8"/><path d="M21 12L18 17H22L19 22"/><path d="M3 12A9 3 0 0 0 14.59 14.87"/></svg></span>
+                            <h3>Clean, reconciled data</h3>
+                            <p>Raw exports from your case management and finance systems become the same clean, reconciled dataset every month.</p>
+                            <ul class="chips" aria-label="Tools used"><li>Excel</li><li>Power Query</li><li>SQL</li><li>Python</li></ul>
+                        </div>
                     </article>
-                    <article class="service-card">
-                        <span class="service-icon"><svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M2 3h20"/><path d="M21 3v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V3"/><path d="m7 21 5-5 5 5"/></svg></span>
-                        <h3>Monthly review packs</h3>
-                        <p>An interactive HTML, PDF or PowerPoint pack that explains what changed since last month, why, and what needs a decision.</p>
-                        <ul class="tool-chips" aria-label="Tools used"><li>HTML</li><li>PDF</li><li>PowerPoint</li></ul>
+                    <article class="tile tile-dash reveal" style="--i: 2">
+                        <div class="tile-body">
+                            <h3>Excel and HTML dashboards</h3>
+                            <p>KPIs, trends, exceptions, and client performance in one monthly view, reconciled back to the source figures.</p>
+                            <ul class="chips" aria-label="Tools used"><li>Excel</li><li>HTML</li></ul>
+                        </div>
+                        <div class="tile-crop">
+                            <img src="review-sample-04-trend.png" width="3200" height="1800" loading="lazy" decoding="async" alt="Detail of an anonymised 12-month balance trend chart">
+                        </div>
                     </article>
-                </div>
-
-                <div class="checks reveal">
-                    <h3>Every figure is checked before it reaches you</h3>
-                    <ol class="checks-list">
-                        <li><span class="check-num">01</span><strong>Reconciled.</strong> Totals must agree on every slide, with the source data, and with your own backup workbook.</li>
-                        <li><span class="check-num">02</span><strong>Blocked if wrong.</strong> If a check fails, the pack can't be sent. I see a clearly marked preview and fix the problem first.</li>
-                        <li><span class="check-num">03</span><strong>Flagged, not hidden.</strong> If your case-management system has something wrong, such as a live case showing a zero balance, I list it for your team to correct rather than quietly patching the report.</li>
-                    </ol>
                 </div>
             </div>
         </section>
 
-        <section class="section portfolio" id="portfolio">
-            <div class="section-inner">
-                <div class="section-head">
-                    <div>
-                        <h2 class="reveal">Example work</h2>
-                    </div>
+        <section class="section tinted" id="checks">
+            <div class="wrap checks-grid">
+                <div class="checks-head reveal">
+                    <h2>Every figure is checked before it reaches you</h2>
                 </div>
-
-                <div class="case-study reveal">
-                    <div class="case-study-brief">
+                <ol class="checks-list">
+                    <li class="reveal" style="--i: 0">
+                        <span class="icon-tile"><svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg></span>
                         <div>
-                            <h3>Anonymised debt recovery review</h3>
-                            <p>The monthly pack a law firm's debt recovery team sends its client: balance movement, recoveries, the collection pipeline, cases awaiting instructions, the instalment forecast and the return on each year's instructions. It is built from case management exports, and every figure is checked against the source workbook before it goes out. This sample keeps a live client pack's layout and interactions; the figures are invented, and no client or firm is named.</p>
-                            <div class="case-study-actions">
-                                <a class="button" href="debt-recovery-review-sample.html" target="_blank" rel="noopener">Open the interactive demo</a>
-                                <small>Opens in a new tab: click through the slides, switch views and hover for exact figures. Best on a laptop or desktop.</small>
-                            </div>
+                            <h3>Reconciled.</h3>
+                            <p>Totals must agree on every slide, with the source data, and with your own backup workbook.</p>
                         </div>
-                        <div class="case-study-proof" role="list" aria-label="About this sample">
-                            <span role="listitem">Format <strong>Interactive HTML pack</strong></span>
-                            <span role="listitem">Workflow <strong>Excel model to reconciled pack</strong></span>
-                            <span role="listitem">Focus <strong>Movement, blockers, forecast</strong></span>
+                    </li>
+                    <li class="reveal" style="--i: 1">
+                        <span class="icon-tile"><svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m15 9-6 6"/><path d="M2.586 16.726A2 2 0 0 1 2 15.312V8.688a2 2 0 0 1 .586-1.414l4.688-4.688A2 2 0 0 1 8.688 2h6.624a2 2 0 0 1 1.414.586l4.688 4.688A2 2 0 0 1 22 8.688v6.624a2 2 0 0 1-.586 1.414l-4.688 4.688a2 2 0 0 1-1.414.586H8.688a2 2 0 0 1-1.414-.586z"/><path d="m9 9 6 6"/></svg></span>
+                        <div>
+                            <h3>Blocked if wrong.</h3>
+                            <p>If a check fails, the pack can't be sent. I see a clearly marked preview and fix the problem first.</p>
                         </div>
-                    </div>
+                    </li>
+                    <li class="reveal" style="--i: 2">
+                        <span class="icon-tile"><svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" x2="4" y1="22" y2="15"/></svg></span>
+                        <div>
+                            <h3>Flagged, not hidden.</h3>
+                            <p>If your case-management system has something wrong, such as a live case showing a zero balance, I list it for your team to correct rather than quietly patching the report.</p>
+                        </div>
+                    </li>
+                </ol>
+            </div>
+        </section>
 
-                    <div class="slide-gallery" role="group" aria-label="Anonymised debt recovery review slides">
-                    <button class="case-study-shot featured" type="button" data-full="review-sample-01-executive-summary.png">
-                        <img src="review-sample-01-executive-summary.png" width="3200" height="1800" loading="lazy" decoding="async" alt="Anonymised executive summary slide with KPI cards, the month's balance movement and cases awaiting client instructions">
-                        <span class="shot-caption">
-                            <span>01</span>
-                            <strong>Executive summary</strong>
-                            <small>Balance, recoveries, new instructions and cases awaiting instructions on one page.</small>
-                        </span>
-                    </button>
-                    <button class="case-study-shot" type="button" data-full="review-sample-02-balance-movement.png">
-                        <img src="review-sample-02-balance-movement.png" width="3200" height="1800" loading="lazy" decoding="async" alt="Anonymised current balance movement waterfall slide">
-                        <span class="shot-caption">
-                            <span>02</span>
-                            <strong>Balance movement</strong>
-                            <small>A waterfall from last month's balance to this month's, step by step.</small>
-                        </span>
-                    </button>
-                    <button class="case-study-shot" type="button" data-full="review-sample-03-instalment-forecast.png">
-                        <img src="review-sample-03-instalment-forecast.png" width="3200" height="1800" loading="lazy" decoding="async" alt="Anonymised instalment plan forecast slide with a cumulative chart and yearly table">
-                        <span class="shot-caption">
-                            <span>03</span>
-                            <strong>Instalment plan forecast</strong>
-                            <small>What agreed plans should collect each year, and what the forecast leaves out.</small>
-                        </span>
-                    </button>
-                    <button class="case-study-shot" type="button" data-full="review-sample-04-trend.png">
-                        <img src="review-sample-04-trend.png" width="3200" height="1800" loading="lazy" decoding="async" alt="Anonymised 12-month current balance trend slide">
-                        <span class="shot-caption">
-                            <span>04</span>
-                            <strong>12-month trend</strong>
-                            <small>Balance, recoveries and new instructions, switchable in the pack.</small>
-                        </span>
-                    </button>
-                    <button class="case-study-shot" type="button" data-full="review-sample-05-awaiting-instructions.png">
-                        <img src="review-sample-05-awaiting-instructions.png" width="3200" height="1800" loading="lazy" decoding="async" alt="Anonymised awaiting client instructions ageing slide">
-                        <span class="shot-caption">
-                            <span>05</span>
-                            <strong>Awaiting client instructions</strong>
-                            <small>How long cases have waited on the client, with four months or more in red.</small>
-                        </span>
-                    </button>
-                    <button class="case-study-shot" type="button" data-full="review-sample-06-return-on-instruction.png">
-                        <img src="review-sample-06-return-on-instruction.png" width="3200" height="1800" loading="lazy" decoding="async" alt="Anonymised return on instruction slide showing outcomes by instruction year">
-                        <span class="shot-caption">
-                            <span>06</span>
-                            <strong>Return on instruction</strong>
-                            <small>What each instruction year has recovered, written off and still has open.</small>
-                        </span>
-                    </button>
-                    <button class="case-study-shot" type="button" data-full="review-sample-07-commentary.png">
-                        <img src="review-sample-07-commentary.png" width="3200" height="1800" loading="lazy" decoding="async" alt="Anonymised commentary slide with What matters and What needs attention panels">
-                        <span class="shot-caption">
-                            <span>07</span>
-                            <strong>Written commentary</strong>
-                            <small>What matters this month, and what needs a decision, written for the figures.</small>
-                        </span>
-                    </button>
+        <section class="section" id="portfolio">
+            <div class="wrap">
+                <header class="work-head reveal">
+                    <h2>Example work</h2>
+                    <p>An anonymised debt recovery review: the monthly pack a law firm's debt recovery team sends its client. It is built from case management exports, and every figure is checked against the source workbook before it goes out.</p>
+                    <div class="work-actions">
+                        <a class="button" href="debt-recovery-review-sample.html" target="_blank" rel="noopener">Open the demo <svg class="icon icon-out" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></a>
+                        <small>Opens in a new tab: click through the slides, switch views and hover for exact figures. Best on a laptop or desktop.</small>
+                    </div>
+                </header>
+
+                <div class="viewer reveal">
+                    <div class="viewer-panel" id="slide-panel" role="tabpanel" aria-labelledby="slide-tab-1">
+                        <button class="viewer-stage" type="button" data-full="review-sample-01-executive-summary.png">
+                            <img src="review-sample-01-executive-summary.png" width="3200" height="1800" decoding="async" alt="Anonymised executive summary slide with KPI cards, the month's balance movement and cases awaiting client instructions">
+                            <span class="sr-only">Enlarge this slide</span>
+                        </button>
+                    </div>
+                    <div class="viewer-caption" aria-live="polite">
+                        <h3 id="slide-title">Executive summary</h3>
+                        <p id="slide-desc">Balance, recoveries, new instructions and cases awaiting instructions on one page.</p>
+                    </div>
+                    <div class="viewer-tabs" role="tablist" aria-label="Slides in the sample pack">
+                        <button class="viewer-tab" type="button" role="tab" id="slide-tab-1" aria-controls="slide-panel" aria-selected="true" tabindex="0"
+                            data-src="review-sample-01-executive-summary.png"
+                            data-alt="Anonymised executive summary slide with KPI cards, the month's balance movement and cases awaiting client instructions"
+                            data-desc="Balance, recoveries, new instructions and cases awaiting instructions on one page.">Executive summary</button>
+                        <button class="viewer-tab" type="button" role="tab" id="slide-tab-2" aria-controls="slide-panel" aria-selected="false" tabindex="-1"
+                            data-src="review-sample-02-balance-movement.png"
+                            data-alt="Anonymised current balance movement waterfall slide"
+                            data-desc="A waterfall from last month's balance to this month's, step by step.">Balance movement</button>
+                        <button class="viewer-tab" type="button" role="tab" id="slide-tab-3" aria-controls="slide-panel" aria-selected="false" tabindex="-1"
+                            data-src="review-sample-03-instalment-forecast.png"
+                            data-alt="Anonymised instalment plan forecast slide with a cumulative chart and yearly table"
+                            data-desc="What agreed plans should collect each year, and what the forecast leaves out.">Instalment plan forecast</button>
+                        <button class="viewer-tab" type="button" role="tab" id="slide-tab-4" aria-controls="slide-panel" aria-selected="false" tabindex="-1"
+                            data-src="review-sample-04-trend.png"
+                            data-alt="Anonymised 12-month current balance trend slide"
+                            data-desc="Balance, recoveries and new instructions, switchable in the pack.">12-month trend</button>
+                        <button class="viewer-tab" type="button" role="tab" id="slide-tab-5" aria-controls="slide-panel" aria-selected="false" tabindex="-1"
+                            data-src="review-sample-05-awaiting-instructions.png"
+                            data-alt="Anonymised awaiting client instructions ageing slide"
+                            data-desc="How long cases have waited on the client, with four months or more in red.">Awaiting client instructions</button>
+                        <button class="viewer-tab" type="button" role="tab" id="slide-tab-6" aria-controls="slide-panel" aria-selected="false" tabindex="-1"
+                            data-src="review-sample-06-return-on-instruction.png"
+                            data-alt="Anonymised return on instruction slide showing outcomes by instruction year"
+                            data-desc="What each instruction year has recovered, written off and still has open.">Return on instruction</button>
+                        <button class="viewer-tab" type="button" role="tab" id="slide-tab-7" aria-controls="slide-panel" aria-selected="false" tabindex="-1"
+                            data-src="review-sample-07-commentary.png"
+                            data-alt="Anonymised commentary slide with What matters and What needs attention panels"
+                            data-desc="What matters this month, and what needs a decision, written for the figures.">Written commentary</button>
                     </div>
                 </div>
+
+                <dl class="work-facts reveal">
+                    <div><dt>Format</dt><dd>Interactive HTML pack</dd></div>
+                    <div><dt>Workflow</dt><dd>Excel model to reconciled pack</dd></div>
+                    <div><dt>Focus</dt><dd>Movement, blockers, forecast</dd></div>
+                </dl>
+                <p class="work-note">This sample keeps a live client pack's layout and interactions; the figures are invented, and no client or firm is named.</p>
             </div>
         </section>
 
@@ -1377,104 +1563,110 @@
         -->
 
         <section class="section" id="pricing">
-            <div class="section-inner">
-                <div class="section-head">
-                    <div>
-                        <h2 class="reveal">Pricing</h2>
-                    </div>
-                    <p class="reveal">Fixed monthly fees, so the cost does not creep up with the hours. The first consultation is free; after that, each retainer is scoped around how often you need reporting, how many data sources are involved, and how much written commentary you want.</p>
-                </div>
+            <div class="wrap">
+                <header class="section-head reveal">
+                    <h2>Pricing</h2>
+                    <p>Fixed monthly fees, so the cost does not creep up with the hours. The first consultation is free; after that, each retainer is scoped around how often you need reporting, how many data sources are involved, and how much written commentary you want.</p>
+                </header>
 
-                <div class="pricing-grid reveal">
-                    <article class="price-panel">
+                <div class="tiers reveal">
+                    <article class="tier">
                         <h3>Entry</h3>
-                        <div class="price">£1,200 <span>per month</span></div>
+                        <p class="price">£1,200 <span>per month</span></p>
                         <ul>
                             <li>Single monthly report or dashboard</li>
                             <li>One to two data sources</li>
-                            <li>Automated preparation workflow</li>
+                            <li>Data preparation and reconciliation</li>
                         </ul>
                     </article>
-                    <article class="price-panel featured">
+                    <article class="tier tier-featured">
                         <h3>Standard</h3>
-                        <div class="price">£1,500 <span>per month</span></div>
+                        <p class="price">£1,500 <span>per month</span></p>
                         <ul>
                             <li>Multiple reports or dashboard views</li>
                             <li>Three or more data sources</li>
                             <li>Portfolio analytics and monthly commentary</li>
                         </ul>
                     </article>
-                    <article class="price-panel">
+                    <article class="tier">
                         <h3>Premium</h3>
-                        <div class="price">£2,000+ <span>per month</span></div>
+                        <p class="price">£2,000+ <span>per month</span></p>
                         <ul>
                             <li>Four or more deliverables</li>
                             <li>High-volume case and client datasets</li>
-                            <li>Automated pipelines across several source systems</li>
+                            <li>Data joined across several source systems</li>
                         </ul>
                     </article>
+                </div>
+                <div class="pricing-includes reveal">
+                    <span class="icon-tile"><svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M18 6 7 17l-5-5"/><path d="m22 10-7.5 7.5L13 16"/></svg></span>
+                    <p>Every plan includes <a href="#checks">the three checks</a> on every figure, and delivery on the same day every month.</p>
                 </div>
                 <p class="pricing-note">No VAT is charged: I'm not VAT registered.</p>
             </div>
         </section>
 
-        <section class="section">
-            <div class="section-inner security reveal">
-                <h2>Security and compliance</h2>
+        <section class="section tinted" aria-labelledby="security-title">
+            <div class="wrap security reveal">
+                <span class="icon-tile"><svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg></span>
                 <div>
+                    <h2 id="security-title">Security and compliance</h2>
                     <p>Client data is handled through encrypted Microsoft 365 Business with MFA, full-disk encryption, TLS-secure communications, and UK data centre storage. Midlands Legal BI is ICO registered and holds professional indemnity and cyber insurance.</p>
-                    <div class="security-points" role="list">
-                        <span role="listitem">ICO registered</span>
-                        <span role="listitem">Data processing agreement available</span>
-                        <span role="listitem">UK data centres</span>
-                        <span role="listitem">Professional indemnity</span>
-                        <span role="listitem">Cyber insurance</span>
-                    </div>
+                    <ul class="security-points">
+                        <li>ICO registered</li>
+                        <li>Data processing agreement available</li>
+                        <li>UK data centres</li>
+                        <li>Professional indemnity</li>
+                        <li>Cyber insurance</li>
+                    </ul>
                 </div>
             </div>
         </section>
 
-        <section class="contact" id="contact">
-            <div class="section-inner contact-panel reveal">
-                <div>
-                    <h2>Book a free 30-minute call</h2>
-                    <p>I'm based in Nuneaton and work with firms across the Midlands and remotely. Email me with what you report on now and when your next deadline is, and we can see whether I can help.</p>
-                </div>
-                <div class="contact-actions">
-                    <a class="contact-link" href="mailto:beresford.salmon@midlandslegalbi.co.uk?subject=Free%20consultation">
-                        <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7"/><rect x="2" y="4" width="20" height="16" rx="2"/></svg>
-                        <span>
-                            <strong>Email</strong>
-                            <span>beresford.salmon@midlandslegalbi.co.uk</span>
-                        </span>
-                    </a>
-                    <a class="contact-link" href="https://www.linkedin.com/in/beresford-salmon/" target="_blank" rel="noreferrer">
-                        <span class="linkedin-logo" aria-hidden="true">in</span>
-                        <span>
-                            <strong>LinkedIn</strong>
-                            <span>Connect with Beresford Salmon</span>
-                        </span>
-                    </a>
+        <section class="section contact" id="contact">
+            <div class="wrap">
+                <div class="contact-panel reveal">
+                    <img class="contact-photo" src="Selfie.jpg" width="796" height="822" loading="lazy" decoding="async" alt="Beresford Salmon">
+                    <div class="contact-body">
+                        <h2>Book a free <span class="nowrap">30-minute</span> call</h2>
+                        <p class="contact-lede">I'm Beresford Salmon, based in Nuneaton and working with firms across the Midlands and remotely. Email me with what you report on now and when your next deadline is, and we can see whether I can help.</p>
+                        <div class="contact-actions">
+                            <a class="button" href="mailto:beresford.salmon@midlandslegalbi.co.uk?subject=Free%20consultation"><svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7"/><rect x="2" y="4" width="20" height="16" rx="2"/></svg> Email me</a>
+                            <a class="button secondary" href="https://www.linkedin.com/in/beresford-salmon/" target="_blank" rel="noreferrer">LinkedIn <svg class="icon icon-out" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></a>
+                        </div>
+                        <p class="contact-address">Or write to <a href="mailto:beresford.salmon@midlandslegalbi.co.uk?subject=Free%20consultation">beresford.salmon@midlandslegalbi.co.uk</a></p>
+                    </div>
                 </div>
             </div>
         </section>
     </main>
 
     <footer class="site-footer">
-        <div class="footer-inner">
+        <div class="wrap footer-inner">
             <span>© <span id="year">2026</span> Beresford Salmon, trading as Midlands Legal BI.</span>
-            <span>Monthly reporting for law firms and debt collection agencies.</span>
+            <span>Monthly reporting for debt recovery teams in law firms and collection agencies.</span>
+            <!-- Footer link to the privacy notice goes here once it is published. -->
         </div>
     </footer>
 
     <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Enlarged slide" aria-hidden="true">
-        <button type="button" id="lightbox-close" aria-label="Close preview"><svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+        <button class="icon-button" type="button" id="lightbox-close" aria-label="Close preview"><svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
     </div>
 
     <script>
-        const year = document.getElementById("year");
-        year.textContent = new Date().getFullYear();
+        document.getElementById("year").textContent = new Date().getFullYear();
+        const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
+        // Theme toggle: flips whatever is showing now and remembers the choice on this device.
+        const root = document.documentElement;
+        const darkQuery = window.matchMedia("(prefers-color-scheme: dark)");
+        document.querySelector(".theme-toggle").addEventListener("click", () => {
+            const isDark = root.dataset.theme ? root.dataset.theme === "dark" : darkQuery.matches;
+            root.dataset.theme = isDark ? "light" : "dark";
+            try { localStorage.setItem("mlbi-theme", root.dataset.theme); } catch (error) {}
+        });
+
+        // Mobile menu
         const toggle = document.querySelector(".mobile-toggle");
         const nav = document.getElementById("nav-links");
 
@@ -1485,41 +1677,100 @@
         }
 
         toggle.addEventListener("click", () => setMenu(!nav.classList.contains("open")));
+        nav.querySelectorAll("a").forEach((link) => link.addEventListener("click", () => setMenu(false)));
 
-        nav.querySelectorAll("a").forEach((link) => {
-            link.addEventListener("click", () => setMenu(false));
+        // Slide viewer: tabs swap the slide on the stage; the stage opens the lightbox.
+        const tabs = [...document.querySelectorAll(".viewer-tab")];
+        const panel = document.getElementById("slide-panel");
+        const stage = panel.querySelector(".viewer-stage");
+        const stageImage = stage.querySelector("img");
+        const slideTitle = document.getElementById("slide-title");
+        const slideDesc = document.getElementById("slide-desc");
+        let swapId = 0;
+
+        function selectTab(tab, moveFocus) {
+            tabs.forEach((other) => {
+                const selected = other === tab;
+                other.setAttribute("aria-selected", String(selected));
+                other.tabIndex = selected ? 0 : -1;
+            });
+            if (moveFocus) tab.focus();
+            if (stage.dataset.full === tab.dataset.src) return;
+
+            panel.setAttribute("aria-labelledby", tab.id);
+            stage.dataset.full = tab.dataset.src;
+
+            // Keep the old slide showing while the new one loads, then cross-fade.
+            const thisSwap = ++swapId;
+            const next = new Image();
+            next.src = tab.dataset.src;
+            next.decode().catch(() => {}).then(() => {
+                if (thisSwap !== swapId) return;
+                stage.classList.add("is-swapping");
+                setTimeout(() => {
+                    if (thisSwap !== swapId) return;
+                    stageImage.src = tab.dataset.src;
+                    stageImage.alt = tab.dataset.alt;
+                    slideTitle.textContent = tab.textContent.trim();
+                    slideDesc.textContent = tab.dataset.desc;
+                    requestAnimationFrame(() => stage.classList.remove("is-swapping"));
+                }, reduceMotion.matches ? 0 : 170);
+            });
+        }
+
+        tabs.forEach((tab) => tab.addEventListener("click", () => selectTab(tab, false)));
+
+        document.querySelector(".viewer-tabs").addEventListener("keydown", (event) => {
+            const current = tabs.indexOf(document.activeElement);
+            if (current < 0) return;
+            const moves = {
+                ArrowDown: current + 1,
+                ArrowRight: current + 1,
+                ArrowUp: current - 1,
+                ArrowLeft: current - 1,
+                Home: 0,
+                End: tabs.length - 1,
+            };
+            if (!(event.key in moves)) return;
+            event.preventDefault();
+            selectTab(tabs[(moves[event.key] + tabs.length) % tabs.length], true);
         });
 
+        // Reveal on scroll. The viewer also fetches its other slides once it comes into view.
         const revealItems = document.querySelectorAll(".reveal");
+
+        function warmSlides() {
+            tabs.forEach((tab) => { new Image().src = tab.dataset.src; });
+        }
+
         if (!("IntersectionObserver" in window)) {
             revealItems.forEach((item) => item.classList.add("visible"));
-        }
-        const revealObserver = !("IntersectionObserver" in window) ? null : new IntersectionObserver((entries) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
+            warmSlides();
+        } else {
+            const revealObserver = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (!entry.isIntersecting) return;
                     entry.target.classList.add("visible");
+                    if (entry.target.classList.contains("viewer")) warmSlides();
                     revealObserver.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.12, rootMargin: "0px 0px -50px 0px" });
-        if (revealObserver) revealItems.forEach((item) => revealObserver.observe(item));
+                });
+            }, { threshold: 0.12, rootMargin: "0px 0px -40px 0px" });
+            revealItems.forEach((item) => revealObserver.observe(item));
+        }
 
+        // Lightbox
         const lightbox = document.getElementById("lightbox");
         const lightboxClose = document.getElementById("lightbox-close");
         // The enlarged image exists only while the lightbox is open, so the page never has an image without a source.
         const lightboxImage = document.createElement("img");
-        let lastTrigger = null;
 
-        document.querySelectorAll(".case-study-shot").forEach((item) => {
-            item.addEventListener("click", () => {
-                lastTrigger = item;
-                lightboxImage.src = item.dataset.full;
-                lightboxImage.alt = item.querySelector("img")?.alt || "Expanded portfolio preview";
-                lightbox.append(lightboxImage);
-                lightbox.classList.add("active");
-                lightbox.setAttribute("aria-hidden", "false");
-                lightboxClose.focus();
-            });
+        stage.addEventListener("click", () => {
+            lightboxImage.src = stage.dataset.full;
+            lightboxImage.alt = stageImage.alt;
+            lightbox.append(lightboxImage);
+            lightbox.classList.add("active");
+            lightbox.setAttribute("aria-hidden", "false");
+            lightboxClose.focus();
         });
 
         function closeLightbox() {
@@ -1528,7 +1779,7 @@
             lightbox.setAttribute("aria-hidden", "true");
             lightboxImage.remove();
             lightboxImage.removeAttribute("src");
-            if (lastTrigger) lastTrigger.focus();
+            stage.focus();
         }
 
         lightboxClose.addEventListener("click", closeLightbox);
