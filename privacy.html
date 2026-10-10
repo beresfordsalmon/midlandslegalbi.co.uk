@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<!--
+    Privacy notice, 10 October 2026 (ticket legal/02).
+    The approved text is kept in Legal/Midlands Legal BI Privacy Notice.md; change both together.
+    Styles are the relevant parts of index.html (tokens, nav, footer), plus the document styles below.
+-->
+<html lang="en-GB">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy notice | Midlands Legal BI</title>
+    <meta name="description" content="What personal data Midlands Legal BI holds, why, how long it's kept, and your rights.">
+    <link rel="canonical" href="https://midlandslegalbi.co.uk/privacy.html">
+    <link rel="icon" href="favicon.ico" sizes="32x32">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <link rel="preload" href="fonts/IBMPlexSans-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
+    <script>
+        // The page follows the system's light or dark setting unless the visitor has picked one.
+        try {
+            const savedTheme = localStorage.getItem("mlbi-theme");
+            if (savedTheme === "light" || savedTheme === "dark") document.documentElement.dataset.theme = savedTheme;
+        } catch (error) {}
+    </script>
+
+    <style>
+        /* IBM Plex Sans, self-hosted (SIL Open Font License). Built by Website/build_fonts.py. */
+        @font-face {
+            font-family: "IBM Plex Sans";
+            font-style: normal;
+            font-weight: 400;
+            font-display: swap;
+            src: url("fonts/IBMPlexSans-Regular.woff2") format("woff2");
+        }
+
+        @font-face {
+            font-family: "IBM Plex Sans";
+            font-style: normal;
+            font-weight: 600;
+            font-display: swap;
+            src: url("fonts/IBMPlexSans-SemiBold.woff2") format("woff2");
+        }
+
+        @font-face {
+            font-family: "IBM Plex Sans";
+            font-style: normal;
+            font-weight: 700;
+            font-display: swap;
+            src: url("fonts/IBMPlexSans-Bold.woff2") format("woff2");
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        /* Light: Carbon's White theme values from Brand/brand-reference.md */
+        :root {
+            --bg: #ffffff;
+            --layer: #f4f4f4;          /* Gray 10 */
+            --line: #e0e0e0;           /* Gray 20 */
+            --line-strong: #c6c6c6;    /* Gray 30 */
+            --text: #161616;           /* Gray 100 */
+            --text-2: #393939;         /* Gray 80 */
+            --muted: #525252;          /* Gray 70 */
+            --accent: #0f62fe;         /* Blue 60: logo square, buttons */
+            --accent-hover: #0043ce;   /* Blue 70 */
+            --link: #0f62fe;
+            --focus: #0f62fe;
+            --radius: 8px;
+            --max: 1200px;
+            --nav-h: 64px;
+            --sans: "IBM Plex Sans", Arial, sans-serif;
+            color-scheme: light;
+        }
+
+        /* Dark: Carbon's Gray 100 theme, for visitors whose system is set to dark */
+        @media (prefers-color-scheme: dark) {
+            :root:not([data-theme="light"]) {
+                --bg: #161616;
+                --layer: #262626;      /* Gray 90 */
+                --line: #393939;       /* Gray 80 */
+                --line-strong: #525252;
+                --text: #f4f4f4;
+                --text-2: #c6c6c6;
+                --muted: #a8a8a8;      /* Gray 40 */
+                --link: #78a9ff;       /* Blue 40 */
+                --focus: #78a9ff;
+                color-scheme: dark;
+            }
+        }
+
+        :root[data-theme="dark"] {
+            --bg: #161616;
+            --layer: #262626;
+            --line: #393939;
+            --line-strong: #525252;
+            --text: #f4f4f4;
+            --text-2: #c6c6c6;
+            --muted: #a8a8a8;
+            --link: #78a9ff;
+            --focus: #78a9ff;
+            color-scheme: dark;
+        }
+
+        html {
+            scroll-padding-top: calc(var(--nav-h) + 1rem);
+        }
+
+        body {
+            margin: 0;
+            min-width: 320px;
+            color: var(--text);
+            background: var(--bg);
+            font-family: var(--sans);
+            font-size: 1rem;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            text-rendering: optimizeLegibility;
+            overflow-x: hidden;
+        }
+
+        a {
+            color: inherit;
+        }
+
+        button {
+            font: inherit;
+            color: inherit;
+        }
+
+        h1, h2 {
+            margin: 0;
+            text-wrap: balance;
+        }
+
+        p {
+            margin: 0;
+        }
+
+        :focus-visible {
+            outline: 2px solid var(--focus);
+            outline-offset: 3px;
+        }
+
+        .icon {
+            display: block;
+            width: 1.25rem;
+            height: 1.25rem;
+            flex: none;
+        }
+
+        .wrap {
+            width: min(var(--max), calc(100% - 2rem));
+            margin-inline: auto;
+        }
+
+        .skip-link {
+            position: fixed;
+            top: 0.75rem;
+            left: 0.75rem;
+            z-index: 500;
+            transform: translateY(-140%);
+            padding: 0.65rem 0.9rem;
+            border-radius: var(--radius);
+            background: var(--text);
+            color: var(--bg);
+            text-decoration: none;
+        }
+
+        .skip-link:focus {
+            transform: translateY(0);
+        }
+
+        .button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            min-height: 3rem;
+            padding: 0 1.25rem;
+            border: 1px solid var(--accent);
+            border-radius: var(--radius);
+            background: var(--accent);
+            color: #ffffff;
+            font-size: 0.9375rem;
+            font-weight: 600;
+            line-height: 1;
+            white-space: nowrap;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background 180ms ease, border-color 180ms ease;
+        }
+
+        .button:hover {
+            background: var(--accent-hover);
+            border-color: var(--accent-hover);
+        }
+
+        /* Navigation: always ink, like the cover of the client packs (ADR 0001) */
+        .site-nav {
+            position: fixed;
+            inset: 0 0 auto 0;
+            z-index: 100;
+            background: rgba(22, 22, 22, 0.9);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            color: #f4f4f4;
+            --focus: #78a9ff;
+        }
+
+        .nav-inner {
+            height: var(--nav-h);
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .brand-mark {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-right: auto;
+            color: #ffffff;
+            text-decoration: none;
+        }
+
+        .brand-seal {
+            width: 2.25rem;
+            height: 2.25rem;
+            display: grid;
+            place-items: center;
+            border-radius: 6px; /* the logo square's own construction: radius 17 on 100 */
+            background: var(--accent);
+            color: #ffffff;
+            font-size: 0.78rem;
+            font-weight: 600;
+        }
+
+        .brand-name {
+            display: block;
+            font-size: 0.97rem;
+            font-weight: 600;
+            line-height: 1.1;
+        }
+
+        .brand-sub {
+            display: block;
+            margin-top: 0.15rem;
+            color: #a8a8a8;
+            font-size: 0.72rem;
+            line-height: 1.2;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .nav-links a:not(.button) {
+            color: #c6c6c6;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: color 160ms ease;
+        }
+
+        .nav-links a:not(.button):hover {
+            color: #ffffff;
+        }
+
+        .nav-links .button {
+            min-height: 2.5rem;
+            padding: 0 1rem;
+            font-size: 0.875rem;
+        }
+
+        .nav-tools {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .icon-button {
+            width: 2.5rem;
+            height: 2.5rem;
+            display: grid;
+            place-items: center;
+            padding: 0;
+            border: 1px solid rgba(255, 255, 255, 0.22);
+            border-radius: var(--radius);
+            background: transparent;
+            color: #f4f4f4;
+            cursor: pointer;
+            transition: background 160ms ease, border-color 160ms ease;
+        }
+
+        .icon-button:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+
+        .icon-button .icon {
+            width: 1.1rem;
+            height: 1.1rem;
+        }
+
+        .theme-toggle .icon-sun {
+            display: none;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root:not([data-theme="light"]) .theme-toggle .icon-sun { display: block; }
+            :root:not([data-theme="light"]) .theme-toggle .icon-moon { display: none; }
+        }
+
+        :root[data-theme="dark"] .theme-toggle .icon-sun { display: block; }
+        :root[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
+
+        .mobile-toggle {
+            display: none;
+        }
+
+        /* The notice: one readable column */
+        .doc {
+            max-width: 46rem;
+            padding: calc(var(--nav-h) + clamp(2.5rem, 6vw, 4.5rem)) 0 clamp(4rem, 8vw, 6rem);
+        }
+
+        .doc h1 {
+            font-size: clamp(2.25rem, 4.5vw, 3.25rem);
+            font-weight: 600;
+            line-height: 1.08;
+            letter-spacing: -0.02em;
+        }
+
+        .doc-updated {
+            margin-top: 0.75rem;
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
+        .doc-lede {
+            margin-top: 1.5rem;
+            color: var(--text-2);
+            font-size: 1.125rem;
+            line-height: 1.7;
+        }
+
+        .doc h2 {
+            margin-top: clamp(2.5rem, 5vw, 3.25rem);
+            padding-top: clamp(2.5rem, 5vw, 3.25rem);
+            border-top: 1px solid var(--line);
+            font-size: clamp(1.4rem, 2.4vw, 1.75rem);
+            font-weight: 600;
+            line-height: 1.2;
+            letter-spacing: -0.01em;
+        }
+
+        .doc p,
+        .doc ul {
+            margin-top: 1rem;
+            color: var(--text-2);
+        }
+
+        .doc ul {
+            padding-left: 1.25rem;
+        }
+
+        .doc li + li {
+            margin-top: 0.4rem;
+        }
+
+        .doc strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .doc a {
+            color: var(--link);
+            text-underline-offset: 0.2em;
+        }
+
+        .doc table {
+            width: 100%;
+            margin-top: 1.5rem;
+            border-collapse: collapse;
+            font-size: 0.9375rem;
+            line-height: 1.5;
+        }
+
+        .doc th,
+        .doc td {
+            padding: 0.75rem 1rem 0.75rem 0;
+            border-bottom: 1px solid var(--line);
+            text-align: left;
+            vertical-align: top;
+        }
+
+        .doc th {
+            color: var(--muted);
+            border-bottom-color: var(--line-strong);
+            font-size: 0.8125rem;
+            font-weight: 600;
+        }
+
+        .doc td {
+            color: var(--text-2);
+        }
+
+        .doc td:first-child {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .doc th:last-child,
+        .doc td:last-child {
+            padding-right: 0;
+        }
+
+        .site-footer {
+            padding: 2rem 0;
+            border-top: 1px solid var(--line);
+        }
+
+        .footer-inner {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 0.5rem 1.5rem;
+            color: var(--muted);
+            font-size: 0.85rem;
+        }
+
+        .footer-inner a {
+            color: var(--text);
+            text-underline-offset: 0.2em;
+        }
+
+        .footer-inner a:hover {
+            color: var(--link);
+        }
+
+        @media (min-width: 768px) {
+            .wrap {
+                width: min(var(--max), calc(100% - 4rem));
+            }
+        }
+
+        @media (max-width: 960px) {
+            .nav-links {
+                position: absolute;
+                inset: var(--nav-h) 0 auto 0;
+                display: none;
+                padding: 0.5rem 1rem 1.25rem;
+                background: #161616;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+            }
+
+            .nav-links.open {
+                display: grid;
+                gap: 0;
+            }
+
+            .nav-links a:not(.button) {
+                padding: 0.8rem 0;
+                font-size: 1rem;
+            }
+
+            .nav-links .button {
+                justify-self: start;
+                min-height: 3rem;
+                margin-top: 0.5rem;
+                padding: 0 1.25rem;
+            }
+
+            .mobile-toggle {
+                display: grid;
+            }
+        }
+
+        /* On phones each table row becomes a small block, labelled from its column heading */
+        @media (max-width: 700px) {
+            .brand-sub {
+                display: none;
+            }
+
+            .doc thead {
+                position: absolute;
+                width: 1px;
+                height: 1px;
+                overflow: hidden;
+                clip-path: inset(50%);
+            }
+
+            .doc tr {
+                display: block;
+                padding: 1rem 0;
+                border-bottom: 1px solid var(--line);
+            }
+
+            .doc td {
+                display: block;
+                padding: 0.15rem 0;
+                border: 0;
+            }
+
+            .doc td[data-label]:not(:first-child)::before {
+                content: attr(data-label) ": ";
+                color: var(--muted);
+                font-weight: 600;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <nav class="site-nav" aria-label="Primary navigation">
+        <div class="wrap nav-inner">
+            <a class="brand-mark" href="./" aria-label="Midlands Legal BI home">
+                <span class="brand-seal" aria-hidden="true">MLBI</span>
+                <span>
+                    <span class="brand-name">Midlands Legal BI</span>
+                    <span class="brand-sub">Monthly reporting, made reliable</span>
+                </span>
+            </a>
+            <div class="nav-links" id="nav-links">
+                <a href="./#services">Services</a>
+                <a href="./#portfolio">Work</a>
+                <a href="./#pricing">Pricing</a>
+                <a class="button" href="./#contact">Book a free call</a>
+            </div>
+            <div class="nav-tools">
+                <button class="icon-button theme-toggle" type="button" aria-label="Switch between light and dark mode">
+                    <svg class="icon icon-moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+                    <svg class="icon icon-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+                </button>
+                <button class="icon-button mobile-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links">
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 5h16"/><path d="M4 12h16"/><path d="M4 19h16"/></svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main id="main">
+        <article class="wrap doc">
+            <h1>Privacy notice</h1>
+            <p class="doc-updated">Last updated: 10 October 2026</p>
+            <p class="doc-lede">This notice explains what personal data I hold, why, how long I keep it, and what you can ask me to do with it. I only collect what I need to run the business. I don't sell or rent personal data to anyone.</p>
+
+            <h2 id="who">Who I am</h2>
+            <p>I'm Beresford Salmon, a sole trader trading as Midlands Legal BI. I'm the data controller for the personal data described here. That means I decide how it's used, and I'm responsible for it.</p>
+            <ul>
+                <li>Email: <a href="mailto:beresford.salmon@midlandslegalbi.co.uk">beresford.salmon@midlandslegalbi.co.uk</a></li>
+                <li>Based in: Nuneaton, Warwickshire</li>
+                <li>ICO registration: ZC095108 (registered as “Mr Beresford Salmon”, other name “Midlands Legal BI”)</li>
+            </ul>
+
+            <h2 id="what">What I hold and why</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th scope="col">Who you are</th>
+                        <th scope="col">What I hold</th>
+                        <th scope="col">Why</th>
+                        <th scope="col">Legal basis</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>A client contact</td>
+                        <td data-label="What I hold">Name, job title, work email and phone number</td>
+                        <td data-label="Why">To deliver the work we've agreed and send invoices</td>
+                        <td data-label="Legal basis">Contract</td>
+                    </tr>
+                    <tr>
+                        <td>A client</td>
+                        <td data-label="What I hold">Invoices and payment records</td>
+                        <td data-label="Why">To keep the accounts HMRC requires</td>
+                        <td data-label="Legal basis">Legal obligation</td>
+                    </tr>
+                    <tr>
+                        <td>Someone I might work with</td>
+                        <td data-label="What I hold">Name, job title, firm and work email</td>
+                        <td data-label="Why">To contact law firms and collection agencies whose work I think I could help with</td>
+                        <td data-label="Legal basis">Legitimate interests</td>
+                    </tr>
+                    <tr>
+                        <td>Someone who emails me</td>
+                        <td data-label="What I hold">Your name, email address and what you wrote</td>
+                        <td data-label="Why">To reply, and to prepare a quote if you ask for one</td>
+                        <td data-label="Legal basis">Legitimate interests, or steps before a contract</td>
+                    </tr>
+                    <tr>
+                        <td>Someone who asked me not to contact them</td>
+                        <td data-label="What I hold">Name and work email</td>
+                        <td data-label="Why">To make sure I don't contact you again</td>
+                        <td data-label="Legal basis">Legitimate interests</td>
+                    </tr>
+                    <tr>
+                        <td>A website visitor</td>
+                        <td data-label="What I hold">Your IP address, held in the host's server logs (see below)</td>
+                        <td data-label="Why">To keep the site running and secure</td>
+                        <td data-label="Legal basis">Legitimate interests</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p>Where I rely on legitimate interests, I've weighed my interest in running the business against your privacy, and I only contact people in their work role. You can object at any time (see <a href="#rights">Your rights</a>).</p>
+
+            <h2 id="sources">Where I get prospect details</h2>
+            <p>If I've contacted you without you contacting me first, I got your details from public sources: the Solicitors Regulation Authority's register of solicitors and firms, and your firm's own website. I only email people at companies and limited liability partnerships (LLPs), and every email tells you how to opt out.</p>
+
+            <h2 id="clients">Data I handle for clients</h2>
+            <p>When I build reports for a client, I may handle personal data in their files, such as the names and balances of their own customers or debtors. For that data the client is the controller and I act on their instructions only. Their privacy notice explains how it's used. I keep it in the business's Microsoft 365 account and nowhere else.</p>
+
+            <h2 id="sharing">Who else sees it</h2>
+            <ul>
+                <li><strong>Microsoft</strong> provides my business email and file storage (Microsoft 365). Files and email are stored in Microsoft's UK data centres.</li>
+                <li><strong>GitHub</strong> hosts this website. It logs visitors' IP addresses for security, as any web host does.</li>
+                <li><strong>HMRC, the ICO, courts or the police</strong>, if the law requires me to share information.</li>
+            </ul>
+            <p>I don't use any other service providers for personal data.</p>
+
+            <h2 id="transfers">Data outside the UK</h2>
+            <p>Files and email are stored in the UK. Microsoft may access some data from outside the UK for things like spam filtering, support and security, under its data protection terms and the UK's approved safeguards.</p>
+            <p>GitHub is a US company, so its website logs are held in the United States. GitHub is certified under the UK–US data bridge (the UK Extension to the EU–US Data Privacy Framework), which the UK government recognises as protecting personal data adequately.</p>
+
+            <h2 id="retention">How long I keep it</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th scope="col">What</th>
+                        <th scope="col">How long</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Invoices and accounting records</td>
+                        <td data-label="How long">7 years from the end of the financial year they relate to</td>
+                    </tr>
+                    <tr>
+                        <td>Client contacts and project files</td>
+                        <td data-label="How long">While we work together, then 2 years</td>
+                    </tr>
+                    <tr>
+                        <td>Prospect details</td>
+                        <td data-label="How long">2 years from the last contact, unless you become a client</td>
+                    </tr>
+                    <tr>
+                        <td>The do-not-contact list</td>
+                        <td data-label="How long">For as long as I do outreach, so I never contact you again</td>
+                    </tr>
+                    <tr>
+                        <td>Emails from people who don't become clients</td>
+                        <td data-label="How long">6 months</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p>After that I delete it.</p>
+
+            <h2 id="security">How I keep it safe</h2>
+            <ul>
+                <li>Business data stays in Microsoft 365. It's never copied to personal accounts, personal email, USB sticks or personal storage.</li>
+                <li>Every account needs a second sign-in step (multi-factor authentication).</li>
+                <li>The computer I use for business data is encrypted with BitLocker.</li>
+                <li>Every password is unique and kept in a password manager (1Password).</li>
+                <li>Email is encrypted in transit.</li>
+            </ul>
+
+            <h2 id="cookies">Cookies</h2>
+            <p>This website doesn't set any cookies. It has no analytics, tracking or advertising code, and it loads nothing from other companies.</p>
+            <p>If you use the light and dark switch, your browser remembers your choice on your own device. It's never sent to me.</p>
+
+            <h2 id="automated">Automated decisions</h2>
+            <p>I don't make any decisions about people by automated means alone, and I don't profile anyone.</p>
+
+            <h2 id="rights">Your rights</h2>
+            <p>You can ask me to:</p>
+            <ul>
+                <li>send you a copy of the personal data I hold about you</li>
+                <li>correct anything that's wrong or incomplete</li>
+                <li>delete it</li>
+                <li>limit how I use it</li>
+                <li>send it to you, or to someone else, in a common file format</li>
+                <li>stop using it, including stopping all marketing straight away</li>
+            </ul>
+            <p>Email me at <a href="mailto:beresford.salmon@midlandslegalbi.co.uk">beresford.salmon@midlandslegalbi.co.uk</a>. It's free. I'll reply within one month, and I'll tell you if I need longer and why. Some rights only apply in certain circumstances; if one doesn't apply, I'll explain why.</p>
+
+            <h2 id="complaints">Complaints</h2>
+            <p>If you're unhappy with how I've handled your data, please email me first. I'll acknowledge your complaint within 30 days and tell you what I'm doing about it.</p>
+            <p>You can also complain to the Information Commissioner's Office (ICO):</p>
+            <ul>
+                <li><a href="https://ico.org.uk/make-a-complaint/">ico.org.uk/make-a-complaint</a></li>
+                <li>0303 123 1113</li>
+                <li>Information Commissioner's Office, Wycliffe House, Water Lane, Wilmslow, Cheshire, SK9 5AF</li>
+            </ul>
+
+            <h2 id="changes">Changes</h2>
+            <p>If I change how I use personal data, I'll update this page and its date. If a change affects you significantly and I have your details, I'll tell you directly.</p>
+        </article>
+    </main>
+
+    <footer class="site-footer">
+        <div class="wrap footer-inner">
+            <span>© <span id="year">2026</span> Beresford Salmon, trading as Midlands Legal BI.</span>
+            <span>Monthly reporting for debt recovery teams in law firms and collection agencies.</span>
+            <a href="privacy.html" aria-current="page">Privacy notice</a>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById("year").textContent = new Date().getFullYear();
+
+        // Theme toggle: flips whatever is showing now and remembers the choice on this device.
+        const root = document.documentElement;
+        const darkQuery = window.matchMedia("(prefers-color-scheme: dark)");
+        document.querySelector(".theme-toggle").addEventListener("click", () => {
+            const isDark = root.dataset.theme ? root.dataset.theme === "dark" : darkQuery.matches;
+            root.dataset.theme = isDark ? "light" : "dark";
+            try { localStorage.setItem("mlbi-theme", root.dataset.theme); } catch (error) {}
+        });
+
+        // Mobile menu
+        const toggle = document.querySelector(".mobile-toggle");
+        const nav = document.getElementById("nav-links");
+
+        function setMenu(isOpen) {
+            nav.classList.toggle("open", isOpen);
+            toggle.setAttribute("aria-expanded", String(isOpen));
+            toggle.setAttribute("aria-label", isOpen ? "Close menu" : "Open menu");
+        }
+
+        toggle.addEventListener("click", () => setMenu(!nav.classList.contains("open")));
+        nav.querySelectorAll("a").forEach((link) => link.addEventListener("click", () => setMenu(false)));
+
+        document.addEventListener("keydown", (event) => {
+            if (event.key === "Escape" && nav.classList.contains("open")) {
+                setMenu(false);
+                toggle.focus();
+            }
+        });
+    </script>
+</body>
+</html>
